@@ -1,0 +1,191 @@
+/* ================================================
+   CEC English Camp — New Site
+   Design System
+   ================================================ */
+
+:root {
+  --navy: #0a1628;
+  --cyan: #00f2ff;
+  --green: #4a6741;
+  --cream: #f5f0e8;
+  --white: #ffffff;
+  --text: #1e293b;
+  --text2: #475569;
+  --border: rgba(30,41,59,0.1);
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --radius: 16px;
+  --font-en: 'Cormorant Garamond', serif;
+  --font-ko: 'Noto Sans KR', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-ko);
+  color: var(--text);
+  background: var(--cream);
+  line-height: 1.7;
+}
+
+/* Header */
+header[role="banner"] {
+  background: var(--navy);
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+header[role="banner"] nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.logo {
+  font-family: var(--font-en);
+  font-size: 1.4rem;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+.logo span { color: var(--cyan); }
+
+nav ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+nav ul a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+nav ul a:hover { color: var(--cyan); }
+
+/* Main */
+main[role="main"] {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 80px 24px;
+  background: var(--navy);
+  color: var(--white);
+}
+
+.hero h1 {
+  font-family: var(--font-en);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-style: italic;
+  color: var(--cyan);
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.8);
+  max-width: 600px;
+  margin: 0 auto 32px;
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 48px 0;
+}
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+.card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.card h2 { font-size: 1.2rem; margin-bottom: 8px; color: var(--navy); }
+.card p { font-size: 0.9rem; color: var(--text2); }
+
+/* Pillar Cluster Links */
+.cluster-links {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin: 32px 0;
+  box-shadow: var(--shadow);
+}
+
+.cluster-links h2 {
+  font-size: 1rem;
+  color: var(--text2);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.cluster-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+
+.cluster-links a {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  color: var(--navy);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.cluster-links a:hover {
+  background: var(--green);
+  color: var(--white);
+}
+
+/* Footer */
+footer[role="contentinfo"] {
+  background: var(--navy);
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 32px 24px;
+  font-size: 0.85rem;
+  margin-top: 80px;
+}
+
+footer a { color: var(--cyan); text-decoration: none; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav ul { gap: 16px; }
+  .hero { padding: 48px 16px; }
+  main[role="main"] { padding: 24px 16px; }
+}
