@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CEC English Camp Speaking Training — 그림으로 배우는 영어 말하기. 초등 3~6학년 AI 스피킹 연습.">
-  <meta name="keywords" content="영어말하기,초등영어스피킹,AI영어회화,CEC English Camp">
+  <meta name="description" content="CEC English Camp Speaking Training — 초등학생 AI 영어 말하기 + 엄마표 스피킹 가이드.">
+  <meta name="keywords" content="영어말하기,초등영어스피킹,엄마표영어,AI영어회화,CEC English Camp">
   <meta property="og:title" content="Speaking Training | CEC English Camp">
   <meta name="robots" content="index, follow">
   <title>Speaking Training | CEC English Camp</title>
@@ -16,11 +16,15 @@
     "@context": "https://schema.org",
     "@type": "Course",
     "name": "CEC Speaking Training",
-    "description": "그림으로 배우는 영어 말하기 — AI와 함께하는 스피킹 연습",
+    "description": "그림으로 배우는 영어 말하기 — 초등 AI 스피킹 + 엄마표 가이드",
     "provider": {"@type": "EducationalOrganization", "name": "CEC English Camp"},
     "educationalLevel": "elementary",
     "typicalAgeRange": "9-13",
-    "inLanguage": ["ko","en"]
+    "inLanguage": ["ko","en"],
+    "hasPart": [
+      {"@type": "Course", "name": "Elementary Speaking", "url": "https://cecenglishcamp.github.io/cec-edu/speaking/elementary/"},
+      {"@type": "Course", "name": "Mom Teacher Speaking", "url": "https://cecenglishcamp.github.io/cec-edu/speaking/mom-teacher/"}
+    ]
   }
   </script>
 </head>
@@ -38,57 +42,47 @@
     </nav>
   </header>
   <main role="main">
-    <section class="hero" aria-label="Speaking Training">
+    <section class="hero" aria-label="Speaking Training Hub">
       <h1>🎤 Speaking Training</h1>
       <p>그림을 보고 영어로 말해보세요 — AI가 바로 확인해드려요!</p>
     </section>
-    <section aria-label="Book Selection" style="margin:48px 0;">
+    <section aria-label="Who is this for?" style="margin:48px 0;">
       <div class="card-grid">
-        <a href="/cec-edu/speaking/peter-rabbit/" class="card">
-          <div class="card-icon">🐰</div>
-          <h2>Peter Rabbit</h2>
-          <p>Grade 3 · 9장면 · 52문장<br>
-          <small style="color:#94a3b8;">A1 레벨</small></p>
+        <a href="/cec-edu/speaking/elementary/" class="card" style="border-top:4px solid #4a6741;">
+          <div class="card-icon">🌟</div>
+          <h2>Elementary Speaking</h2>
+          <p style="color:#475569;">초등 3~6학년<br>그림 보고 AI에게 영어로 말하기<br><small style="color:#94a3b8;">Grade 3~6 · A1~B1</small></p>
+          <div style="margin-top:16px;background:#4a6741;color:#fff;padding:8px 16px;border-radius:100px;font-size:0.85rem;display:inline-block;">학생용 →</div>
         </a>
-        <a href="/cec-edu/speaking/wind-willows/" class="card">
-          <div class="card-icon">🌬️</div>
-          <h2>Wind in the Willows</h2>
-          <p>Grade 4 · 8장면 · 47문장<br>
-          <small style="color:#94a3b8;">A2 레벨</small></p>
-        </a>
-        <a href="/cec-edu/speaking/treasure-island/" class="card">
-          <div class="card-icon">🏴‍☠️</div>
-          <h2>Treasure Island</h2>
-          <p>Grade 5 · 8장면 · 47문장<br>
-          <small style="color:#94a3b8;">B1 레벨</small></p>
-        </a>
-        <a href="/cec-edu/speaking/little-princess/" class="card">
-          <div class="card-icon">👑</div>
-          <h2>A Little Princess</h2>
-          <p>Grade 6 · 8장면 · 45문장<br>
-          <small style="color:#94a3b8;">B1 레벨</small></p>
+        <a href="/cec-edu/speaking/mom-teacher/" class="card" style="border-top:4px solid #0a1628;">
+          <div class="card-icon">👩‍👧</div>
+          <h2>Mom Teacher Speaking</h2>
+          <p style="color:#475569;">엄마가 아이에게 가르치기<br>장면별 교수법 + 표현 가이드<br><small style="color:#94a3b8;">Mom Teacher · A1~B1</small></p>
+          <div style="margin-top:16px;background:#0a1628;color:#fff;padding:8px 16px;border-radius:100px;font-size:0.85rem;display:inline-block;">엄마용 →</div>
         </a>
       </div>
     </section>
-    <section aria-label="How to Use" style="background:#fff;border-radius:16px;padding:32px;margin:32px 0;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-      <h2 style="font-size:0.85rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">📖 How to Use</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">🖼️</div><p style="font-weight:700;color:#0a1628;">1. 그림 보기</p><p style="color:#475569;font-size:0.9rem;">장면을 보고 내용을 파악하세요</p></div>
-        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">🎤</div><p style="font-weight:700;color:#0a1628;">2. 영어로 말하기</p><p style="color:#475569;font-size:0.9rem;">AI에게 영어로 설명해보세요</p></div>
-        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">✅</div><p style="font-weight:700;color:#0a1628;">3. 확인하기</p><p style="color:#475569;font-size:0.9rem;">AI가 맞는지 확인해드려요</p></div>
+    <section aria-label="How it works" style="background:#fff;border-radius:16px;padding:32px;margin:32px 0;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+      <h2 style="font-size:0.85rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:20px;">📖 How It Works</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">
+        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">🖼️</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">1. 그림 보기</p><p style="color:#475569;font-size:0.85rem;">장면을 보고 내용 파악</p></div>
+        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">🎤</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">2. 영어로 말하기</p><p style="color:#475569;font-size:0.85rem;">AI에게 영어로 설명</p></div>
+        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">✅</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">3. AI 확인</p><p style="color:#475569;font-size:0.85rem;">맞는지 바로 피드백</p></div>
+        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">📈</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">4. 실력 향상</p><p style="color:#475569;font-size:0.85rem;">반복으로 완성</p></div>
       </div>
     </section>
-    <aside class="cluster-links" aria-label="Related">
+    <aside class="cluster-links" aria-label="Related Learning">
       <h2>Related Learning</h2>
       <ul>
         <li><a href="/cec-edu/elementary/">Elementary English →</a></li>
-        <li><a href="/cec-edu/grammar/">Grammar BaseCamp →</a></li>
         <li><a href="/cec-edu/mom-teacher/">Mom Teacher →</a></li>
+        <li><a href="/cec-edu/grammar/">Grammar BaseCamp →</a></li>
       </ul>
     </aside>
   </main>
   <footer role="contentinfo">
     <p>© 2024 CEC English Camp · AI-Powered English Education</p>
+    <p style="margin-top:8px;"><a href="/cec-edu/">Home</a> · <a href="/cec-edu/speaking/elementary/">Elementary</a> · <a href="/cec-edu/speaking/mom-teacher/">Mom Teacher</a></p>
   </footer>
 </body>
 </html>
