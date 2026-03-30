@@ -5,54 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grammar Base | CEC Edu</title>
 <meta name="description" content="G01~G80 핵심 문법 단계별 마스터">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0a1628;--cyan:#00f2ff;--green:#4a6741;--cream:#f5f0e8;--white:#ffffff;--border:#e0d8cc;}
+:root{--point:#00f2ff;--bg:#000000;--card:#111;--card2:#0a0a0a;--border:#222;--muted:#888;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--navy);}
-.site-header{background:var(--navy);position:sticky;top:0;z-index:100;}
-.main-nav{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.nav-logo{color:var(--cyan);font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-style:italic;}
-.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
-.nav-link{color:rgba(255,255,255,0.8);text-decoration:none;padding:6px 14px;border-radius:100px;font-size:0.82rem;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;white-space:nowrap;}
-.nav-link:hover,.nav-link[aria-current="page"]{background:var(--cyan);color:var(--navy);border-color:var(--cyan);}
-.hero{text-align:center;padding:56px 20px 40px;background:linear-gradient(160deg,#0a1628 0%,#1a3a1a 100%);color:#fff;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Helvetica','Arial',sans-serif;background:var(--bg);color:#fff;line-height:1.8;word-break:keep-all;}
+
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 5%;background:rgba(0,0,0,0.98);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000;gap:16px;}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:900;color:#fff;text-decoration:none;white-space:nowrap;}
+.logo:hover{color:var(--point);}
+.logo-img{width:40px;height:40px;object-fit:contain;}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;list-style:none;}
+.nav-links a{color:#fff;text-decoration:none;font-size:0.85rem;font-weight:700;padding:6px 14px;border-radius:25px;border:1px solid transparent;transition:all 0.2s;}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--point);border-color:var(--point);}
+
+.hero{text-align:center;padding:60px 20px 48px;border-bottom:1px solid var(--border);}
 .hero-emoji{font-size:3rem;margin-bottom:16px;}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cyan);margin-bottom:10px;}
-.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;line-height:1.7;max-width:520px;margin:0 auto;}
-.section-wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
-.section-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:20px;letter-spacing:0.05em;text-transform:uppercase;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px;}
-.card{background:var(--white);border-radius:16px;padding:26px 22px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 10px rgba(10,22,40,0.06);text-decoration:none;color:var(--navy);transition:transform 0.2s,box-shadow 0.2s;display:block;}
-.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(10,22,40,0.12);}
-.card-emoji{font-size:2.2rem;margin-bottom:12px;}
-.card-title{font-size:1rem;font-weight:700;margin-bottom:6px;}
-.card-desc{font-size:0.82rem;color:#666;line-height:1.6;}
-.card-badge{display:inline-block;margin-top:10px;background:var(--green);color:#fff;padding:2px 10px;border-radius:100px;font-size:0.72rem;}
-.site-footer{background:var(--navy);color:rgba(255,255,255,0.45);text-align:center;padding:20px;font-size:0.78rem;}
-@media(max-width:600px){.nav-link{padding:5px 10px;font-size:0.76rem;}.hero h1{font-size:1.5rem;}.cards{grid-template-columns:1fr 1fr;}}
+.hero h1{font-size:2.2rem;font-weight:900;margin-bottom:12px;letter-spacing:-1px;}
+.hero h1 em{color:var(--point);font-style:normal;}
+.hero p{color:var(--muted);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.7;}
+
+.section-wrap{max-width:1000px;margin:0 auto;padding:48px 24px 80px;}
+.section-title{font-size:0.85rem;font-weight:700;color:var(--point);margin-bottom:20px;letter-spacing:3px;text-transform:uppercase;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:52px;}
+.card{background:var(--card);border-radius:14px;padding:28px 22px;text-align:center;border:1px solid var(--border);text-decoration:none;color:#fff;display:block;transition:all 0.25s;}
+.card:hover{border-color:var(--point);transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,242,255,0.08);}
+.card-emoji{font-size:2.2rem;margin-bottom:14px;}
+.card-title{font-size:1.05rem;font-weight:800;margin-bottom:6px;}
+.card-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+.card-badge{display:inline-block;margin-top:12px;border:1px solid var(--point);color:var(--point);padding:2px 12px;border-radius:25px;font-size:0.72rem;font-weight:700;}
+
+footer{background:var(--card2);border-top:1px solid var(--border);text-align:center;padding:24px;font-size:0.78rem;color:#555;}
+
+@media(max-width:768px){
+  header{flex-direction:column;padding:12px 16px;}
+  .nav-links a{font-size:0.78rem;padding:5px 10px;}
+  .hero h1{font-size:1.6rem;}
+  .cards{grid-template-columns:1fr 1fr;}
+}
 @media(max-width:400px){.cards{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-<header class="site-header">
-  <nav class="main-nav" aria-label="CEC Edu">
-    <a href="/" class="nav-logo">CEC English Camp · Edu</a>
-    <div class="nav-links">
-      <a href="/" class="nav-link">🏠 홈</a>
-      <a href="/elementary/" class="nav-link">🌱 초등</a>
-      <a href="/middle-high/" class="nav-link">📘 중고등</a>
-      <a href="/adult/" class="nav-link">👩 성인</a>
-      <a href="/mom-teacher/" class="nav-link">👨‍🏫 엄마교사</a>
-      <a href="/grammar/" class="nav-link" aria-current="page">📐 문법</a>
-      <a href="/speaking/" class="nav-link">🗣️ 스피킹</a>
-    </div>
-  </nav>
+<header>
+  <a href="/" class="logo">
+    <img src="https://pub-a418b5aad0bd4c3fb41cf7159403fc12.r2.dev/robo_study.png" alt="CEC" class="logo-img" onerror="this.style.display='none'">
+    <span>CEC Edu</span>
+  </a>
+  <nav class="nav-links"><a href="/">🏠 Home</a><a href="/elementary/">Elementary</a><a href="/middle-high/">Middle-High</a><a href="/adult/">Adult</a><a href="/mom-teacher/">Mom Teacher</a><a href="/grammar/" aria-current="page">Grammar</a><a href="/speaking/">Speaking</a></nav>
 </header>
 <main>
   <section class="hero">
     <div class="hero-emoji">📐</div>
-    <h1>Grammar Base Camp</h1>
+    <h1>Grammar <em>Base Camp</em></h1>
     <p>G01~G80 핵심 문법을 단계별로 마스터하세요</p>
   </section>
   <div class="section-wrap">
@@ -64,6 +69,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--n
   </div></section>
   </div>
 </main>
-<footer class="site-footer">© 2026 CEC English Camp</footer>
+<footer>© 2026 CEC English Camp · cecenglishcamp.github.io/cec-edu</footer>
 </body>
 </html>
