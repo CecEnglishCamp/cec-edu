@@ -1,517 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Grammar BaseCamp — G01~G80 영어 문법 완전 정복. 기초 be동사부터 고급 명사화까지 80단계 무료 학습.">
-  <meta name="keywords" content="영어문법,현재완료,수동태,조건문,관계대명사,영어문법무료,Grammar BaseCamp">
-  <meta property="og:title" content="Grammar BaseCamp G01~G80 | CEC English Camp">
-  <meta property="og:url" content="https://cec-edu.github.io/grammar/">
-  <meta name="robots" content="index, follow">
-  <title>Grammar BaseCamp — 80 Steps to Master English Grammar | CEC English Camp</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    "name": "Grammar BaseCamp — 80 Steps to Master English Grammar",
-    "description": "G01~G80 기초부터 고급까지 영어 문법 완전 정복. 무료.",
-    "url": "https://cec-edu.github.io/grammar/",
-    "provider": {
-      "@type": "EducationalOrganization",
-      "name": "CEC English Camp",
-      "url": "https://cec-edu.github.io"
-    },
-    "hasCourseInstance": {
-      "@type": "CourseInstance",
-      "courseMode": "online",
-      "inLanguage": "ko"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "KRW",
-      "availability": "https://schema.org/InStock"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "ratingCount": "500"
-    },
-    "numberOfCredits": 80,
-    "educationalLevel": "A1 to B2",
-    "teaches": [
-      "Be Verb", "Present Tense", "Past Tense", "Future Tense",
-      "Present Perfect", "Passive Voice", "Conditionals", "Relative Clauses"
-    ]
-  }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Base | CEC Edu</title>
+<meta name="description" content="G01~G80 핵심 문법 단계별 마스터">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--cyan:#00f2ff;--green:#4a6741;--cream:#f5f0e8;--white:#ffffff;--border:#e0d8cc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--navy);}
+.site-header{background:var(--navy);position:sticky;top:0;z-index:100;}
+.main-nav{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.nav-logo{color:var(--cyan);font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-link{color:rgba(255,255,255,0.8);text-decoration:none;padding:6px 14px;border-radius:100px;font-size:0.82rem;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;white-space:nowrap;}
+.nav-link:hover,.nav-link[aria-current="page"]{background:var(--cyan);color:var(--navy);border-color:var(--cyan);}
+.hero{text-align:center;padding:56px 20px 40px;background:linear-gradient(160deg,#0a1628 0%,#1a3a1a 100%);color:#fff;}
+.hero-emoji{font-size:3rem;margin-bottom:16px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cyan);margin-bottom:10px;}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;line-height:1.7;max-width:520px;margin:0 auto;}
+.section-wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
+.section-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:20px;letter-spacing:0.05em;text-transform:uppercase;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px;}
+.card{background:var(--white);border-radius:16px;padding:26px 22px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 10px rgba(10,22,40,0.06);text-decoration:none;color:var(--navy);transition:transform 0.2s,box-shadow 0.2s;display:block;}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(10,22,40,0.12);}
+.card-emoji{font-size:2.2rem;margin-bottom:12px;}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.card-desc{font-size:0.82rem;color:#666;line-height:1.6;}
+.card-badge{display:inline-block;margin-top:10px;background:var(--green);color:#fff;padding:2px 10px;border-radius:100px;font-size:0.72rem;}
+.site-footer{background:var(--navy);color:rgba(255,255,255,0.45);text-align:center;padding:20px;font-size:0.78rem;}
+@media(max-width:600px){.nav-link{padding:5px 10px;font-size:0.76rem;}.hero h1{font-size:1.5rem;}.cards{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.cards{grid-template-columns:1fr;}}
+</style>
 </head>
-<body data-page="grammar-pillar">
-
-  <header role="banner">
-    <nav aria-label="사이트 메뉴">
-      <a href="/cec-edu/" class="logo">CEC <span>English Camp</span></a>
-      <ul>
-        <li><a href="/cec-edu/grammar/" style="color:#00f2ff;">Grammar</a></li>
-        <li><a href="/cec-edu/elementary/">Elementary</a></li>
-        <li><a href="/cec-edu/middle-high/">Middle & High</a></li>
-        <li><a href="/cec-edu/speaking/">Speaking</a></li>
-        <li><a href="/cec-edu/adult/">Adult English</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main role="main">
-
-    <section class="hero" aria-label="Grammar BaseCamp 소개">
-      <h1>80 Steps to Master English Grammar</h1>
-      <p>기초부터 고급까지 — Robo와 함께 영문법을 완성하자</p>
-    </section>
-
-    
-    <section aria-label="Stage 1 &middot; Basic G01&ndash;G30" style="margin:48px 0;">
-      <h2 style="font-size:0.85rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Stage 1 &middot; Basic G01&ndash;G30</h2>
-      <div class="card-grid">
-        <a href="/cec-edu/grammar/be-verb/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G01</div>
-          <h2 style="font-size:1rem;">Be Verb</h2>
-          <p>Be동사 현재형</p>
-        </a>
-        <a href="/cec-edu/grammar/articles/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G02</div>
-          <h2 style="font-size:1rem;">Articles</h2>
-          <p>관사 a/an/the</p>
-        </a>
-        <a href="/cec-edu/grammar/simple-present/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G03</div>
-          <h2 style="font-size:1rem;">Simple Present</h2>
-          <p>단순현재시제</p>
-        </a>
-        <a href="/cec-edu/grammar/present-continuous/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G04</div>
-          <h2 style="font-size:1rem;">Present Continuous</h2>
-          <p>현재진행형</p>
-        </a>
-        <a href="/cec-edu/grammar/simple-past/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G05</div>
-          <h2 style="font-size:1rem;">Simple Past</h2>
-          <p>단순과거시제</p>
-        </a>
-        <a href="/cec-edu/grammar/future-tense/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G06</div>
-          <h2 style="font-size:1rem;">Future Tense</h2>
-          <p>미래시제 will/going to</p>
-        </a>
-        <a href="/cec-edu/grammar/modal-verbs/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G07</div>
-          <h2 style="font-size:1rem;">Modal Verbs</h2>
-          <p>조동사 can/could/should</p>
-        </a>
-        <a href="/cec-edu/grammar/countable-nouns/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G08</div>
-          <h2 style="font-size:1rem;">Countable Nouns</h2>
-          <p>가산/불가산 명사</p>
-        </a>
-        <a href="/cec-edu/grammar/wh-questions/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G09</div>
-          <h2 style="font-size:1rem;">Wh Questions</h2>
-          <p>의문문 만들기</p>
-        </a>
-        <a href="/cec-edu/grammar/comparative-superlative/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G10</div>
-          <h2 style="font-size:1rem;">Comparative Superlative</h2>
-          <p>비교급/최상급</p>
-        </a>
-        <a href="/cec-edu/grammar/possessive-forms/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G11</div>
-          <h2 style="font-size:1rem;">Possessive Forms</h2>
-          <p>소유격 표현</p>
-        </a>
-        <a href="/cec-edu/grammar/there-is-there-are/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G12</div>
-          <h2 style="font-size:1rem;">There Is There Are</h2>
-          <p>There is/There are</p>
-        </a>
-        <a href="/cec-edu/grammar/prepositions-place/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G13</div>
-          <h2 style="font-size:1rem;">Prepositions Place</h2>
-          <p>장소 전치사</p>
-        </a>
-        <a href="/cec-edu/grammar/prepositions-time/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G14</div>
-          <h2 style="font-size:1rem;">Prepositions Time</h2>
-          <p>시간 전치사</p>
-        </a>
-        <a href="/cec-edu/grammar/demonstratives/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G15</div>
-          <h2 style="font-size:1rem;">Demonstratives</h2>
-          <p>지시대명사</p>
-        </a>
-        <a href="/cec-edu/grammar/plural-nouns/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G16</div>
-          <h2 style="font-size:1rem;">Plural Nouns</h2>
-          <p>복수명사</p>
-        </a>
-        <a href="/cec-edu/grammar/object-pronouns/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G17</div>
-          <h2 style="font-size:1rem;">Object Pronouns</h2>
-          <p>목적격 대명사</p>
-        </a>
-        <a href="/cec-edu/grammar/yes-no-questions/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G18</div>
-          <h2 style="font-size:1rem;">Yes No Questions</h2>
-          <p>Yes/No 의문문</p>
-        </a>
-        <a href="/cec-edu/grammar/frequency-adverbs/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G19</div>
-          <h2 style="font-size:1rem;">Frequency Adverbs</h2>
-          <p>빈도부사</p>
-        </a>
-        <a href="/cec-edu/grammar/imperative-commands/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G20</div>
-          <h2 style="font-size:1rem;">Imperative Commands</h2>
-          <p>명령문</p>
-        </a>
-        <a href="/cec-edu/grammar/past-continuous/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G21</div>
-          <h2 style="font-size:1rem;">Past Continuous</h2>
-          <p>과거진행형</p>
-        </a>
-        <a href="/cec-edu/grammar/present-perfect/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G22</div>
-          <h2 style="font-size:1rem;">Present Perfect</h2>
-          <p>현재완료</p>
-        </a>
-        <a href="/cec-edu/grammar/must-have-to/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G23</div>
-          <h2 style="font-size:1rem;">Must Have To</h2>
-          <p>Must/Have to/Need to</p>
-        </a>
-        <a href="/cec-edu/grammar/some-any-no/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G24</div>
-          <h2 style="font-size:1rem;">Some Any No</h2>
-          <p>Some/Any/No/None</p>
-        </a>
-        <a href="/cec-edu/grammar/adverbs-manner/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G25</div>
-          <h2 style="font-size:1rem;">Adverbs Manner</h2>
-          <p>방법부사</p>
-        </a>
-        <a href="/cec-edu/grammar/conjunctions/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G26</div>
-          <h2 style="font-size:1rem;">Conjunctions</h2>
-          <p>접속사 and/but/or/so</p>
-        </a>
-        <a href="/cec-edu/grammar/like-would-like/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G27</div>
-          <h2 style="font-size:1rem;">Like Would Like</h2>
-          <p>Like vs Would like</p>
-        </a>
-        <a href="/cec-edu/grammar/too-enough/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G28</div>
-          <h2 style="font-size:1rem;">Too Enough</h2>
-          <p>Too vs Enough</p>
-        </a>
-        <a href="/cec-edu/grammar/first-conditional/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G29</div>
-          <h2 style="font-size:1rem;">First Conditional</h2>
-          <p>1형식 조건문</p>
-        </a>
-        <a href="/cec-edu/grammar/gerunds-infinitives/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G30</div>
-          <h2 style="font-size:1rem;">Gerunds Infinitives</h2>
-          <p>동명사/부정사</p>
-        </a>
-      </div>
-    </section>
-
-    <section aria-label="Stage 2 &middot; Intermediate G31&ndash;G55" style="margin:48px 0;">
-      <h2 style="font-size:0.85rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Stage 2 &middot; Intermediate G31&ndash;G55</h2>
-      <div class="card-grid">
-        <a href="/cec-edu/grammar/relative-pronouns/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G31</div>
-          <h2 style="font-size:1rem;">Relative Pronouns</h2>
-          <p>관계대명사</p>
-        </a>
-        <a href="/cec-edu/grammar/past-simple-continuous/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G32</div>
-          <h2 style="font-size:1rem;">Past Simple Continuous</h2>
-          <p>과거단순 vs 과거진행</p>
-        </a>
-        <a href="/cec-edu/grammar/used-to/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G33</div>
-          <h2 style="font-size:1rem;">Used To</h2>
-          <p>Used to</p>
-        </a>
-        <a href="/cec-edu/grammar/question-tags/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G34</div>
-          <h2 style="font-size:1rem;">Question Tags</h2>
-          <p>부가의문문</p>
-        </a>
-        <a href="/cec-edu/grammar/reflexive-pronouns/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G35</div>
-          <h2 style="font-size:1rem;">Reflexive Pronouns</h2>
-          <p>재귀대명사</p>
-        </a>
-        <a href="/cec-edu/grammar/each-every/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G36</div>
-          <h2 style="font-size:1rem;">Each Every</h2>
-          <p>Each vs Every</p>
-        </a>
-        <a href="/cec-edu/grammar/both-either-neither/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G37</div>
-          <h2 style="font-size:1rem;">Both Either Neither</h2>
-          <p>Both/Either/Neither</p>
-        </a>
-        <a href="/cec-edu/grammar/so-such/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G38</div>
-          <h2 style="font-size:1rem;">So Such</h2>
-          <p>So vs Such</p>
-        </a>
-        <a href="/cec-edu/grammar/still-yet-already/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G39</div>
-          <h2 style="font-size:1rem;">Still Yet Already</h2>
-          <p>Still/Yet/Already</p>
-        </a>
-        <a href="/cec-edu/grammar/direct-indirect-speech/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G40</div>
-          <h2 style="font-size:1rem;">Direct Indirect Speech</h2>
-          <p>직접/간접화법</p>
-        </a>
-        <a href="/cec-edu/grammar/present-perfect-past-simple/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G41</div>
-          <h2 style="font-size:1rem;">Present Perfect Past Simple</h2>
-          <p>현재완료 vs 과거단순</p>
-        </a>
-        <a href="/cec-edu/grammar/present-perfect-continuous/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G42</div>
-          <h2 style="font-size:1rem;">Present Perfect Continuous</h2>
-          <p>현재완료진행형</p>
-        </a>
-        <a href="/cec-edu/grammar/past-perfect/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G43</div>
-          <h2 style="font-size:1rem;">Past Perfect</h2>
-          <p>과거완료</p>
-        </a>
-        <a href="/cec-edu/grammar/future-perfect/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G44</div>
-          <h2 style="font-size:1rem;">Future Perfect</h2>
-          <p>미래완료</p>
-        </a>
-        <a href="/cec-edu/grammar/modals-possibility/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G45</div>
-          <h2 style="font-size:1rem;">Modals Possibility</h2>
-          <p>가능성 조동사</p>
-        </a>
-        <a href="/cec-edu/grammar/second-conditional/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G46</div>
-          <h2 style="font-size:1rem;">Second Conditional</h2>
-          <p>2형식 조건문</p>
-        </a>
-        <a href="/cec-edu/grammar/third-conditional/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G47</div>
-          <h2 style="font-size:1rem;">Third Conditional</h2>
-          <p>3형식 조건문</p>
-        </a>
-        <a href="/cec-edu/grammar/passive-voice/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G48</div>
-          <h2 style="font-size:1rem;">Passive Voice</h2>
-          <p>수동태</p>
-        </a>
-        <a href="/cec-edu/grammar/causative-verbs/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G49</div>
-          <h2 style="font-size:1rem;">Causative Verbs</h2>
-          <p>사역동사</p>
-        </a>
-        <a href="/cec-edu/grammar/gerunds-infinitives-advanced/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G50</div>
-          <h2 style="font-size:1rem;">Gerunds Infinitives Advanced</h2>
-          <p>동명사/부정사 심화</p>
-        </a>
-        <a href="/cec-edu/grammar/phrasal-verbs/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G51</div>
-          <h2 style="font-size:1rem;">Phrasal Verbs</h2>
-          <p>구동사</p>
-        </a>
-        <a href="/cec-edu/grammar/relative-clauses/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G52</div>
-          <h2 style="font-size:1rem;">Relative Clauses</h2>
-          <p>관계절</p>
-        </a>
-        <a href="/cec-edu/grammar/reported-speech/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G53</div>
-          <h2 style="font-size:1rem;">Reported Speech</h2>
-          <p>간접화법</p>
-        </a>
-        <a href="/cec-edu/grammar/wish-if-only/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G54</div>
-          <h2 style="font-size:1rem;">Wish If Only</h2>
-          <p>Wish/If only</p>
-        </a>
-        <a href="/cec-edu/grammar/articles-advanced/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G55</div>
-          <h2 style="font-size:1rem;">Articles Advanced</h2>
-          <p>관사 심화</p>
-        </a>
-      </div>
-    </section>
-
-    <section aria-label="Stage 3 &middot; Upper G56&ndash;G70" style="margin:48px 0;">
-      <h2 style="font-size:0.85rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Stage 3 &middot; Upper G56&ndash;G70</h2>
-      <div class="card-grid">
-        <a href="/cec-edu/grammar/quantifiers/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G56</div>
-          <h2 style="font-size:1rem;">Quantifiers</h2>
-          <p>수량 표현</p>
-        </a>
-        <a href="/cec-edu/grammar/linking-words/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G57</div>
-          <h2 style="font-size:1rem;">Linking Words</h2>
-          <p>연결어</p>
-        </a>
-        <a href="/cec-edu/grammar/emphasis-do/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G58</div>
-          <h2 style="font-size:1rem;">Emphasis Do</h2>
-          <p>강조 do/does/did</p>
-        </a>
-        <a href="/cec-edu/grammar/cleft-sentences/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G59</div>
-          <h2 style="font-size:1rem;">Cleft Sentences</h2>
-          <p>분열문</p>
-        </a>
-        <a href="/cec-edu/grammar/mixed-conditionals/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G60</div>
-          <h2 style="font-size:1rem;">Mixed Conditionals</h2>
-          <p>혼합가정법</p>
-        </a>
-        <a href="/cec-edu/grammar/future-in-past/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G61</div>
-          <h2 style="font-size:1rem;">Future In Past</h2>
-          <p>과거 속 미래</p>
-        </a>
-        <a href="/cec-edu/grammar/participle-clauses/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G62</div>
-          <h2 style="font-size:1rem;">Participle Clauses</h2>
-          <p>분사구문</p>
-        </a>
-        <a href="/cec-edu/grammar/inversion/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G63</div>
-          <h2 style="font-size:1rem;">Inversion</h2>
-          <p>도치구문</p>
-        </a>
-        <a href="/cec-edu/grammar/subjunctive/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G64</div>
-          <h2 style="font-size:1rem;">Subjunctive</h2>
-          <p>접속법</p>
-        </a>
-        <a href="/cec-edu/grammar/double-comparatives/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G65</div>
-          <h2 style="font-size:1rem;">Double Comparatives</h2>
-          <p>이중비교급</p>
-        </a>
-        <a href="/cec-edu/grammar/advanced-passive/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G66</div>
-          <h2 style="font-size:1rem;">Advanced Passive</h2>
-          <p>수동태 심화</p>
-        </a>
-        <a href="/cec-edu/grammar/modals-deduction/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G67</div>
-          <h2 style="font-size:1rem;">Modals Deduction</h2>
-          <p>추측 조동사</p>
-        </a>
-        <a href="/cec-edu/grammar/advanced-conditionals/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G68</div>
-          <h2 style="font-size:1rem;">Advanced Conditionals</h2>
-          <p>고급 조건문</p>
-        </a>
-        <a href="/cec-edu/grammar/nominal-clauses/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G69</div>
-          <h2 style="font-size:1rem;">Nominal Clauses</h2>
-          <p>명사절</p>
-        </a>
-        <a href="/cec-edu/grammar/advanced-relative-clauses/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G70</div>
-          <h2 style="font-size:1rem;">Advanced Relative Clauses</h2>
-          <p>관계절 심화</p>
-        </a>
-      </div>
-    </section>
-
-    <section aria-label="Stage 4 &middot; Advanced G71&ndash;G80" style="margin:48px 0;">
-      <h2 style="font-size:0.85rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Stage 4 &middot; Advanced G71&ndash;G80</h2>
-      <div class="card-grid">
-        <a href="/cec-edu/grammar/complex-phrasal-verbs/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G71</div>
-          <h2 style="font-size:1rem;">Complex Phrasal Verbs</h2>
-          <p>복합 구동사</p>
-        </a>
-        <a href="/cec-edu/grammar/advanced-reported-speech/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G72</div>
-          <h2 style="font-size:1rem;">Advanced Reported Speech</h2>
-          <p>간접화법 심화</p>
-        </a>
-        <a href="/cec-edu/grammar/ellipsis-substitution/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G73</div>
-          <h2 style="font-size:1rem;">Ellipsis Substitution</h2>
-          <p>생략/대용</p>
-        </a>
-        <a href="/cec-edu/grammar/advanced-linking/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G74</div>
-          <h2 style="font-size:1rem;">Advanced Linking</h2>
-          <p>고급 연결어</p>
-        </a>
-        <a href="/cec-edu/grammar/hedging/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G75</div>
-          <h2 style="font-size:1rem;">Hedging</h2>
-          <p>완화 표현</p>
-        </a>
-        <a href="/cec-edu/grammar/fronting-inversion/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G76</div>
-          <h2 style="font-size:1rem;">Fronting Inversion</h2>
-          <p>전치/도치</p>
-        </a>
-        <a href="/cec-edu/grammar/complex-sentences/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G77</div>
-          <h2 style="font-size:1rem;">Complex Sentences</h2>
-          <p>복합 문장 구조</p>
-        </a>
-        <a href="/cec-edu/grammar/advanced-gerunds/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G78</div>
-          <h2 style="font-size:1rem;">Advanced Gerunds</h2>
-          <p>동명사/부정사 고급</p>
-        </a>
-        <a href="/cec-edu/grammar/nominalization/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G79</div>
-          <h2 style="font-size:1rem;">Nominalization</h2>
-          <p>명사화</p>
-        </a>
-        <a href="/cec-edu/grammar/advanced-articles/" class="card">
-          <div class="card-icon" style="font-size:1rem;font-weight:700;color:#4a6741;">G80</div>
-          <h2 style="font-size:1rem;">Advanced Articles</h2>
-          <p>한정사 심화</p>
-        </a>
-      </div>
-    </section>
-<aside class="cluster-links" aria-label="관련 학습">
-      <h2>이 문법을 실전에서 연습하려면</h2>
-      <ul>
-        <li><a href="/cec-edu/elementary/">Camp A 초등영어 →</a></li>
-        <li><a href="/cec-edu/middle-high/">Camp B 중고등영어 →</a></li>
-        <li><a href="/cec-edu/adult/">Camp C 주부영어 →</a></li>
-      </ul>
-    </aside>
-
-  </main>
-
-  <footer role="contentinfo">
-    <p>© 2024 CEC English Camp</p>
-    <p style="margin-top:8px;"><a href="/cec-edu/">홈</a> · <a href="/cec-edu/grammar/">Grammar</a></p>
-  </footer>
-
+<body>
+<header class="site-header">
+  <nav class="main-nav" aria-label="CEC Edu">
+    <a href="/" class="nav-logo">CEC English Camp · Edu</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">🏠 홈</a>
+      <a href="/elementary/" class="nav-link">🌱 초등</a>
+      <a href="/middle-high/" class="nav-link">📘 중고등</a>
+      <a href="/adult/" class="nav-link">👩 성인</a>
+      <a href="/mom-teacher/" class="nav-link">👨‍🏫 엄마교사</a>
+      <a href="/grammar/" class="nav-link" aria-current="page">📐 문법</a>
+      <a href="/speaking/" class="nav-link">🗣️ 스피킹</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-emoji">📐</div>
+    <h1>Grammar Base Camp</h1>
+    <p>G01~G80 핵심 문법을 단계별로 마스터하세요</p>
+  </section>
+  <div class="section-wrap">
+  <section><h2 class="section-title">단계별 문법</h2><div class="cards">
+    <a href="#" class="card"><div class="card-emoji">🔢</div><div class="card-title">G01~G20</div><div class="card-desc">기초 — 현재/과거/미래 시제</div><span class="card-badge">Basic</span></a>
+    <a href="#" class="card"><div class="card-emoji">📖</div><div class="card-title">G21~G40</div><div class="card-desc">중급 — 완료형 · 수동태 · 조동사</div><span class="card-badge">Intermediate</span></a>
+    <a href="#" class="card"><div class="card-emoji">✨</div><div class="card-title">G41~G60</div><div class="card-desc">고급 — 가정법 · 분사구문 · 관계절</div><span class="card-badge">Advanced</span></a>
+    <a href="#" class="card"><div class="card-emoji">🎯</div><div class="card-title">G61~G80</div><div class="card-desc">심화 — 강조 · 도치 · 생략 · 수사</div><span class="card-badge">Expert</span></a>
+  </div></section>
+  </div>
+</main>
+<footer class="site-footer">© 2026 CEC English Camp</footer>
 </body>
 </html>

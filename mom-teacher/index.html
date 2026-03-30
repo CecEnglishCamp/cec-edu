@@ -1,104 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Mom Teacher 엄마표 영어 — 엄마가 직접 가르치는 학년별 맞춤 영어 커리큘럼. 초등 3~6학년 영어 수업 가이드.">
-  <meta name="keywords" content="엄마표영어,엄마영어교육,초등영어가르치기,홈스쿨영어,CEC English Camp">
-  <meta property="og:title" content="Mom Teacher · 엄마표 영어 | CEC English Camp">
-  <meta property="og:url" content="https://cecenglishcamp.github.io/cec-edu/mom-teacher/">
-  <meta name="robots" content="index, follow">
-  <title>Mom Teacher · 엄마표 영어 | CEC English Camp</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    "name": "Mom Teacher — 엄마표 영어",
-    "description": "엄마가 직접 가르치는 학년별 맞춤 영어 커리큘럼",
-    "url": "https://cecenglishcamp.github.io/cec-edu/mom-teacher/",
-    "provider": {
-      "@type": "EducationalOrganization",
-      "name": "CEC English Camp"
-    },
-    "educationalLevel": "elementary",
-    "typicalAgeRange": "9-12",
-    "inLanguage": ["ko","en"],
-    "hasCourseInstance": {
-      "@type": "CourseInstance",
-      "courseMode": "online"
-    },
-    "teaches": [
-      "Home School English", "Parent-Led Teaching",
-      "Reading Guide", "Phonics", "Vocabulary Building"
-    ]
-  }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>엄마교사 | CEC Edu</title>
+<meta name="description" content="학부모 교사용 영어 수업 가이드">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--cyan:#00f2ff;--green:#4a6741;--cream:#f5f0e8;--white:#ffffff;--border:#e0d8cc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--navy);}
+.site-header{background:var(--navy);position:sticky;top:0;z-index:100;}
+.main-nav{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.nav-logo{color:var(--cyan);font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-link{color:rgba(255,255,255,0.8);text-decoration:none;padding:6px 14px;border-radius:100px;font-size:0.82rem;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;white-space:nowrap;}
+.nav-link:hover,.nav-link[aria-current="page"]{background:var(--cyan);color:var(--navy);border-color:var(--cyan);}
+.hero{text-align:center;padding:56px 20px 40px;background:linear-gradient(160deg,#0a1628 0%,#1a3a1a 100%);color:#fff;}
+.hero-emoji{font-size:3rem;margin-bottom:16px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cyan);margin-bottom:10px;}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;line-height:1.7;max-width:520px;margin:0 auto;}
+.section-wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
+.section-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:20px;letter-spacing:0.05em;text-transform:uppercase;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px;}
+.card{background:var(--white);border-radius:16px;padding:26px 22px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 10px rgba(10,22,40,0.06);text-decoration:none;color:var(--navy);transition:transform 0.2s,box-shadow 0.2s;display:block;}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(10,22,40,0.12);}
+.card-emoji{font-size:2.2rem;margin-bottom:12px;}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.card-desc{font-size:0.82rem;color:#666;line-height:1.6;}
+.card-badge{display:inline-block;margin-top:10px;background:var(--green);color:#fff;padding:2px 10px;border-radius:100px;font-size:0.72rem;}
+.site-footer{background:var(--navy);color:rgba(255,255,255,0.45);text-align:center;padding:20px;font-size:0.78rem;}
+@media(max-width:600px){.nav-link{padding:5px 10px;font-size:0.76rem;}.hero h1{font-size:1.5rem;}.cards{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.cards{grid-template-columns:1fr;}}
+</style>
 </head>
-<body data-camp="mom" data-page="mom-teacher-pillar">
-  <header role="banner">
-    <nav aria-label="Site Navigation">
-      <a href="/cec-edu/" class="logo">CEC <span>English Camp</span></a>
-      <ul>
-        <li><a href="/cec-edu/grammar/">Grammar</a></li>
-        <li><a href="/cec-edu/elementary/">Elementary</a></li>
-        <li><a href="/cec-edu/middle-high/">Middle & High</a></li>
-        <li><a href="/cec-edu/adult/">Adult English</a></li>
-        <li><a href="/cec-edu/mom-teacher/" style="color:#00f2ff;">Mom Teacher</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main role="main">
-    <section class="hero" aria-label="Mom Teacher Introduction">
-      <h1>Mom Teacher · 엄마표 영어</h1>
-      <p>엄마가 직접 가르치는 영어 — 학년별 맞춤 커리큘럼으로 시작하세요</p>
-    </section>
-
-    <section aria-label="Grade Curriculum" style="margin:48px 0;">
-      <div class="card-grid">
-        <a href="/cec-edu/mom-teacher/grade3/" class="card">
-          <div class="card-icon">🐰</div>
-          <h2>Grade 3</h2>
-          <p>Peter Rabbit 수업 가이드<br>엄마표 수업 진행법 + 워크시트</p>
-        </a>
-        <a href="/cec-edu/mom-teacher/grade4/" class="card">
-          <div class="card-icon">🌬️</div>
-          <h2>Grade 4</h2>
-          <p>Wind in the Willows 수업 가이드<br>독해 지도법 + 활동지</p>
-        </a>
-        <a href="/cec-edu/mom-teacher/grade5/" class="card">
-          <div class="card-icon">🏴‍☠️</div>
-          <h2>Grade 5</h2>
-          <p>Treasure Island 수업 가이드<br>에세이 지도법 + 첨삭 팁</p>
-        </a>
-        <a href="/cec-edu/mom-teacher/grade6/" class="card">
-          <div class="card-icon">👑</div>
-          <h2>Grade 6</h2>
-          <p>A Little Princess 수업 가이드<br>토론 지도법 + 발표 연습</p>
-        </a>
-      </div>
-    </section>
-
-    <aside class="cluster-links" aria-label="Related Learning">
-      <h2>Related Learning</h2>
-      <ul>
-        <li><a href="/cec-edu/elementary/">Camp A Elementary →</a></li>
-        <li><a href="/cec-edu/grammar/">Grammar BaseCamp →</a></li>
-        <li><a href="/cec-edu/adult/">Adult English →</a></li>
-      </ul>
-    </aside>
-  </main>
-
-  <footer role="contentinfo">
-    <p>© 2024 CEC English Camp · AI-Powered English Education</p>
-    <p style="margin-top:8px;">
-      <a href="/cec-edu/">Home</a> ·
-      <a href="/cec-edu/grammar/">Grammar</a> ·
-      <a href="/cec-edu/mom-teacher/">Mom Teacher</a>
-    </p>
-  </footer>
+<body>
+<header class="site-header">
+  <nav class="main-nav" aria-label="CEC Edu">
+    <a href="/" class="nav-logo">CEC English Camp · Edu</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">🏠 홈</a>
+      <a href="/elementary/" class="nav-link">🌱 초등</a>
+      <a href="/middle-high/" class="nav-link">📘 중고등</a>
+      <a href="/adult/" class="nav-link">👩 성인</a>
+      <a href="/mom-teacher/" class="nav-link" aria-current="page">👨‍🏫 엄마교사</a>
+      <a href="/grammar/" class="nav-link">📐 문법</a>
+      <a href="/speaking/" class="nav-link">🗣️ 스피킹</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-emoji">👨‍🏫</div>
+    <h1>엄마교사 — Mom Teacher</h1>
+    <p>학부모 교사용 영어 수업 가이드 · Grade 3~6</p>
+  </section>
+  <div class="section-wrap">
+  <section><h2 class="section-title">학년별 가이드</h2><div class="cards">
+    <a href="grade3/" class="card"><div class="card-emoji">📗</div><div class="card-title">Grade 3</div><div class="card-desc">초등 3학년 엄마교사 가이드</div><span class="card-badge">Grade 3</span></a>
+    <a href="grade4/" class="card"><div class="card-emoji">📘</div><div class="card-title">Grade 4</div><div class="card-desc">초등 4학년 엄마교사 가이드</div><span class="card-badge">Grade 4</span></a>
+    <a href="grade5/" class="card"><div class="card-emoji">📙</div><div class="card-title">Grade 5</div><div class="card-desc">초등 5학년 엄마교사 가이드</div><span class="card-badge">Grade 5</span></a>
+    <a href="grade6/" class="card"><div class="card-emoji">📕</div><div class="card-title">Grade 6</div><div class="card-desc">초등 6학년 엄마교사 가이드</div><span class="card-badge">Grade 6</span></a>
+  </div></section>
+  </div>
+</main>
+<footer class="site-footer">© 2026 CEC English Camp</footer>
 </body>
 </html>

@@ -1,99 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CEC Camp C Adult English — 성인/주부를 위한 실생활 영어 100 에피소드. 공항, 호텔, 레스토랑 등 여행·일상 영어.">
-  <meta name="keywords" content="주부영어,성인영어,여행영어,일상영어회화,CEC English Camp">
-  <meta property="og:title" content="Camp C · Adult English | CEC English Camp">
-  <meta property="og:url" content="https://cecenglishcamp.github.io/cec-edu/adult/">
-  <meta name="robots" content="index, follow">
-  <title>Camp C · Adult English | CEC English Camp</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    "name": "Camp C — Adult English",
-    "description": "성인/주부를 위한 실생활 영어 100 에피소드",
-    "url": "https://cecenglishcamp.github.io/cec-edu/adult/",
-    "provider": {
-      "@type": "EducationalOrganization",
-      "name": "CEC English Camp"
-    },
-    "educationalLevel": "adult",
-    "typicalAgeRange": "25-60",
-    "inLanguage": ["ko","en"],
-    "hasCourseInstance": {
-      "@type": "CourseInstance",
-      "courseMode": "online"
-    },
-    "teaches": [
-      "Travel English", "Daily Conversation", "Airport English",
-      "Hotel English", "Restaurant English", "Phone Calls"
-    ]
-  }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주부영어 | CEC Edu</title>
+<meta name="description" content="미국 일상생활 영어 60 에피소드">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--cyan:#00f2ff;--green:#4a6741;--cream:#f5f0e8;--white:#ffffff;--border:#e0d8cc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--navy);}
+.site-header{background:var(--navy);position:sticky;top:0;z-index:100;}
+.main-nav{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.nav-logo{color:var(--cyan);font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-link{color:rgba(255,255,255,0.8);text-decoration:none;padding:6px 14px;border-radius:100px;font-size:0.82rem;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;white-space:nowrap;}
+.nav-link:hover,.nav-link[aria-current="page"]{background:var(--cyan);color:var(--navy);border-color:var(--cyan);}
+.hero{text-align:center;padding:56px 20px 40px;background:linear-gradient(160deg,#0a1628 0%,#1a3a1a 100%);color:#fff;}
+.hero-emoji{font-size:3rem;margin-bottom:16px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cyan);margin-bottom:10px;}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;line-height:1.7;max-width:520px;margin:0 auto;}
+.section-wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
+.section-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:20px;letter-spacing:0.05em;text-transform:uppercase;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px;}
+.card{background:var(--white);border-radius:16px;padding:26px 22px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 10px rgba(10,22,40,0.06);text-decoration:none;color:var(--navy);transition:transform 0.2s,box-shadow 0.2s;display:block;}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(10,22,40,0.12);}
+.card-emoji{font-size:2.2rem;margin-bottom:12px;}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.card-desc{font-size:0.82rem;color:#666;line-height:1.6;}
+.card-badge{display:inline-block;margin-top:10px;background:var(--green);color:#fff;padding:2px 10px;border-radius:100px;font-size:0.72rem;}
+.site-footer{background:var(--navy);color:rgba(255,255,255,0.45);text-align:center;padding:20px;font-size:0.78rem;}
+@media(max-width:600px){.nav-link{padding:5px 10px;font-size:0.76rem;}.hero h1{font-size:1.5rem;}.cards{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.cards{grid-template-columns:1fr;}}
+</style>
 </head>
-<body data-camp="c" data-page="adult-pillar">
-  <header role="banner">
-    <nav aria-label="Site Navigation">
-      <a href="/cec-edu/" class="logo">CEC <span>English Camp</span></a>
-      <ul>
-        <li><a href="/cec-edu/grammar/">Grammar</a></li>
-        <li><a href="/cec-edu/elementary/">Elementary</a></li>
-        <li><a href="/cec-edu/middle-high/">Middle & High</a></li>
-        <li><a href="/cec-edu/adult/" style="color:#00f2ff;">Adult English</a></li>
-        <li><a href="/cec-edu/mom-teacher/">Mom Teacher</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main role="main">
-    <section class="hero" aria-label="Camp C Introduction">
-      <h1>Camp C · Adult English</h1>
-      <p>성인/주부를 위한 실생활 영어 — 100 에피소드로 완성하세요</p>
-    </section>
-
-    <section aria-label="Episode Topics" style="margin:48px 0;">
-      <div class="card-grid">
-        <a href="/cec-edu/adult/ep01/" class="card">
-          <div class="card-icon">✈️</div>
-          <h2>Airport</h2>
-          <p>공항 도착, 수하물, 세관<br>EP 01~10</p>
-        </a>
-        <a href="/cec-edu/adult/ep11/" class="card">
-          <div class="card-icon">🏨</div>
-          <h2>Hotel</h2>
-          <p>체크인, 룸서비스, 체크아웃<br>EP 11~20</p>
-        </a>
-        <a href="/cec-edu/adult/ep21/" class="card">
-          <div class="card-icon">🍽️</div>
-          <h2>Restaurant</h2>
-          <p>주문, 메뉴, 계산<br>EP 21~30</p>
-        </a>
-      </div>
-    </section>
-
-    <aside class="cluster-links" aria-label="Related Learning">
-      <h2>Related Learning</h2>
-      <ul>
-        <li><a href="/cec-edu/grammar/">Grammar BaseCamp →</a></li>
-        <li><a href="/cec-edu/middle-high/">Previous: Middle & High →</a></li>
-        <li><a href="/cec-edu/mom-teacher/">Mom Teacher →</a></li>
-      </ul>
-    </aside>
-  </main>
-
-  <footer role="contentinfo">
-    <p>© 2024 CEC English Camp · AI-Powered English Education</p>
-    <p style="margin-top:8px;">
-      <a href="/cec-edu/">Home</a> ·
-      <a href="/cec-edu/grammar/">Grammar</a> ·
-      <a href="/cec-edu/adult/">Adult English</a>
-    </p>
-  </footer>
+<body>
+<header class="site-header">
+  <nav class="main-nav" aria-label="CEC Edu">
+    <a href="/" class="nav-logo">CEC English Camp · Edu</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">🏠 홈</a>
+      <a href="/elementary/" class="nav-link">🌱 초등</a>
+      <a href="/middle-high/" class="nav-link">📘 중고등</a>
+      <a href="/adult/" class="nav-link" aria-current="page">👩 성인</a>
+      <a href="/mom-teacher/" class="nav-link">👨‍🏫 엄마교사</a>
+      <a href="/grammar/" class="nav-link">📐 문법</a>
+      <a href="/speaking/" class="nav-link">🗣️ 스피킹</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-emoji">👩</div>
+    <h1>주부영어 — Adult English</h1>
+    <p>미국 일상생활 영어 60 에피소드 · 영자 아줌마와 함께</p>
+  </section>
+  <div class="section-wrap">
+  <section><h2 class="section-title">에피소드</h2><div class="cards">
+    <a href="ep01/" class="card"><div class="card-emoji">🌸</div><div class="card-title">EP01~15</div><div class="card-desc">마트 · 병원 · 학교 · 이웃 만남…</div><span class="card-badge">A2~B1</span></a>
+    <a href="ep16/" class="card"><div class="card-emoji">🌺</div><div class="card-title">EP16~30</div><div class="card-desc">공항 · 운전면허 · 약국 · 은행…</div><span class="card-badge">A2~B1</span></a>
+    <a href="ep31/" class="card"><div class="card-emoji">🌻</div><div class="card-title">EP31~45</div><div class="card-desc">헬스장 · 우체국 · 드라이브스루…</div><span class="card-badge">A2~B1</span></a>
+    <a href="ep46/" class="card"><div class="card-emoji">🌼</div><div class="card-title">EP46~60</div><div class="card-desc">알레르기 · 미용실 · 세탁소 · 영어일기…</div><span class="card-badge">A2~B1</span></a>
+  </div></section>
+  </div>
+</main>
+<footer class="site-footer">© 2026 CEC English Camp</footer>
 </body>
 </html>

@@ -1,144 +1,73 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CEC English Camp — AI 기반 한국 학생 영어 교육 플랫폼. 초등/중고등/성인/주부 영어, 문법 완성까지.">
-  <meta name="keywords" content="영어교육,초등영어,중학영어,주부영어,영어문법,AI영어,CEC English Camp">
-  <meta property="og:title" content="CEC English Camp | AI 기반 영어 교육">
-  <meta property="og:description" content="초등부터 성인까지 AI와 함께하는 영어 완성">
-  <meta property="og:url" content="https://cec-edu.github.io">
-  <meta name="robots" content="index, follow">
-  <title>CEC English Camp | AI 기반 영어 교육 플랫폼</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "CEC English Camp",
-    "url": "https://cec-edu.github.io",
-    "logo": "https://cec-edu.github.io/assets/img/logo.png",
-    "description": "AI 기반 한국 학생 영어 교육 플랫폼. 초등/중고등/성인/주부 영어, 문법 G01~G80",
-    "foundingDate": "2024",
-    "inLanguage": "ko",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "CEC English Camp 교육과정",
-      "itemListElement": [
-        {
-          "@type": "Course",
-          "name": "Grammar BaseCamp",
-          "description": "G01~G80 기초부터 고급까지 영어 문법",
-          "url": "https://cec-edu.github.io/grammar/",
-          "offers": {"@type": "Offer", "price": "0", "priceCurrency": "KRW"}
-        },
-        {
-          "@type": "Course",
-          "name": "Camp A 초등영어",
-          "description": "초등 3~6학년 클래식 문학 기반 영어",
-          "url": "https://cec-edu.github.io/elementary/"
-        },
-        {
-          "@type": "Course",
-          "name": "Camp B 중고등영어",
-          "description": "중1~고3 영어 에세이와 토론",
-          "url": "https://cec-edu.github.io/middle-high/"
-        },
-        {
-          "@type": "Course",
-          "name": "Camp C 주부영어",
-          "description": "성인 주부를 위한 실생활 영어 100 에피소드",
-          "url": "https://cec-edu.github.io/adult/"
-        }
-      ]
-    },
-    "sameAs": [
-      "https://cecenglishcamp.github.io"
-    ]
-  }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEC English Camp Edu | CEC Edu</title>
+<meta name="description" content="체계적인 문학 기반 영어 학습">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--cyan:#00f2ff;--green:#4a6741;--cream:#f5f0e8;--white:#ffffff;--border:#e0d8cc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--navy);}
+.site-header{background:var(--navy);position:sticky;top:0;z-index:100;}
+.main-nav{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.nav-logo{color:var(--cyan);font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-link{color:rgba(255,255,255,0.8);text-decoration:none;padding:6px 14px;border-radius:100px;font-size:0.82rem;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;white-space:nowrap;}
+.nav-link:hover,.nav-link[aria-current="page"]{background:var(--cyan);color:var(--navy);border-color:var(--cyan);}
+.hero{text-align:center;padding:56px 20px 40px;background:linear-gradient(160deg,#0a1628 0%,#1a3a1a 100%);color:#fff;}
+.hero-emoji{font-size:3rem;margin-bottom:16px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cyan);margin-bottom:10px;}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;line-height:1.7;max-width:520px;margin:0 auto;}
+.section-wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
+.section-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:20px;letter-spacing:0.05em;text-transform:uppercase;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px;}
+.card{background:var(--white);border-radius:16px;padding:26px 22px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 10px rgba(10,22,40,0.06);text-decoration:none;color:var(--navy);transition:transform 0.2s,box-shadow 0.2s;display:block;}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(10,22,40,0.12);}
+.card-emoji{font-size:2.2rem;margin-bottom:12px;}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.card-desc{font-size:0.82rem;color:#666;line-height:1.6;}
+.card-badge{display:inline-block;margin-top:10px;background:var(--green);color:#fff;padding:2px 10px;border-radius:100px;font-size:0.72rem;}
+.site-footer{background:var(--navy);color:rgba(255,255,255,0.45);text-align:center;padding:20px;font-size:0.78rem;}
+@media(max-width:600px){.nav-link{padding:5px 10px;font-size:0.76rem;}.hero h1{font-size:1.5rem;}.cards{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.cards{grid-template-columns:1fr;}}
+</style>
 </head>
-<body data-page="home">
-
-  <header role="banner">
-    <nav aria-label="사이트 메뉴">
-      <a href="/cec-edu/" class="logo">CEC <span>English Camp</span></a>
-      <ul>
-        <li><a href="/cec-edu/grammar/">Grammar</a></li>
-        <li><a href="/cec-edu/elementary/">Elementary</a></li>
-        <li><a href="/cec-edu/middle-high/">Middle & High</a></li>
-        <li><a href="/cec-edu/speaking/">Speaking</a></li>
-        <li><a href="/cec-edu/adult/">Adult English</a></li>
-        <li><a href="/cec-edu/mom-teacher/">Mom Teacher</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main role="main">
-
-    <section class="hero" aria-label="메인 소개">
-      <h1>AI와 함께하는 영어 완성</h1>
-      <p>초등부터 성인까지 — 클래식 문학과 AI 회화로 영어를 완성하세요</p>
-      <a href="/cec-edu/grammar/" style="background:#00f2ff;color:#0a1628;padding:14px 32px;border-radius:100px;font-weight:700;text-decoration:none;">Start Free →</a>
-    </section>
-
-    <section aria-label="교육과정">
-      <div class="card-grid">
-        <a href="/cec-edu/grammar/" class="card">
-          <div class="card-icon">📚</div>
-          <h2>Grammar BaseCamp</h2>
-          <p>G01~G80 기초부터 고급까지 영어 문법 완성. 무료.</p>
-        </a>
-        <a href="/cec-edu/elementary/" class="card">
-          <div class="card-icon">🌟</div>
-          <h2>Camp A · Elementary</h2>
-          <p>초등 3~6학년. 피터래빗, 보물섬 등 클래식 문학으로 배우는 영어.</p>
-        </a>
-        <a href="/cec-edu/middle-high/" class="card">
-          <div class="card-icon">🎯</div>
-          <h2>Camp B · Middle & High</h2>
-          <p>중1~고3. 에세이 쓰기와 AI 토론으로 실력 완성.</p>
-        </a>
-        <a href="/cec-edu/adult/" class="card">
-          <div class="card-icon">✈️</div>
-          <h2>Camp C · Adult English</h2>
-          <p>공항, 호텔, 레스토랑. 실생활 100 에피소드.</p>
-        </a>
-        <a href="/cec-edu/mom-teacher/" class="card">
-          <div class="card-icon">👩‍👧</div>
-          <h2>Mom Teacher</h2>
-          <p>엄마가 직접 가르치는 영어. 학년별 맞춤 커리큘럼.</p>
-        </a>
-      </div>
-    </section>
-
-    <aside class="cluster-links" aria-label="빠른 문법 검색">
-      <h2>Quick Grammar Search</h2>
-      <ul>
-        <li><a href="/cec-edu/grammar/present-perfect/">현재완료</a></li>
-        <li><a href="/cec-edu/grammar/passive-voice/">수동태</a></li>
-        <li><a href="/cec-edu/grammar/conditionals/">조건문</a></li>
-        <li><a href="/cec-edu/grammar/relative-clauses/">관계절</a></li>
-        <li><a href="/cec-edu/grammar/modal-verbs/">조동사</a></li>
-        <li><a href="/cec-edu/grammar/">View All 80 Units →</a></li>
-      </ul>
-    </aside>
-
-  </main>
-
-  <footer role="contentinfo">
-    <p>© 2024 CEC English Camp · AI 기반 영어 교육 플랫폼</p>
-    <p style="margin-top:8px;">
-      <a href="/cec-edu/grammar/">Grammar</a> ·
-      <a href="/cec-edu/elementary/">Elementary</a> ·
-      <a href="/cec-edu/middle-high/">Middle & High</a> ·
-      <a href="/cec-edu/adult/">Adult English</a>
-    </p>
-  </footer>
-
+<body>
+<header class="site-header">
+  <nav class="main-nav" aria-label="CEC Edu">
+    <a href="/" class="nav-logo">CEC English Camp · Edu</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link" aria-current="page">🏠 홈</a>
+      <a href="/elementary/" class="nav-link">🌱 초등</a>
+      <a href="/middle-high/" class="nav-link">📘 중고등</a>
+      <a href="/adult/" class="nav-link">👩 성인</a>
+      <a href="/mom-teacher/" class="nav-link">👨‍🏫 엄마교사</a>
+      <a href="/grammar/" class="nav-link">📐 문법</a>
+      <a href="/speaking/" class="nav-link">🗣️ 스피킹</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-emoji">🏕️</div>
+    <h1>CEC English Camp · Edu</h1>
+    <p>고전 문학 기반 영어 교육 플랫폼 — 초등부터 성인까지</p>
+  </section>
+  <div class="section-wrap">
+  <section><h2 class="section-title">학습 과정</h2><div class="cards">
+    <a href="/elementary/" class="card"><div class="card-emoji">🌱</div><div class="card-title">초등 영어</div><div class="card-desc">Grade 3~6 · 고전 동화로 배우는 영어</div><span class="card-badge">Camp A</span></a>
+    <a href="/middle-high/" class="card"><div class="card-emoji">📘</div><div class="card-title">중고등 영어</div><div class="card-desc">중 1~고 3 · 에세이·디베이트·논술</div><span class="card-badge">Camp B</span></a>
+    <a href="/adult/" class="card"><div class="card-emoji">👩</div><div class="card-title">주부영어</div><div class="card-desc">미국 일상생활 60 에피소드</div><span class="card-badge">Camp C</span></a>
+    <a href="/mom-teacher/" class="card"><div class="card-emoji">👨‍🏫</div><div class="card-title">엄마교사</div><div class="card-desc">학부모 교사용 가이드 (Grade 3~6)</div><span class="card-badge">Mom Teacher</span></a>
+  </div></section>
+  <section><h2 class="section-title">학습 도구</h2><div class="cards">
+    <a href="/grammar/" class="card"><div class="card-emoji">📐</div><div class="card-title">Grammar Base</div><div class="card-desc">G01~G80 핵심 문법 체계</div><span class="card-badge">G01~G80</span></a>
+    <a href="/speaking/" class="card"><div class="card-emoji">🗣️</div><div class="card-title">Speaking Training</div><div class="card-desc">그림 보고 말하는 스피킹 훈련</div><span class="card-badge">Speaking</span></a>
+  </div></section>
+  </div>
+</main>
+<footer class="site-footer">© 2026 CEC English Camp</footer>
 </body>
 </html>

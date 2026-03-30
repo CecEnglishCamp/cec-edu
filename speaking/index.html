@@ -1,88 +1,69 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CEC English Camp Speaking Training — 초등학생 AI 영어 말하기 + 엄마표 스피킹 가이드.">
-  <meta name="keywords" content="영어말하기,초등영어스피킹,엄마표영어,AI영어회화,CEC English Camp">
-  <meta property="og:title" content="Speaking Training | CEC English Camp">
-  <meta name="robots" content="index, follow">
-  <title>Speaking Training | CEC English Camp</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    "name": "CEC Speaking Training",
-    "description": "그림으로 배우는 영어 말하기 — 초등 AI 스피킹 + 엄마표 가이드",
-    "provider": {"@type": "EducationalOrganization", "name": "CEC English Camp"},
-    "educationalLevel": "elementary",
-    "typicalAgeRange": "9-13",
-    "inLanguage": ["ko","en"],
-    "hasPart": [
-      {"@type": "Course", "name": "Elementary Speaking", "url": "https://cecenglishcamp.github.io/cec-edu/speaking/elementary/"},
-      {"@type": "Course", "name": "Mom Teacher Speaking", "url": "https://cecenglishcamp.github.io/cec-edu/speaking/mom-teacher/"}
-    ]
-  }
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speaking Training | CEC Edu</title>
+<meta name="description" content="그림 보고 영어로 말하는 스피킹 훈련">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--cyan:#00f2ff;--green:#4a6741;--cream:#f5f0e8;--white:#ffffff;--border:#e0d8cc;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--navy);}
+.site-header{background:var(--navy);position:sticky;top:0;z-index:100;}
+.main-nav{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.nav-logo{color:var(--cyan);font-size:1rem;font-weight:700;text-decoration:none;white-space:nowrap;font-family:'Cormorant Garamond',serif;font-style:italic;}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;}
+.nav-link{color:rgba(255,255,255,0.8);text-decoration:none;padding:6px 14px;border-radius:100px;font-size:0.82rem;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;white-space:nowrap;}
+.nav-link:hover,.nav-link[aria-current="page"]{background:var(--cyan);color:var(--navy);border-color:var(--cyan);}
+.hero{text-align:center;padding:56px 20px 40px;background:linear-gradient(160deg,#0a1628 0%,#1a3a1a 100%);color:#fff;}
+.hero-emoji{font-size:3rem;margin-bottom:16px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--cyan);margin-bottom:10px;}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;line-height:1.7;max-width:520px;margin:0 auto;}
+.section-wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px;}
+.section-title{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:20px;letter-spacing:0.05em;text-transform:uppercase;}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:48px;}
+.card{background:var(--white);border-radius:16px;padding:26px 22px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 10px rgba(10,22,40,0.06);text-decoration:none;color:var(--navy);transition:transform 0.2s,box-shadow 0.2s;display:block;}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(10,22,40,0.12);}
+.card-emoji{font-size:2.2rem;margin-bottom:12px;}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:6px;}
+.card-desc{font-size:0.82rem;color:#666;line-height:1.6;}
+.card-badge{display:inline-block;margin-top:10px;background:var(--green);color:#fff;padding:2px 10px;border-radius:100px;font-size:0.72rem;}
+.site-footer{background:var(--navy);color:rgba(255,255,255,0.45);text-align:center;padding:20px;font-size:0.78rem;}
+@media(max-width:600px){.nav-link{padding:5px 10px;font-size:0.76rem;}.hero h1{font-size:1.5rem;}.cards{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.cards{grid-template-columns:1fr;}}
+</style>
 </head>
-<body data-camp="speaking" data-page="hub">
-  <header role="banner">
-    <nav aria-label="Site Navigation">
-      <a href="/cec-edu/" class="logo">CEC <span>English Camp</span></a>
-      <ul>
-        <li><a href="/cec-edu/grammar/">Grammar</a></li>
-        <li><a href="/cec-edu/elementary/">Elementary</a></li>
-        <li><a href="/cec-edu/speaking/" style="color:#00f2ff;">Speaking</a></li>
-        <li><a href="/cec-edu/adult/">Adult English</a></li>
-        <li><a href="/cec-edu/mom-teacher/">Mom Teacher</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main role="main">
-    <section class="hero" aria-label="Speaking Training Hub">
-      <h1>🎤 Speaking Training</h1>
-      <p>그림을 보고 영어로 말해보세요 — AI가 바로 확인해드려요!</p>
-    </section>
-    <section aria-label="Who is this for?" style="margin:48px 0;">
-      <div class="card-grid">
-        <a href="/cec-edu/speaking/elementary/" class="card" style="border-top:4px solid #4a6741;">
-          <div class="card-icon">🌟</div>
-          <h2>Elementary Speaking</h2>
-          <p style="color:#475569;">초등 3~6학년<br>그림 보고 AI에게 영어로 말하기<br><small style="color:#94a3b8;">Grade 3~6 · A1~B1</small></p>
-          <div style="margin-top:16px;background:#4a6741;color:#fff;padding:8px 16px;border-radius:100px;font-size:0.85rem;display:inline-block;">학생용 →</div>
-        </a>
-        <a href="/cec-edu/speaking/mom-teacher/" class="card" style="border-top:4px solid #0a1628;">
-          <div class="card-icon">👩‍👧</div>
-          <h2>Mom Teacher Speaking</h2>
-          <p style="color:#475569;">엄마가 아이에게 가르치기<br>장면별 교수법 + 표현 가이드<br><small style="color:#94a3b8;">Mom Teacher · A1~B1</small></p>
-          <div style="margin-top:16px;background:#0a1628;color:#fff;padding:8px 16px;border-radius:100px;font-size:0.85rem;display:inline-block;">엄마용 →</div>
-        </a>
-      </div>
-    </section>
-    <section aria-label="How it works" style="background:#fff;border-radius:16px;padding:32px;margin:32px 0;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-      <h2 style="font-size:0.85rem;color:#475569;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:20px;">📖 How It Works</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">
-        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">🖼️</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">1. 그림 보기</p><p style="color:#475569;font-size:0.85rem;">장면을 보고 내용 파악</p></div>
-        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">🎤</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">2. 영어로 말하기</p><p style="color:#475569;font-size:0.85rem;">AI에게 영어로 설명</p></div>
-        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">✅</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">3. AI 확인</p><p style="color:#475569;font-size:0.85rem;">맞는지 바로 피드백</p></div>
-        <div style="text-align:center;padding:16px;"><div style="font-size:2rem;margin-bottom:8px;">📈</div><p style="font-weight:700;color:#0a1628;margin-bottom:4px;">4. 실력 향상</p><p style="color:#475569;font-size:0.85rem;">반복으로 완성</p></div>
-      </div>
-    </section>
-    <aside class="cluster-links" aria-label="Related Learning">
-      <h2>Related Learning</h2>
-      <ul>
-        <li><a href="/cec-edu/elementary/">Elementary English →</a></li>
-        <li><a href="/cec-edu/mom-teacher/">Mom Teacher →</a></li>
-        <li><a href="/cec-edu/grammar/">Grammar BaseCamp →</a></li>
-      </ul>
-    </aside>
-  </main>
-  <footer role="contentinfo">
-    <p>© 2024 CEC English Camp · AI-Powered English Education</p>
-    <p style="margin-top:8px;"><a href="/cec-edu/">Home</a> · <a href="/cec-edu/speaking/elementary/">Elementary</a> · <a href="/cec-edu/speaking/mom-teacher/">Mom Teacher</a></p>
-  </footer>
+<body>
+<header class="site-header">
+  <nav class="main-nav" aria-label="CEC Edu">
+    <a href="/" class="nav-logo">CEC English Camp · Edu</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link">🏠 홈</a>
+      <a href="/elementary/" class="nav-link">🌱 초등</a>
+      <a href="/middle-high/" class="nav-link">📘 중고등</a>
+      <a href="/adult/" class="nav-link">👩 성인</a>
+      <a href="/mom-teacher/" class="nav-link">👨‍🏫 엄마교사</a>
+      <a href="/grammar/" class="nav-link">📐 문법</a>
+      <a href="/speaking/" class="nav-link" aria-current="page">🗣️ 스피킹</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <section class="hero">
+    <div class="hero-emoji">🗣️</div>
+    <h1>Speaking Training</h1>
+    <p>그림을 보고 영어로 말하는 스피킹 훈련 시스템</p>
+  </section>
+  <div class="section-wrap">
+  <section><h2 class="section-title">스피킹 과정</h2><div class="cards">
+    <a href="peter-rabbit/" class="card"><div class="card-emoji">🐰</div><div class="card-title">Peter Rabbit</div><div class="card-desc">G3 · img01~09 · 52문장</div><span class="card-badge">Grade 3</span></a>
+    <a href="wind-willows/" class="card"><div class="card-emoji">🐸</div><div class="card-title">Wind in Willows</div><div class="card-desc">G4 · img01~08 · 47문장</div><span class="card-badge">Grade 4</span></a>
+    <a href="treasure-island/" class="card"><div class="card-emoji">🏴‍☠️</div><div class="card-title">Treasure Island</div><div class="card-desc">G5 · img01~08 · 47문장</div><span class="card-badge">Grade 5</span></a>
+    <a href="little-princess/" class="card"><div class="card-emoji">👑</div><div class="card-title">Little Princess</div><div class="card-desc">G6 · img01~10</div><span class="card-badge">Grade 6</span></a>
+  </div></section>
+  </div>
+</main>
+<footer class="site-footer">© 2026 CEC English Camp</footer>
 </body>
 </html>
