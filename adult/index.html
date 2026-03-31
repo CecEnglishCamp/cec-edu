@@ -278,9 +278,9 @@ document.querySelectorAll('.prog-tab').forEach((btn,i)=>{
 document.querySelectorAll('.grade-tab').forEach(btn=>{
   btn.addEventListener('click',function(){
     const c=this.dataset.color;
-    document.querySelectorAll('.grade-tab').forEach(b=>{b.classList.remove('active');b.style.background='transparent';b.style.color='rgba(255,255,255,.55)';b.style.borderColor='rgba(255,255,255,.15)';});
+    this.closest('.prog-section, .desc-inner').querySelectorAll('.grade-tab').forEach(b=>{b.classList.remove('active');b.style.background='transparent';b.style.color='rgba(255,255,255,.55)';b.style.borderColor='rgba(255,255,255,.15)';});
     this.classList.add('active');this.style.background=c;this.style.color='#000';this.style.borderColor='transparent';
-    document.querySelectorAll('.grade-section').forEach(s=>s.classList.remove('active'));
+    this.closest('.prog-section, .desc-inner').querySelectorAll('.grade-section').forEach(s=>s.classList.remove('active'));
     document.getElementById(this.dataset.grade).classList.add('active');
   });
 });
