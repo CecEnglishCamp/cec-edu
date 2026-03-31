@@ -65,6 +65,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
 .year-header{margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)}
 .year-header h3{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;margin-bottom:4px}
 .year-header span{font-size:.82rem;color:rgba(255,255,255,.35)}
+.week-card.soon{opacity:.35;cursor:default;pointer-events:none}
+.week-card.soon .wnum{color:rgba(255,255,255,.3)}
+.soon-badge{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.06em}
 </style>
 </head>
 <body>
@@ -125,7 +128,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
         <button class="year-tab"  data-year="middle-m3" data-color="#a78bfa">Middle School — Year 3</button>
       </div>
       <div class="year-content active" id="middle-m1">
-        <div class="year-header"><h3 style="color:#a78bfa">Middle School — Year 1</h3></div>
+        <div class="year-header"><h3 style="color:#a78bfa">Middle School — Year 1</h3><span>W01 – W06</span></div>
         <div class="week-grid">
           <a class="week-card" href="/cec-edu/middle-high/m1/w01/" onmouseover="this.style.background='#a78bfa15';this.style.borderColor='#a78bfa55';this.querySelector('.wnum').style.color='#a78bfa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W01</span><span>Week 1</span></a>
           <a class="week-card" href="/cec-edu/middle-high/m1/w02/" onmouseover="this.style.background='#a78bfa15';this.style.borderColor='#a78bfa55';this.querySelector('.wnum').style.color='#a78bfa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W02</span><span>Week 2</span></a>
@@ -136,7 +139,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
         </div>
       </div>
       <div class="year-content" id="middle-m2">
-        <div class="year-header"><h3 style="color:#a78bfa">Middle School — Year 2</h3></div>
+        <div class="year-header"><h3 style="color:#a78bfa">Middle School — Year 2</h3><span>W01 – W06</span></div>
         <div class="week-grid">
           <a class="week-card" href="/cec-edu/middle-high/m2/w01/" onmouseover="this.style.background='#a78bfa15';this.style.borderColor='#a78bfa55';this.querySelector('.wnum').style.color='#a78bfa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W01</span><span>Week 1</span></a>
           <a class="week-card" href="/cec-edu/middle-high/m2/w02/" onmouseover="this.style.background='#a78bfa15';this.style.borderColor='#a78bfa55';this.querySelector('.wnum').style.color='#a78bfa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W02</span><span>Week 2</span></a>
@@ -147,7 +150,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
         </div>
       </div>
       <div class="year-content" id="middle-m3">
-        <div class="year-header"><h3 style="color:#a78bfa">Middle School — Year 3</h3></div>
+        <div class="year-header"><h3 style="color:#a78bfa">Middle School — Year 3</h3><span>W01 – W06</span></div>
         <div class="week-grid">
           <a class="week-card" href="/cec-edu/middle-high/m3/w01/" onmouseover="this.style.background='#a78bfa15';this.style.borderColor='#a78bfa55';this.querySelector('.wnum').style.color='#a78bfa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W01</span><span>Week 1</span></a>
           <a class="week-card" href="/cec-edu/middle-high/m3/w02/" onmouseover="this.style.background='#a78bfa15';this.style.borderColor='#a78bfa55';this.querySelector('.wnum').style.color='#a78bfa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W02</span><span>Week 2</span></a>
@@ -165,7 +168,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
         <button class="year-tab"  data-year="high-g3" data-color="#34d399">High School — Year 3</button>
       </div>
       <div class="year-content active" id="high-g1">
-        <div class="year-header"><h3 style="color:#34d399">High School — Year 1</h3></div>
+        <div class="year-header"><h3 style="color:#34d399">High School — Year 1</h3><span>W01 – W06</span></div>
         <div class="week-grid">
           <a class="week-card" href="/cec-edu/middle-high/hs/g1/w01/" onmouseover="this.style.background='#34d39915';this.style.borderColor='#34d39955';this.querySelector('.wnum').style.color='#34d399'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W01</span><span>Week 1</span></a>
           <a class="week-card" href="/cec-edu/middle-high/hs/g1/w02/" onmouseover="this.style.background='#34d39915';this.style.borderColor='#34d39955';this.querySelector('.wnum').style.color='#34d399'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W02</span><span>Week 2</span></a>
@@ -176,7 +179,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
         </div>
       </div>
       <div class="year-content" id="high-g2">
-        <div class="year-header"><h3 style="color:#34d399">High School — Year 2</h3></div>
+        <div class="year-header"><h3 style="color:#34d399">High School — Year 2</h3><span>W01 – W06</span></div>
         <div class="week-grid">
           <a class="week-card" href="/cec-edu/middle-high/hs/g2/w01/" onmouseover="this.style.background='#34d39915';this.style.borderColor='#34d39955';this.querySelector('.wnum').style.color='#34d399'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W01</span><span>Week 1</span></a>
           <a class="week-card" href="/cec-edu/middle-high/hs/g2/w02/" onmouseover="this.style.background='#34d39915';this.style.borderColor='#34d39955';this.querySelector('.wnum').style.color='#34d399'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W02</span><span>Week 2</span></a>
@@ -187,7 +190,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
         </div>
       </div>
       <div class="year-content" id="high-g3">
-        <div class="year-header"><h3 style="color:#34d399">High School — Year 3</h3></div>
+        <div class="year-header"><h3 style="color:#34d399">High School — Year 3</h3><span>W01 – W06</span></div>
         <div class="week-grid">
           <a class="week-card" href="/cec-edu/middle-high/hs/g3/w01/" onmouseover="this.style.background='#34d39915';this.style.borderColor='#34d39955';this.querySelector('.wnum').style.color='#34d399'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W01</span><span>Week 1</span></a>
           <a class="week-card" href="/cec-edu/middle-high/hs/g3/w02/" onmouseover="this.style.background='#34d39915';this.style.borderColor='#34d39955';this.querySelector('.wnum').style.color='#34d399'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.wnum').style.color=''"><span class="wnum">W02</span><span>Week 2</span></a>
