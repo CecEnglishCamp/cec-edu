@@ -63,6 +63,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
 .img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px}
 .img-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;text-decoration:none;color:rgba(255,255,255,.6);font-size:.72rem;font-weight:500;gap:2px;transition:all .2s}
 .img-card .inum{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;line-height:1;color:#fff;transition:color .2s}
+
+.image-overlay{position:absolute;inset:0;border-radius:18px;background:rgba(0,0,0,0);display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px;transition:background .35s;pointer-events:none}
+div:hover>.image-overlay{background:rgba(0,0,0,0.22)}
+.overlay-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;font-weight:600;color:#00f2ff;letter-spacing:.06em;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;text-shadow:0 2px 20px rgba(0,0,0,.9)}
+div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
@@ -98,10 +103,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
     <h1 class="camp-title">Speaking Training</h1>
   </div>
   <div class="image-wrap">
-    <div style="width:min(520px,80vw);aspect-ratio:16/10;border-radius:18px;border:2px dashed rgba(0,255,255,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(0,255,255,0.02);box-shadow:0 24px 70px rgba(0,0,0,0.4)">
+    <div style="position:relative;display:inline-block;cursor:pointer" onclick="document.getElementById('story-grid').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div style="width:min(520px,80vw);aspect-ratio:16/10;border-radius:18px;border:2px dashed rgba(0,255,255,0.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(0,255,255,0.02);box-shadow:0 24px 70px rgba(0,0,0,0.4)">
     <span style="font-size:2.5rem;opacity:.2">🖼</span>
     <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,.2)">Speaking Training Image</span>
   </div>
+    <div class="image-overlay"><span class="overlay-label">Choose a Story ↓</span></div>
   </div>
 </section>
 <section class="desc-section">
@@ -116,7 +123,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
       <div class="feature-card"><span class="feature-icon">🎯</span><div class="feature-title">4-Sentence Completion</div><p class="feature-body">Complete 4 correct descriptions to finish the session — short enough to stay focused, long enough to build habit.</p></div>
     </div>
     <div style="max-width:1100px;margin:0 auto">
-      <div class="story-grid">
+      <div class="story-grid" id="story-grid">
       <div class="story-card" onmouseover="this.querySelectorAll('.img-card').forEach(c=>{c.style.borderColor='#4ade8055';})" onmouseout="this.querySelectorAll('.img-card').forEach(c=>{c.style.borderColor='';})">
         <span class="story-grade" style="color:#4ade80;background:#4ade8018">G3</span>
         <div class="story-title">Peter Rabbit</div>

@@ -68,6 +68,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
 .week-card.soon{opacity:.35;cursor:default;pointer-events:none}
 .week-card.soon .wnum{color:rgba(255,255,255,.3)}
 .soon-badge{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.06em}
+
+.image-overlay{position:absolute;inset:0;border-radius:18px;background:rgba(0,0,0,0);display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px;transition:background .35s;pointer-events:none}
+div:hover>.image-overlay{background:rgba(0,0,0,0.22)}
+.overlay-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;font-weight:600;color:#00f2ff;letter-spacing:.06em;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;text-shadow:0 2px 20px rgba(0,0,0,.9)}
+div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
@@ -103,7 +108,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
     <h1 class="camp-title">Camp B</h1>
   </div>
   <div class="image-wrap">
+    <div style="position:relative;display:inline-block;cursor:pointer" onclick="document.getElementById('school-toggle').scrollIntoView({behavior:'smooth',block:'start'})">
     <img class="camp-image" src="https://pub-a418b5aad0bd4c3fb41cf7159403fc12.r2.dev/covers/Camp_B.png" alt="Camp B">
+    <div class="image-overlay"><span class="overlay-label">Select Your School ↓</span></div>
+  </div>
   </div>
 </section>
 <section class="desc-section">
@@ -117,7 +125,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
       <div class="feature-card"><span class="feature-icon">💬</span><div class="feature-title">Discussion & Wrap-Up</div><p class="feature-body">Every session closes with guided discussion and a ChatGPT link for open-ended conversation practice.</p></div>
       <div class="feature-card"><span class="feature-icon">📊</span><div class="feature-title">Grade-Differentiated Feedback</div><p class="feature-body">AI feedback calibrated per grade — middle school gets accessible corrections; high school receives college-level critique.</p></div>
     </div>
-    <div class="school-toggle">
+    <div class="school-toggle" id="school-toggle">
       <button class="school-btn active" style="background:#a78bfa;color:#000;border-color:transparent" data-school="middle">Middle School</button>
       <button class="school-btn" data-school="high">High School</button>
     </div>
