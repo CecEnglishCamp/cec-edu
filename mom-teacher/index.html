@@ -1,74 +1,226 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>엄마교사 | CEC Edu</title>
-<meta name="description" content="학부모 교사용 영어 수업 가이드">
+<title>Mom Teacher — CEC English Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--point:#00f2ff;--bg:#000000;--card:#111;--card2:#0a0a0a;--border:#222;--muted:#888;}
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Helvetica','Arial',sans-serif;background:var(--bg);color:#fff;line-height:1.8;word-break:keep-all;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:'Outfit',sans-serif}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:68px;background:#000;border-bottom:1px solid rgba(0,255,255,0.13);position:fixed;top:0;left:0;right:0;z-index:1000}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-logo img{width:38px;height:38px;object-fit:contain;border-radius:8px}
+.nav-logo-text{font-size:1.1rem;font-weight:800;color:#fff;white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:6px;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-sep{color:#00ffff;font-size:.38rem;opacity:.4;padding:0 2px}
+.nav-links a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.88rem;font-weight:500;padding:5px 8px;white-space:nowrap;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:#00ffff}
+.nav-register a{background:#00ffff;color:#000;text-decoration:none;font-size:.85rem;font-weight:800;padding:9px 24px;border-radius:50px;display:block}
+.nav-register a:hover{opacity:.82}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 20px 60px}
+.camp-label{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:32px;animation:fadeUp .7s ease forwards}
+.camp-badge{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:50px;padding:6px 20px}
+.camp-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(3rem,6vw,5rem);color:#fff;line-height:1}
+.image-wrap{position:relative;animation:fadeUp .9s .15s ease both}
+.camp-image{width:min(520px,80vw);border-radius:18px;display:block;box-shadow:0 0 0 1px rgba(0,255,255,0.08),0 24px 70px rgba(0,0,0,0.55);will-change:transform;transition:box-shadow .4s}
+.desc-section{background:#000;border-top:1px solid rgba(255,255,255,.06);padding:90px 40px 60px}
+.desc-inner{max-width:1100px;margin:0 auto}
+.desc-intro{text-align:center;margin-bottom:60px}
+.desc-intro p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2vw,1.5rem);font-style:italic;color:rgba(255,255,255,.7);line-height:1.75;max-width:720px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:70px}
+.feature-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:32px 28px;transition:border-color .25s,background .25s}
+.feature-card:hover{background:rgba(0,255,255,.04);border-color:rgba(0,255,255,.18)}
+.feature-icon{font-size:1.8rem;margin-bottom:14px;display:block}
+.feature-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px}
+.feature-body{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.75}
+.grade-tabs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+.grade-tab{padding:10px 28px;border-radius:50px;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.55);transition:all .2s}
+.grade-tab:hover{border-color:rgba(255,255,255,.35);color:#fff}
+.grade-section{display:none;max-width:1100px;margin:0 auto}
+.grade-section.active{display:block}
+.grade-header{margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.07)}
+.grade-header h3{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;margin-bottom:4px}
+.grade-header span{font-size:.82rem;color:rgba(255,255,255,.35)}
+.book-group{margin-bottom:32px}
+.book-title{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.book-title h4{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:#fff;font-weight:600;white-space:nowrap}
+.book-line{flex:1;height:1px;background:rgba(255,255,255,.07)}
+.book-badge{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.3);white-space:nowrap}
+.week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+.week-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:13px 6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:.75rem;font-weight:500;gap:3px;transition:all .2s}
+.week-card .wnum{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;line-height:1;color:#fff;transition:color .2s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.features-grid{grid-template-columns:1fr}.nav-links{display:none}}
 
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 5%;background:rgba(0,0,0,0.98);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000;gap:16px;}
-.logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:900;color:#fff;text-decoration:none;white-space:nowrap;}
-.logo:hover{color:var(--point);}
-.logo-img{width:40px;height:40px;object-fit:contain;}
-.nav-links{display:flex;gap:8px;flex-wrap:wrap;list-style:none;}
-.nav-links a{color:#fff;text-decoration:none;font-size:0.85rem;font-weight:700;padding:6px 14px;border-radius:25px;border:1px solid transparent;transition:all 0.2s;}
-.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--point);border-color:var(--point);}
+.week-card.soon{opacity:.35;cursor:default;pointer-events:none}
+.week-card.soon .wnum{color:rgba(255,255,255,.3)}
+.soon-badge{font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:.06em}
 
-.hero{text-align:center;padding:60px 20px 48px;border-bottom:1px solid var(--border);}
-.hero-emoji{font-size:3rem;margin-bottom:16px;}
-.hero h1{font-size:2.2rem;font-weight:900;margin-bottom:12px;letter-spacing:-1px;}
-.hero h1 em{color:var(--point);font-style:normal;}
-.hero p{color:var(--muted);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.7;}
+.image-overlay{position:absolute;inset:0;border-radius:18px;background:rgba(0,0,0,0);display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px;transition:background .35s;pointer-events:none}
+div:hover>.image-overlay{background:rgba(0,0,0,0.22)}
+.overlay-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;font-weight:600;color:#00f2ff;letter-spacing:.06em;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;text-shadow:0 2px 20px rgba(0,0,0,.9)}
+div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
 
-.section-wrap{max-width:1000px;margin:0 auto;padding:48px 24px 80px;}
-.section-title{font-size:0.85rem;font-weight:700;color:var(--point);margin-bottom:20px;letter-spacing:3px;text-transform:uppercase;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:52px;}
-.card{background:var(--card);border-radius:14px;padding:28px 22px;text-align:center;border:1px solid var(--border);text-decoration:none;color:#fff;display:block;transition:all 0.25s;}
-.card:hover{border-color:var(--point);transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,242,255,0.08);}
-.card-emoji{font-size:2.2rem;margin-bottom:14px;}
-.card-title{font-size:1.05rem;font-weight:800;margin-bottom:6px;}
-.card-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;}
-.card-badge{display:inline-block;margin-top:12px;border:1px solid var(--point);color:var(--point);padding:2px 12px;border-radius:25px;font-size:0.72rem;font-weight:700;}
-
-footer{background:var(--card2);border-top:1px solid var(--border);text-align:center;padding:24px;font-size:0.78rem;color:#555;}
-
-@media(max-width:768px){
-  header{flex-direction:column;padding:12px 16px;}
-  .nav-links a{font-size:0.78rem;padding:5px 10px;}
-  .hero h1{font-size:1.6rem;}
-  .cards{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:400px){.cards{grid-template-columns:1fr;}}
+.ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.ep-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:13px 6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:.75rem;font-weight:500;gap:3px;transition:all .2s}
+.ep-card .enum{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;line-height:1;color:#fff;transition:color .2s}
+.image-overlay{position:absolute;inset:0;border-radius:18px;background:rgba(0,0,0,0);display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px;transition:background .35s;pointer-events:none}
+div:hover>.image-overlay{background:rgba(0,0,0,0.22)}
+.overlay-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;font-weight:600;color:#00f2ff;letter-spacing:.06em;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;text-shadow:0 2px 20px rgba(0,0,0,.9)}
+div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
-<header>
-  <a href="/" class="logo">
-    <img src="https://pub-a418b5aad0bd4c3fb41cf7159403fc12.r2.dev/robo_study.png" alt="CEC" class="logo-img" onerror="this.style.display='none'">
-    <span>CEC Edu</span>
+<nav>
+  <a href="/cec-edu/" class="nav-logo">
+    <img src="/cec-edu/assets/robo.png" alt="Robo" onerror="this.style.display='none'">
+    <span class="nav-logo-text">CEC English Camp</span>
   </a>
-  <nav class="nav-links"><a href="/">🏠 Home</a><a href="/elementary/">Elementary</a><a href="/middle-high/">Middle-High</a><a href="/adult/">Adult</a><a href="/mom-teacher/" aria-current="page">Mom Teacher</a><a href="/grammar/">Grammar</a><a href="/speaking/">Speaking</a></nav>
-</header>
-<main>
-  <section class="hero">
-    <img class="camp-image" src="https://pub-a418b5aad0bd4c3fb41cf7159403fc12.r2.dev/covers/mom_teach2.png" alt="Mom Teacher" style="width:min(400px,70vw);border-radius:18px;margin-bottom:24px;box-shadow:0 24px 70px rgba(0,0,0,0.55);">
-    <h1>엄마교사 — <em>Mom Teacher</em></h1>
-    <p>학부모 교사용 영어 수업 가이드 · Grade 3~6</p>
-  </section>
-  <div class="section-wrap">
-  <section><h2 class="section-title">학년별 가이드</h2><div class="cards">
-    <a href="grade3/" class="card"><div class="card-emoji">📗</div><div class="card-title">Grade 3</div><div class="card-desc">초등 3학년 엄마교사 가이드</div><span class="card-badge">Grade 3</span></a>
-    <a href="grade4/" class="card"><div class="card-emoji">📘</div><div class="card-title">Grade 4</div><div class="card-desc">초등 4학년 엄마교사 가이드</div><span class="card-badge">Grade 4</span></a>
-    <a href="grade5/" class="card"><div class="card-emoji">📙</div><div class="card-title">Grade 5</div><div class="card-desc">초등 5학년 엄마교사 가이드</div><span class="card-badge">Grade 5</span></a>
-    <a href="grade6/" class="card"><div class="card-emoji">📕</div><div class="card-title">Grade 6</div><div class="card-desc">초등 6학년 엄마교사 가이드</div><span class="card-badge">Grade 6</span></a>
-  </div></section>
+  <ul class="nav-links">
+    <li><a href="/cec-edu/about/">About</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="/cec-edu/elementary/">Camp A</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="/cec-edu/middle-high/">Camp B</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="/cec-edu/adult/">Camp C</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="/cec-edu/grammar/">Grammar Base Camp</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="/cec-edu/speaking/">Speaking</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="/cec-edu/games/">Game</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="#">Programs</a></li>
+    <li class="nav-sep">•</li>
+    <li><a href="#">AI Tools</a></li>
+  </ul>
+  <div class="nav-register"><a href="/cec-edu/register/">Register</a></div>
+</nav>
+<section class="hero">
+  <div class="camp-label">
+    <span class="camp-badge">MOM TEACHER · PARENT GUIDE</span>
+    <h1 class="camp-title">Mom Teacher</h1>
   </div>
-</main>
-<footer>© 2026 CEC English Camp · cecenglishcamp.github.io/cec-edu</footer>
-</body>
-</html>
+  <div class="image-wrap">
+    <div style="position:relative;display:inline-block;cursor:pointer" onclick="const _el=document.getElementById('grade-tabs'); window.scrollTo({top:_el.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'})">
+      <img class="camp-image" src="https://pub-a418b5aad0bd4c3fb41cf7159403fc12.r2.dev/covers/mom_teach2.png" alt="Mom Teacher">
+      <div class="image-overlay"><span class="overlay-label">Select Your Grade ↓</span></div>
+    </div>
+  </div>
+</section>
+<section class="desc-section">
+  <div class="desc-inner">
+    <div class="desc-intro">
+      <p>A structured curriculum for parents who want to teach English at home — Grade 3 through Grade 6, episode by episode, with confidence.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card"><span class="feature-icon">👩‍🏫</span><div class="feature-title">Parent-Led Lessons</div><p class="feature-body">Clear lesson plans any parent can follow — no teaching experience required. Just open and teach.</p></div>
+      <div class="feature-card"><span class="feature-icon">📚</span><div class="feature-title">Grade 3 – 6 Coverage</div><p class="feature-body">15 episodes per grade, 60 total — systematically covering vocabulary, grammar, and reading comprehension.</p></div>
+      <div class="feature-card"><span class="feature-icon">🤖</span><div class="feature-title">AI Support</div><p class="feature-body">AI tutor assists both parent and child — answering questions and providing pronunciation guidance in real time.</p></div>
+      <div class="feature-card"><span class="feature-icon">🏠</span><div class="feature-title">Home-Friendly Format</div><p class="feature-body">Short, focused episodes designed for a home setting — 20 to 30 minutes per session, no special equipment needed.</p></div>
+    </div>
+    <div class="grade-tabs" id="grade-tabs">
+      <button class="grade-tab active" style="background:#4ade80;color:#000;border-color:transparent" data-grade="grade3" data-color="#4ade80">Grade 3</button>
+      <button class="grade-tab"  data-grade="grade4" data-color="#60a5fa">Grade 4</button>
+      <button class="grade-tab"  data-grade="grade5" data-color="#f59e0b">Grade 5</button>
+      <button class="grade-tab"  data-grade="grade6" data-color="#f472b6">Grade 6</button>
+    </div>
+    <div class="grade-section active" id="grade3">
+      <div class="grade-header"><h3 style="color:#4ade80">Grade 3</h3><span>15 Episodes</span></div>
+      <div class="ep-grid">
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep01/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP01</span><span>Episode 1</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep02/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP02</span><span>Episode 2</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep03/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP03</span><span>Episode 3</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep04/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP04</span><span>Episode 4</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep05/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP05</span><span>Episode 5</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep06/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP06</span><span>Episode 6</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep07/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP07</span><span>Episode 7</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep08/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP08</span><span>Episode 8</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep09/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP09</span><span>Episode 9</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep10/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP10</span><span>Episode 10</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep11/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP11</span><span>Episode 11</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep12/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP12</span><span>Episode 12</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep13/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP13</span><span>Episode 13</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep14/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP14</span><span>Episode 14</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade3/ep15/" onmouseover="this.style.background='#4ade8015';this.style.borderColor='#4ade8055';this.querySelector('.enum').style.color='#4ade80'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP15</span><span>Episode 15</span></a>
+      </div>
+    </div>
+    <div class="grade-section" id="grade4">
+      <div class="grade-header"><h3 style="color:#60a5fa">Grade 4</h3><span>15 Episodes</span></div>
+      <div class="ep-grid">
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep01/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP01</span><span>Episode 1</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep02/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP02</span><span>Episode 2</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep03/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP03</span><span>Episode 3</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep04/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP04</span><span>Episode 4</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep05/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP05</span><span>Episode 5</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep06/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP06</span><span>Episode 6</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep07/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP07</span><span>Episode 7</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep08/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP08</span><span>Episode 8</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep09/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP09</span><span>Episode 9</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep10/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP10</span><span>Episode 10</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep11/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP11</span><span>Episode 11</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep12/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP12</span><span>Episode 12</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep13/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP13</span><span>Episode 13</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep14/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP14</span><span>Episode 14</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade4/ep15/" onmouseover="this.style.background='#60a5fa15';this.style.borderColor='#60a5fa55';this.querySelector('.enum').style.color='#60a5fa'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP15</span><span>Episode 15</span></a>
+      </div>
+    </div>
+    <div class="grade-section" id="grade5">
+      <div class="grade-header"><h3 style="color:#f59e0b">Grade 5</h3><span>15 Episodes</span></div>
+      <div class="ep-grid">
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep01/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP01</span><span>Episode 1</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep02/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP02</span><span>Episode 2</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep03/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP03</span><span>Episode 3</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep04/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP04</span><span>Episode 4</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep05/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP05</span><span>Episode 5</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep06/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP06</span><span>Episode 6</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep07/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP07</span><span>Episode 7</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep08/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP08</span><span>Episode 8</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep09/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP09</span><span>Episode 9</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep10/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP10</span><span>Episode 10</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep11/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP11</span><span>Episode 11</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep12/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP12</span><span>Episode 12</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep13/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP13</span><span>Episode 13</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep14/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP14</span><span>Episode 14</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade5/ep15/" onmouseover="this.style.background='#f59e0b15';this.style.borderColor='#f59e0b55';this.querySelector('.enum').style.color='#f59e0b'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP15</span><span>Episode 15</span></a>
+      </div>
+    </div>
+    <div class="grade-section" id="grade6">
+      <div class="grade-header"><h3 style="color:#f472b6">Grade 6</h3><span>15 Episodes</span></div>
+      <div class="ep-grid">
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep01/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP01</span><span>Episode 1</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep02/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP02</span><span>Episode 2</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep03/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP03</span><span>Episode 3</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep04/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP04</span><span>Episode 4</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep05/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP05</span><span>Episode 5</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep06/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP06</span><span>Episode 6</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep07/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP07</span><span>Episode 7</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep08/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP08</span><span>Episode 8</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep09/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP09</span><span>Episode 9</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep10/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP10</span><span>Episode 10</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep11/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP11</span><span>Episode 11</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep12/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP12</span><span>Episode 12</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep13/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP13</span><span>Episode 13</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep14/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP14</span><span>Episode 14</span></a>
+        <a class="ep-card" href="/cec-edu/mom-teacher/grade6/ep15/" onmouseover="this.style.background='#f472b615';this.style.borderColor='#f472b655';this.querySelector('.enum').style.color='#f472b6'" onmouseout="this.style.background='';this.style.borderColor='';this.querySelector('.enum').style.color=''"><span class="enum">EP15</span><span>Episode 15</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+document.querySelectorAll('.grade-tab').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    const c=this.dataset.color;
+    document.querySelectorAll('.grade-tab').forEach(b=>{b.classList.remove('active');b.style.background='transparent';b.style.color='rgba(255,255,255,.55)';b.style.borderColor='rgba(255,255,255,.15)';});
+    this.classList.add('active');this.style.background=c;this.style.color='#000';this.style.borderColor='transparent';
+    document.querySelectorAll('.grade-section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(this.dataset.grade).classList.add('active');
+  });
+});
+const img=document.querySelector('.camp-image');
+if(img){document.addEventListener('mousemove',e=>{const cx=window.innerWidth/2,cy=window.innerHeight/2;const dx=(e.clientX-cx)/cx,dy=(e.clientY-cy)/cy;img.style.transform=`perspective(800px) rotateX(${dy*-5}deg) rotateY(${dx*6}deg) translateY(-2px)`;});document.addEventListener('mouseleave',()=>{img.style.transform='';});}
+</script>
+</body></html>
