@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;color:#fff;font-family:'Outfit',sans-serif;min-height:100vh}
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px;height:68px;background:#000;border-bottom:1px solid rgba(0,255,255,0.13);position:fixed;top:0;left:0;right:0;z-index:1000}
@@ -32,10 +33,39 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
 .nav-dropdown-menu a{display:block;padding:10px 18px;color:rgba(255,255,255,.78);text-decoration:none;font-size:.87rem;font-weight:500;transition:background .15s,color .15s;white-space:nowrap}
 .nav-dropdown-menu a:hover{background:rgba(0,255,255,.08);color:#00ffff}
 
-.school-toggle{display:flex;justify-content:center;gap:14px;margin-bottom:36px;flex-wrap:wrap}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 20px 60px;text-align:center}
+.camp-label{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:32px}
+.camp-badge{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:50px;padding:6px 20px}
+.camp-title{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(3rem,6vw,5rem);color:#fff;line-height:1}
+.hero-img-wrap{position:relative;cursor:pointer;display:inline-block}
+.hero-img-wrap img{width:min(520px,72vw);border-radius:18px;display:block;box-shadow:0 0 0 1px rgba(0,255,255,0.08),0 24px 70px rgba(0,0,0,0.55);transition:box-shadow .4s}
+.hero-img-wrap:hover img{box-shadow:0 0 0 1.5px rgba(0,255,255,0.3),0 36px 90px rgba(0,0,0,0.65)}
+.img-overlay{position:absolute;inset:0;border-radius:18px;background:rgba(0,0,0,0);display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px;transition:background .35s;pointer-events:none}
+.hero-img-wrap:hover .img-overlay{background:rgba(0,0,0,0.22)}
+.img-overlay span{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;font-weight:600;color:#00f2ff;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;text-shadow:0 2px 20px rgba(0,0,0,.9)}
+.hero-img-wrap:hover .img-overlay span{opacity:1;transform:translateY(0)}
+
+/* DESC */
+.desc-section{background:#000;border-top:1px solid rgba(255,255,255,.06);padding:80px 40px 60px}
+.desc-inner{max-width:1100px;margin:0 auto}
+.desc-intro{text-align:center;margin-bottom:60px}
+.desc-intro p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2vw,1.5rem);font-style:italic;color:rgba(255,255,255,.7);line-height:1.75;max-width:720px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:48px}
+.feature-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:28px;transition:border-color .25s,background .25s}
+.feature-card:hover{background:rgba(0,255,255,.04);border-color:rgba(0,255,255,.18)}
+.feature-icon{font-size:1.7rem;margin-bottom:12px;display:block}
+.feature-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px}
+.feature-body{font-size:.87rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.75}
+
+/* SCHOOL TOGGLE */
+.school-toggle{display:flex;justify-content:center;gap:14px;margin-bottom:36px}
 .school-btn{padding:11px 40px;border-radius:50px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.55);transition:all .2s}
-.school-section{display:none;max-width:1100px;margin:0 auto}
+.school-section{display:none}
 .school-section.active{display:block}
+
+/* YEAR TABS */
 .year-tabs{display:flex;gap:10px;margin-bottom:32px;flex-wrap:wrap}
 .year-tab{padding:9px 24px;border-radius:50px;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.5);transition:all .2s}
 .year-content{display:none}
@@ -43,10 +73,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 36px
 .year-header{margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)}
 .year-header h3{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;margin-bottom:4px}
 .year-header span{font-size:.82rem;color:rgba(255,255,255,.35)}
-.image-overlay{position:absolute;inset:0;border-radius:18px;background:rgba(0,0,0,0);display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px;transition:background .35s;pointer-events:none}
-div:hover>.image-overlay{background:rgba(0,0,0,0.22)}
-.overlay-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;font-weight:600;color:#00f2ff;letter-spacing:.06em;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;text-shadow:0 2px 20px rgba(0,0,0,.9)}
-div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
+
+/* WEEK GRID */
+.week-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
+.week-card{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;text-decoration:none;color:rgba(255,255,255,.65);font-size:.75rem;font-weight:500;gap:3px;transition:all .2s}
+.week-card:hover{transform:translateY(-2px)}
+.wnum{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;line-height:1;color:#fff;transition:color .2s}
+
+@media(max-width:700px){.features-grid{grid-template-columns:1fr}.nav-links{display:none}}
 </style>
 </head>
 <body>
@@ -72,9 +106,7 @@ div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
     <li class="nav-sep">•</li>
     <li class="nav-dropdown">
       <a href="#" class="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">Programs ▾</a>
-      <div class="nav-dropdown-menu">
-        <a href="/cec-edu/games/">Grammar Game</a>
-      </div>
+      <div class="nav-dropdown-menu"><a href="/cec-edu/games/">Grammar Game</a></div>
     </li>
     <li class="nav-sep">•</li>
     <li class="nav-dropdown">
@@ -90,18 +122,18 @@ div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
   </ul>
   <div class="nav-register" aria-label="Registration"><a href="/cec-edu/register/">Register</a></div>
 </nav>
+
 <section class="hero">
   <div class="camp-label">
     <span class="camp-badge">CAMP B · MIDDLE &amp; HIGH SCHOOL</span>
     <h1 class="camp-title">Camp B</h1>
   </div>
-  <div class="image-wrap">
-    <div style="position:relative;display:inline-block;cursor:pointer" onclick="const _el=document.getElementById('school-toggle'); window.scrollTo({top:_el.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'})">
-      <img class="camp-image" src="https://pub-a418b5aad0bd4c3fb41cf7159403fc12.r2.dev/covers/Camp_B.png" alt="Camp B">
-      <div class="image-overlay"><span class="overlay-label">Select Your School ↓</span></div>
-    </div>
+  <div class="hero-img-wrap" onclick="const el=document.getElementById('school-toggle');window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'})">
+    <img src="https://pub-a418b5aad0bd4c3fb41cf7159403fc12.r2.dev/covers/Camp_B.png" alt="Camp B">
+    <div class="img-overlay"><span>Select Your School ↓</span></div>
   </div>
 </section>
+
 <section class="desc-section">
   <div class="desc-inner">
     <div class="desc-intro">
@@ -119,9 +151,9 @@ div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
     </div>
     <div class="school-section active" id="middle" role="tabpanel">
       <div class="year-tabs" role="tablist">
-        <button class="year-tab active" style="background:#a78bfa;color:#000;border-color:transparent" role="tab" aria-selected="true" data-year="middle-m1" data-color="#a78bfa">Middle School — Year 1</button>
-        <button class="year-tab"  role="tab" aria-selected="false" data-year="middle-m2" data-color="#a78bfa">Middle School — Year 2</button>
-        <button class="year-tab"  role="tab" aria-selected="false" data-year="middle-m3" data-color="#a78bfa">Middle School — Year 3</button>
+        <button class="year-tab active" style="background:#a78bfa;color:#000;border-color:transparent" role="tab" aria-selected="true" data-year="middle-m1" data-color="#a78bfa">Year 1</button>
+        <button class="year-tab"  role="tab" aria-selected="false" data-year="middle-m2" data-color="#a78bfa">Year 2</button>
+        <button class="year-tab"  role="tab" aria-selected="false" data-year="middle-m3" data-color="#a78bfa">Year 3</button>
       </div>
       <div class="year-content active" id="middle-m1" role="tabpanel">
         <div class="year-header"><h3 style="color:#a78bfa">Middle School — Year 1</h3><span>W01 – W22</span></div>
@@ -207,9 +239,9 @@ div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
     </div>
     <div class="school-section" id="high" role="tabpanel">
       <div class="year-tabs" role="tablist">
-        <button class="year-tab active" style="background:#34d399;color:#000;border-color:transparent" role="tab" aria-selected="true" data-year="high-g1" data-color="#34d399">High School — Year 1</button>
-        <button class="year-tab"  role="tab" aria-selected="false" data-year="high-g2" data-color="#34d399">High School — Year 2</button>
-        <button class="year-tab"  role="tab" aria-selected="false" data-year="high-g3" data-color="#34d399">High School — Year 3</button>
+        <button class="year-tab active" style="background:#34d399;color:#000;border-color:transparent" role="tab" aria-selected="true" data-year="high-g1" data-color="#34d399">Year 1</button>
+        <button class="year-tab"  role="tab" aria-selected="false" data-year="high-g2" data-color="#34d399">Year 2</button>
+        <button class="year-tab"  role="tab" aria-selected="false" data-year="high-g3" data-color="#34d399">Year 3</button>
       </div>
       <div class="year-content active" id="high-g1" role="tabpanel">
         <div class="year-header"><h3 style="color:#34d399">High School — Year 1</h3><span>W01 – W22</span></div>
@@ -295,6 +327,7 @@ div:hover>.image-overlay>.overlay-label{opacity:1;transform:translateY(0)}
     </div>
   </div>
 </section>
+
 <script>
 document.querySelectorAll('.school-btn').forEach((btn,i)=>{
   btn.addEventListener('click',function(){
@@ -314,7 +347,7 @@ document.querySelectorAll('.year-tab').forEach(btn=>{
     document.getElementById(this.dataset.year).classList.add('active');
   });
 });
-const img=document.querySelector('.camp-image');
+const img=document.querySelector('.hero-img-wrap img');
 if(img){document.addEventListener('mousemove',e=>{const cx=window.innerWidth/2,cy=window.innerHeight/2;const dx=(e.clientX-cx)/cx,dy=(e.clientY-cy)/cy;img.style.transform=`perspective(800px) rotateX(${dy*-5}deg) rotateY(${dx*6}deg) translateY(-2px)`;});document.addEventListener('mouseleave',()=>{img.style.transform='';});}
 </script>
 </body></html>
