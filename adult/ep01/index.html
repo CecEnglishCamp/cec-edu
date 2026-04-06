@@ -15,6 +15,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#000;border-bott
 .nav-sep{color:rgba(255,255,255,.2);font-size:.65rem}
 .nav-register{background:#00f2ff;color:#000;font-size:.78rem;font-weight:800;padding:7px 16px;border-radius:50px;text-decoration:none;white-space:nowrap}
 iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100vh - 52px);border:none}
+
+/* ── TTS CONTROLLER (nearly invisible for OBS) ── */
+.tts-ctrl{
+  position:fixed;bottom:4px;right:4px;z-index:10000;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(0,0,0,.15);backdrop-filter:blur(4px);
+  border-radius:8px;padding:3px 6px;
+  opacity:0.08;transition:opacity .3s;
+  font-family:'Segoe UI',sans-serif;
+}
+.tts-ctrl:hover{opacity:0.85}
+.tts-ctrl button{
+  background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);
+  width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.tts-ctrl button:hover{background:rgba(255,255,255,.15)}
+.tts-ctrl button.active{background:rgba(233,69,96,.6);border-color:rgba(233,69,96,.8)}
+.tts-ctrl .tts-info{
+  font-size:10px;color:rgba(255,255,255,.7);max-width:120px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.tts-ctrl select{
+  background:rgba(0,0,0,.3);color:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.2);border-radius:4px;
+  font-size:10px;padding:2px 4px;cursor:pointer;
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
 </head>
@@ -38,6 +65,556 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
   </ul>
   <a href="/cec-edu/register/" class="nav-register">Register</a>
 </nav>
-<iframe src="/camp-c/ep01.html" title="Camp C Episode 01"></iframe>
+<iframe id="epFrame" src="/camp-c/ep01.html" title="Camp C Episode 01"></iframe>
+
+<!-- TTS CONTROLLER (nearly invisible — hover to reveal) -->
+<div class="tts-ctrl" id="ttsCtrl">
+  <button id="ttsPlayBtn" onclick="toggleTTS()" title="Play/Pause">&#9654;</button>
+  <button onclick="ttsPrev()" title="Prev">&#9664;</button>
+  <button onclick="ttsNext()" title="Next">&#9654;</button>
+  <select id="ttsSpeed" onchange="onSpeedChange()" title="Speed">
+    <option value="0.8">0.8x</option>
+    <option value="1.0" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+    <option value="1.5">1.5x</option>
+  </select>
+  <span class="tts-info" id="ttsInfo">Ready</span>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   TTS AUTO-NARRATION + IFRAME SCROLL CONTROLLER
+   ══════════════════════════════════════════════ */
+
+const TTS_URL   = 'https://journey-bronzy-fruitily.ngrok-free.dev/api/tts';
+const TTS_TOKEN = 'cec-speaking-2026';
+
+/* ── SCRIPT DATA ── */
+const RAW_SCRIPT = `[KO] 안녕하세요 여러분~ CEC 영어캠프에 오신 걸 환영합니다!
+오늘은 Camp C 에피소드 1, 공항에 도착하는 이야기예요.
+우리의 주인공, 박영자 씨! 딸을 만나러 혼자 LA 공항에 왔어요.
+비행기에서 "Chicken or beef?" 이것도 긴장됐는데,
+드디어 미국 땅을 밟았습니다! 두근두근하죠?
+
+[KO] 영자 씨 손에는 메모가 하나 있어요.
+"터미널 2, 출구 5번, 딸이 마중 나옴"
+근데... 표지판이 다 영어예요!
+어디로 가야 할지 모르겠는 거예요. 아이고~
+그때! 노란 조끼 입은 공항 직원이 보여요.
+용기를 내서 다가갑니다. 그리고 딱 한마디!
+
+[KO] 오늘의 핵심 표현이에요. 잘 들어보세요~
+
+[EN] Excuse me. Can you help me?
+
+[KO] 어때요? 생각보다 쉽죠?
+이 한 문장이면 공항에서도, 길에서도, 가게에서도 다 통해요!
+자, 한번 같이 따라해봐요. 천천히 갈게요~
+
+[EN] Excuse me. Can you help me?
+
+[KO] 잘하셨어요! 한번 더 해볼까요?
+
+[EN] Excuse me. Can you help me?
+
+[KO] 완벽해요~! 이제 영자 씨 이야기를 계속 볼게요.
+영자 씨가 메모를 보여주면서 이렇게 말해요.
+
+[EN] My daughter is waiting... Terminal 2... Exit 5...
+
+[KO] 문법이 완벽하진 않지만, 충분히 통해요!
+핵심 단어만 말해도 외국인들은 다 알아들어요. 걱정 마세요~
+그랬더니 직원이 웃으면서 이렇게 알려줘요.
+
+[EN] Go straight, then turn left. Near the coffee shop.
+
+[KO] 영자 씨가 다 알아들은 건 아니지만,
+straight하고 left, 이 두 단어는 들었어요!
+그것만으로도 충분했어요.
+영자 씨가 고맙다고 인사하고 걸어가는데...
+저기 멀리서 딸이 손을 흔들고 있어요!
+
+[EN] Thank you very much!
+
+[KO] 아~ 감동이죠? 영자 씨 정말 대단해요!
+영어 한마디로 딸을 찾았어요.
+자, 이제 오늘 나온 영어 표현들을 정리해볼게요.
+
+[KO] 먼저 오늘의 핵심 문장 패턴이에요.
+Excuse me 다음에 Can you 더하고 동사를 넣으면 뭐든지 부탁할 수 있어요!
+
+[EN] Can you help me?
+
+[KO] 도와주실 수 있나요? 가장 기본이죠!
+
+[EN] Can you show me?
+
+[KO] 보여주실 수 있나요? 지도나 메뉴 볼 때 딱이에요.
+
+[EN] Can you tell me?
+
+[KO] 알려주실 수 있나요? 길 물을 때 유용해요.
+이 패턴 하나면 정말 만능이에요!
+
+[KO] 이제 오늘의 주요 단어들을 같이 읽어볼게요.
+
+[EN] Terminal.
+
+[KO] 터미널, 공항 건물이에요.
+
+[EN] Exit.
+
+[KO] 출구예요.
+
+[EN] Worker.
+
+[KO] 직원이에요.
+
+[EN] Airport.
+
+[KO] 공항이에요.
+
+[EN] Daughter.
+
+[KO] 딸이에요.
+
+[EN] Direction.
+
+[KO] 방향이에요.
+
+[EN] Go straight.
+
+[KO] 직진하다, 쭉 앞으로 가는 거예요.
+
+[EN] Turn left.
+
+[KO] 왼쪽으로 돌다!
+
+[KO] 좋아요! 이제 같은 이야기를 영어로 한번 읽어볼게요.
+가장 쉬운 버전부터 갈게요. 긴장하지 마세요~
+
+[EN] Young-ja is at the airport.
+She comes from Korea.
+She wants to find her daughter.
+She has a paper. It says: "Terminal 2, Exit 5."
+But she cannot read the signs. They are in English.
+She is nervous. She sees a worker.
+"Excuse me. Can you help me?" she says.
+The worker smiles. He says, "Go straight. Turn left."
+Young-ja smiles. She walks.
+She sees her daughter. She is happy.
+
+[KO] 어때요? 다 아는 단어들이죠?
+이번엔 조금 더 자연스러운 버전으로 들어볼게요.
+
+[EN] Young-ja arrives at the Los Angeles airport.
+She flew from Korea two days ago to visit her daughter.
+She is excited, but also nervous.
+She has a note: "Terminal 2, Exit 5. Daughter will meet here."
+She looks around, but everything is in English. She doesn't know where Terminal 2 is.
+She sees a worker in a yellow vest. She walks up and says,
+"Excuse me. Can you help me?"
+She shows the note. "My daughter is waiting... Terminal 2... Exit 5."
+The worker smiles and says,
+"Go straight, then turn left. Near the coffee shop."
+She walks and sees her daughter waving.
+Now she feels safe and smiles brightly.
+
+[KO] 점점 영어가 귀에 들어오죠?
+마지막으로 원어민 느낌 버전이에요. 한번 도전!
+
+[EN] After a long flight from Korea, Young-ja finally arrives in Los Angeles.
+She's a bit tired and nervous, but also excited to meet her daughter.
+She checks the note she wrote before leaving home:
+"Terminal 2, Exit 5. Meet daughter here."
+But the airport signs are confusing. Everything is written in English, and she's not sure which direction to go.
+She takes a deep breath and approaches a staff member in a yellow vest.
+"Excuse me... can you help me?" she asks, carefully.
+She shows the paper and adds, "My daughter is waiting at Terminal 2... Exit 5."
+The staff member smiles and replies clearly,
+"Go straight, then turn left. It's near the coffee shop."
+Though she doesn't understand every word, she catches "straight" and "left." That's enough.
+She bows slightly and says, "Thank you very much."
+Following the directions, she soon sees a familiar face — her daughter, waving.
+Relief and joy flood her heart. She made it.
+
+[KO] 와~ 같은 이야기인데 레벨별로 들으니까 다르죠?
+이렇게 반복하면 자연스럽게 영어 실력이 올라가요!
+
+[KO] 자, 이제 퀴즈 타임이에요! 간단하니까 겁먹지 마세요~
+
+[KO] 첫번째 문제. 영자 씨는 어디에 있나요?
+
+[EN] Where is Young-ja?
+
+[KO] 정답은~
+
+[EN] At the airport.
+
+[KO] 공항이죠! 쉽죠?
+
+[KO] 두번째 문제. 누가 영자 씨를 도와줬나요?
+
+[EN] Who helps her?
+
+[KO] 정답은~
+
+[EN] A worker.
+
+[KO] 직원이요! 노란 조끼 입은 분~
+
+[KO] 세번째 문제. 이야기 끝에서 영자 씨 기분은 어땠나요?
+
+[EN] How does she feel at the end?
+
+[KO] 정답은~
+
+[EN] Happy!
+
+[KO] 행복! 딸을 찾았으니까요~
+
+[KO] 이번엔 A2 레벨 퀴즈! 조금 더 생각해봐요~
+
+[KO] 영자 씨는 왜 공항에 있나요?
+
+[EN] Why is Young-ja at the airport?
+
+[KO] 정답은~
+
+[EN] To meet her daughter.
+
+[KO] 딸을 만나러 왔죠!
+
+[KO] 영자 씨 메모에는 뭐라고 적혀있었나요?
+
+[EN] What is written on her note?
+
+[KO] 정답은~
+
+[EN] Terminal 2, Exit 5.
+
+[KO] 맞아요! 터미널 2, 출구 5!
+
+[KO] 직원이 알려준 방향은요?
+
+[EN] What direction did the worker say?
+
+[KO] 정답은~
+
+[EN] Go straight, then turn left.
+
+[KO] 직진해서 왼쪽으로!
+
+[KO] 마지막! 영자 씨가 끝에 본 건 뭐였나요?
+
+[EN] What did she see at the end?
+
+[KO] 정답은~
+
+[EN] Her daughter waving.
+
+[KO] 딸이 손을 흔들고 있었어요! 감동이죠~
+
+[KO] 자, 이제 재미있는 게임도 해볼까요?
+사이트에 가면 6개 게임이 있어요!
+
+[KO] 게임 1. 단어 고르기!
+
+[EN] Excuse me, can you blank me?
+
+[KO] 빈칸에 들어갈 단어는? help, give, take 중에서~
+
+[EN] Help!
+
+[KO] 맞아요, help!
+
+[KO] 게임 2. 단어 순서 맞추기!
+뒤죽박죽 된 단어들을 올바른 순서로 배열하는 거예요.
+정답은 물론~
+
+[EN] Excuse me. Can you help me?
+
+[KO] 이거 한 문장이면 어디서든 도움 받을 수 있어요!
+
+[KO] 게임 3. 매칭 게임!
+영어 단어와 한국어 뜻을 연결하는 거예요.
+
+[EN] Terminal.
+[KO] 터미널.
+[EN] Exit.
+[KO] 출구.
+[EN] Worker.
+[KO] 직원.
+[EN] Direction.
+[KO] 방향.
+[EN] Airport.
+[KO] 공항.
+
+[KO] 게임 4. 빈칸 채우기!
+
+[EN] She showed her blank to the worker.
+
+[KO] note, bag, phone 중에서 정답은?
+
+[EN] Note!
+
+[KO] 맞아요, 메모를 보여줬죠!
+
+[KO] 게임 5. 번역 게임!
+"실례합니다, 도와주실 수 있나요?"를 영어로 하면?
+
+[EN] Excuse me, can you help me?
+
+[KO] 완벽해요~!
+
+[KO] 게임 6. 대화 완성하기!
+직원이 이렇게 물어봐요.
+
+[EN] Can I help you?
+
+[KO] 영자 씨가 뭐라고 대답했을까요?
+
+[EN] Excuse me, Terminal 2?
+
+[KO] 맞아요! 간단하게 목적지를 말하면 돼요!
+
+[KO] 오늘의 핵심 표현 마지막으로 한번 더!
+
+[EN] Excuse me. Can you help me?
+
+[KO] 이 한 문장으로 영자 씨는 공항에서 딸을 찾았어요.
+여러분도 충분히 할 수 있어요!
+
+[KO] 더 많은 수업은 cecenglishcamp.github.io에서 만나보세요!
+다음 에피소드에서 만나요~ 감사합니다!
+
+[EN] See you in the next episode. Thank you!`;
+
+/* ── PARSE ── */
+function parseScript(raw) {
+  const parts = [];
+  const regex = /\[(KO|EN)\]\s*/g;
+  let match;
+  const tags = [];
+  while ((match = regex.exec(raw)) !== null) {
+    tags.push({ lang: match[1].toLowerCase(), idx: match.index, end: regex.lastIndex });
+  }
+  for (let i = 0; i < tags.length; i++) {
+    const textStart = tags[i].end;
+    const textEnd = (i + 1 < tags.length) ? tags[i + 1].idx : raw.length;
+    const body = raw.substring(textStart, textEnd).trim();
+    if (body) parts.push({ lang: tags[i].lang, body });
+  }
+  return parts;
+}
+
+const sections = parseScript(RAW_SCRIPT);
+
+/*
+ * ── SCROLL MAP ──
+ * Maps section index ranges to CSS selectors in the iframe.
+ * { maxIdx, selector, tab? [prefix, level] }
+ * "maxIdx" = last section index (inclusive) this rule covers.
+ */
+const scrollMap = [
+  { maxIdx:  1, sel: '.situation-banner' },
+  { maxIdx:  8, sel: '.key-card' },
+  { maxIdx: 14, sel: '.story-kr' },
+  { maxIdx: 22, sel: '.story-kr' },          /* grammar patterns - still story context */
+  { maxIdx: 39, sel: '.story-kr' },           /* vocab words */
+  { maxIdx: 41, sel: '#story-a1', tab: ['story','a1'] },  /* A1 story */
+  { maxIdx: 43, sel: '#story-a2', tab: ['story','a2'] },  /* A2 story */
+  { maxIdx: 46, sel: '#story-b1', tab: ['story','b1'] },  /* B1 story */
+  { maxIdx: 62, sel: '#quiz-a1',  tab: ['quiz','a1'] },   /* A1 quiz */
+  { maxIdx: 83, sel: '#quiz-a2',  tab: ['quiz','a2'] },   /* A2 quiz */
+  { maxIdx: 89, sel: '#g1bl' },               /* game 1 */
+  { maxIdx: 92, sel: '#g2zone' },             /* game 2 */
+  { maxIdx:103, sel: '#g3fb' },               /* game 3 */
+  { maxIdx:108, sel: '#g4bl' },               /* game 4 */
+  { maxIdx:111, sel: '#g5fb' },               /* game 5 */
+  { maxIdx:116, sel: '#g6fb' },               /* game 6 */
+  { maxIdx:999, sel: '.key-card' },           /* closing - back to key expression */
+];
+
+/* ── STATE ── */
+let curIdx       = 0;
+let playing      = false;
+let playbackRate = 1.0;
+let audio        = null;
+let blobUrl      = null;
+let endTimer     = null;
+
+/* ── DOM ── */
+const playBtn = document.getElementById('ttsPlayBtn');
+const infoEl  = document.getElementById('ttsInfo');
+const frame   = document.getElementById('epFrame');
+
+/* ── IFRAME HELPERS ── */
+function getIframeDoc() {
+  try { return frame.contentDocument || frame.contentWindow.document; } catch(e) { return null; }
+}
+
+function iframeScroll(idx) {
+  const doc = getIframeDoc();
+  if (!doc) return;
+
+  const rule = scrollMap.find(r => idx <= r.maxIdx);
+  if (!rule) return;
+
+  // Switch tab if needed
+  if (rule.tab) {
+    try {
+      const fn = frame.contentWindow.showTab;
+      if (fn) fn(rule.tab[0], rule.tab[1], null);
+    } catch(e) {}
+  }
+
+  // Scroll to element
+  try {
+    const el = doc.querySelector(rule.sel);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch(e) {}
+}
+
+/* ── AUDIO CLEANUP ── */
+function stopAudio() {
+  if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+  if (audio) {
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    audio = null;
+  }
+  if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+}
+
+/* ── TTS FETCH & PLAY ── */
+async function playSection(idx) {
+  if (idx >= sections.length) { finish(); return; }
+
+  stopAudio();
+  curIdx = idx;
+  iframeScroll(idx);
+  infoEl.textContent = (idx + 1) + '/' + sections.length;
+
+  const sec  = sections[idx];
+  const isKo = sec.lang === 'ko';
+
+  let blob;
+  try {
+    const res = await fetch(TTS_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + TTS_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text:  sec.body,
+        voice: isKo ? 'alloy' : 'fable',
+        speed: isKo ? 1.0 : 0.75
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    blob = await res.blob();
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('TTS error:', e);
+    playing = false;
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    return;
+  }
+
+  if (!playing) return;
+
+  blobUrl = URL.createObjectURL(blob);
+  audio = new Audio(blobUrl);
+  audio.playbackRate = playbackRate;
+
+  let ended = false;
+  function onEnd() {
+    if (ended) return;
+    ended = true;
+    if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+    if (playing) playSection(idx + 1);
+  }
+
+  audio.addEventListener('ended', onEnd);
+  audio.addEventListener('error', () => { infoEl.textContent = 'ERR'; });
+
+  try {
+    await audio.play();
+    // Fallback timeout in case ended event doesn't fire
+    if (audio.duration && isFinite(audio.duration)) {
+      endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+    } else {
+      audio.addEventListener('loadedmetadata', () => {
+        if (!ended && audio.duration && isFinite(audio.duration)) {
+          endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+        }
+      });
+    }
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('Play error:', e);
+  }
+}
+
+/* ── CONTROLS ── */
+function toggleTTS() {
+  if (playing) {
+    playing = false;
+    if (audio) audio.pause();
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    infoEl.textContent = 'Paused';
+  } else {
+    playing = true;
+    playBtn.textContent = '\u23F8';
+    playBtn.classList.add('active');
+
+    if (audio && audio.paused && audio.currentTime > 0 && !audio.ended) {
+      audio.play();
+    } else {
+      playSection(curIdx);
+    }
+  }
+}
+
+function ttsNext() {
+  stopAudio();
+  curIdx = Math.min(curIdx + 1, sections.length - 1);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function ttsPrev() {
+  stopAudio();
+  curIdx = Math.max(curIdx - 1, 0);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function onSpeedChange() {
+  playbackRate = parseFloat(document.getElementById('ttsSpeed').value);
+  if (audio) audio.playbackRate = playbackRate;
+}
+
+function finish() {
+  playing = false;
+  playBtn.textContent = '\u25B6';
+  playBtn.classList.remove('active');
+  infoEl.textContent = 'Done';
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', (e) => {
+  // Only handle if not typing in an input
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.code === 'F2')         { e.preventDefault(); toggleTTS(); }
+  else if (e.code === 'F3')    { e.preventDefault(); ttsNext(); }
+  else if (e.code === 'F1')    { e.preventDefault(); ttsPrev(); }
+});
+</script>
 </body>
 </html>
