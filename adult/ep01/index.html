@@ -449,30 +449,17 @@ const playBtn = document.getElementById('ttsPlayBtn');
 const infoEl  = document.getElementById('ttsInfo');
 const frame   = document.getElementById('epFrame');
 
-/* ── IFRAME HELPERS ── */
-function getIframeDoc() {
-  try { return frame.contentDocument || frame.contentWindow.document; } catch(e) { return null; }
-}
-
+/* ── SCROLL VIA postMessage (no direct iframe DOM access) ── */
 function iframeScroll(idx) {
-  const doc = getIframeDoc();
-  if (!doc) return;
-
   const rule = scrollMap.find(r => idx <= r.maxIdx);
   if (!rule) return;
-
-  // Switch tab if needed
-  if (rule.tab) {
-    try {
-      const fn = frame.contentWindow.showTab;
-      if (fn) fn(rule.tab[0], rule.tab[1], null);
-    } catch(e) {}
-  }
-
-  // Scroll to element
   try {
-    const el = doc.querySelector(rule.sel);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const win = frame.contentWindow;
+    if (!win) return;
+    if (rule.tab) {
+      win.postMessage({ type: 'showTab', prefix: rule.tab[0], level: rule.tab[1] }, '*');
+    }
+    win.postMessage({ type: 'scrollTo', selector: rule.sel }, '*');
   } catch(e) {}
 }
 
