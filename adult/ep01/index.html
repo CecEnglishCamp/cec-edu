@@ -385,10 +385,17 @@ Relief and joy flood her heart. She made it.
 [KO] 이 한 문장으로 영자 씨는 공항에서 딸을 찾았어요.
 여러분도 충분히 할 수 있어요!
 
-[KO] 더 많은 수업은 cecenglishcamp.github.io에서 만나보세요!
-다음 에피소드에서 만나요~ 감사합니다!
+[KO] 오늘 공부 정말 잘 하셨어요!
+이제 오늘 배운 표현을 AI 선생님과 직접 연습해보세요.
+페이지 아래 ChatGPT 버튼을 누르면
+AI 선생님이 기다리고 있어요.
+자유롭게 영어로 대화해보세요~ 화이팅!
 
-[EN] See you in the next episode. Thank you!`;
+[EN] Great job today!
+Now practice with your AI teacher.
+Click the ChatGPT button below. You can do it!
+
+[KO] 다음 에피소드에서 또 만나요~ 감사합니다!`;
 
 /* ── PARSE ── */
 function parseScript(raw) {
@@ -417,23 +424,23 @@ const sections = parseScript(RAW_SCRIPT);
  * "maxIdx" = last section index (inclusive) this rule covers.
  */
 const scrollMap = [
-  { maxIdx:  1, sel: '.situation-banner' },
-  { maxIdx:  8, sel: '.key-card' },
-  { maxIdx: 14, sel: '.story-kr' },
-  { maxIdx: 22, sel: '.story-kr' },          /* grammar patterns - still story context */
-  { maxIdx: 39, sel: '.story-kr' },           /* vocab words */
-  { maxIdx: 41, sel: '#story-a1', tab: ['story','a1'] },  /* A1 story */
-  { maxIdx: 43, sel: '#story-a2', tab: ['story','a2'] },  /* A2 story */
-  { maxIdx: 46, sel: '#story-b1', tab: ['story','b1'] },  /* B1 story */
-  { maxIdx: 62, sel: '#quiz-a1',  tab: ['quiz','a1'] },   /* A1 quiz */
-  { maxIdx: 83, sel: '#quiz-a2',  tab: ['quiz','a2'] },   /* A2 quiz */
+  { maxIdx:  1, sel: null },                   /* opening — stay on image, no scroll */
+  { maxIdx:  8, sel: '.key-card' },            /* key expression + practice */
+  { maxIdx: 14, sel: '.story-kr' },            /* story dialogue */
+  { maxIdx: 22, sel: '.story-kr' },            /* grammar patterns */
+  { maxIdx: 39, sel: '.story-kr' },            /* vocab words */
+  { maxIdx: 41, sel: '#story-a1', tab: ['story','a1'] },
+  { maxIdx: 43, sel: '#story-a2', tab: ['story','a2'] },
+  { maxIdx: 46, sel: '#story-b1', tab: ['story','b1'] },
+  { maxIdx: 62, sel: '#quiz-a1',  tab: ['quiz','a1'] },
+  { maxIdx: 83, sel: '#quiz-a2',  tab: ['quiz','a2'] },
   { maxIdx: 89, sel: '#g1bl' },               /* game 1 */
   { maxIdx: 92, sel: '#g2zone' },             /* game 2 */
   { maxIdx:103, sel: '#g3fb' },               /* game 3 */
   { maxIdx:108, sel: '#g4bl' },               /* game 4 */
   { maxIdx:111, sel: '#g5fb' },               /* game 5 */
   { maxIdx:116, sel: '#g6fb' },               /* game 6 */
-  { maxIdx:999, sel: '.key-card' },           /* closing - back to key expression */
+  { maxIdx:999, sel: '#ai-tutor-widget' },    /* closing — AI tutor area */
 ];
 
 /* ── STATE ── */
@@ -452,7 +459,7 @@ const frame   = document.getElementById('epFrame');
 /* ── SCROLL VIA postMessage (no direct iframe DOM access) ── */
 function iframeScroll(idx) {
   const rule = scrollMap.find(r => idx <= r.maxIdx);
-  if (!rule) return;
+  if (!rule || !rule.sel) return;  /* null sel = stay put (e.g. opening image) */
   try {
     const win = frame.contentWindow;
     if (!win) return;
