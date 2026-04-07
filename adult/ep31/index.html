@@ -415,9 +415,7 @@ async function playSection(idx) {
   } catch(e) {
     infoEl.textContent = 'ERR';
     console.error('TTS error:', e);
-    playing = false;
-    playBtn.textContent = '\u25B6';
-    playBtn.classList.remove('active');
+    if (playing) { setTimeout(() => playSection(idx + 1), 300); }
     return;
   }
 
@@ -436,7 +434,7 @@ async function playSection(idx) {
   }
 
   audio.addEventListener('ended', onEnd);
-  audio.addEventListener('error', () => { infoEl.textContent = 'ERR'; });
+  audio.addEventListener('error', () => { infoEl.textContent = 'ERR'; onEnd(); });
 
   try {
     await audio.play();
@@ -453,6 +451,7 @@ async function playSection(idx) {
   } catch(e) {
     infoEl.textContent = 'ERR';
     console.error('Play error:', e);
+    onEnd();
   }
 }
 
