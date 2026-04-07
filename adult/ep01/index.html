@@ -6,71 +6,102 @@
 <title>Camp C — EP01</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Outfit',sans-serif;background:#000;overflow:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#000;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px}
-.nav-logo{font-weight:800;font-size:.95rem;color:#fff;text-decoration:none;white-space:nowrap;font-family:'Outfit',sans-serif}
-.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
-.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.78rem;font-weight:500;padding:4px 5px}
-.nav-links a.active{color:#00f2ff;font-weight:700}
-.nav-sep{color:rgba(255,255,255,.2);font-size:.65rem}
-.nav-register{background:#00f2ff;color:#000;font-size:.78rem;font-weight:800;padding:7px 16px;border-radius:50px;text-decoration:none;white-space:nowrap}
-iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100vh - 52px);border:none}
+body{font-family:'Noto Sans KR','Segoe UI',sans-serif;background:#f0f4ff;color:#1a1a2e;overflow:hidden;height:100vh}
 
-/* ── TTS CONTROLLER (nearly invisible for OBS) ── */
-.tts-ctrl{
-  position:fixed;bottom:4px;right:4px;z-index:10000;
-  display:flex;align-items:center;gap:4px;
-  background:rgba(0,0,0,.15);backdrop-filter:blur(4px);
-  border-radius:8px;padding:3px 6px;
-  opacity:0.08;transition:opacity .3s;
-  font-family:'Segoe UI',sans-serif;
-}
-.tts-ctrl:hover{opacity:0.85}
-.tts-ctrl button{
-  background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);
-  width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;
+/* ── FULLSCREEN SECTION DISPLAY ── */
+.stage{
+  position:fixed;inset:0;
   display:flex;align-items:center;justify-content:center;
+  padding:40px 60px;
 }
-.tts-ctrl button:hover{background:rgba(255,255,255,.15)}
-.tts-ctrl button.active{background:rgba(233,69,96,.6);border-color:rgba(233,69,96,.8)}
+.slide{
+  width:100%;max-width:1400px;
+  text-align:center;
+  opacity:0;transition:opacity .5s ease;
+  position:absolute;pointer-events:none;
+}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* ── LANGUAGE BADGES ── */
+.lang-tag{
+  display:inline-block;
+  padding:6px 20px;border-radius:30px;
+  font-size:14px;font-weight:800;letter-spacing:2px;
+  margin-bottom:24px;
+}
+.lang-tag.ko{background:rgba(0,150,255,.12);color:#0070d6;border:2px solid rgba(0,150,255,.2)}
+.lang-tag.en{background:rgba(233,69,96,.1);color:#e94560;border:2px solid rgba(233,69,96,.2)}
+
+/* ── TEXT STYLES ── */
+.text-ko{
+  font-size:32px;line-height:1.9;color:#222;
+  white-space:pre-wrap;font-weight:500;
+}
+.text-en{
+  font-size:38px;line-height:1.8;color:#1a1a2e;
+  white-space:pre-wrap;font-weight:800;
+  font-family:'Outfit','Noto Sans KR',sans-serif;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{
+  position:fixed;top:0;left:0;right:0;height:4px;z-index:100;
+  background:rgba(0,0,0,.06);
+}
+.progress-fill{
+  height:100%;background:linear-gradient(90deg,#0070d6,#e94560);
+  transition:width .4s ease;width:0;
+}
+
+/* ── SECTION COUNTER ── */
+.counter{
+  position:fixed;top:12px;right:20px;z-index:100;
+  font-size:13px;font-weight:700;color:#888;
+  font-family:'Consolas',monospace;
+}
+
+/* ── TTS CONTROLLER ── */
+.tts-ctrl{
+  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:10000;
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(10px);
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:40px;padding:6px 16px;
+  opacity:0.15;transition:opacity .3s;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+}
+.tts-ctrl:hover{opacity:1}
+.tts-ctrl button{
+  background:none;border:2px solid rgba(0,0,0,.15);color:#333;
+  width:36px;height:36px;border-radius:50%;font-size:15px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.tts-ctrl button:hover{background:rgba(0,112,214,.1);border-color:#0070d6;color:#0070d6}
+.tts-ctrl button.active{background:#e94560;border-color:#e94560;color:#fff}
 .tts-ctrl .tts-info{
-  font-size:10px;color:rgba(255,255,255,.7);max-width:120px;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:12px;color:#666;font-weight:600;min-width:50px;text-align:center;
 }
 .tts-ctrl select{
-  background:rgba(0,0,0,.3);color:rgba(255,255,255,.8);
-  border:1px solid rgba(255,255,255,.2);border-radius:4px;
-  font-size:10px;padding:2px 4px;cursor:pointer;
+  background:#f5f5f5;color:#333;
+  border:1px solid rgba(0,0,0,.1);border-radius:8px;
+  font-size:12px;padding:4px 8px;cursor:pointer;font-weight:600;
 }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<nav>
-  <a href="/cec-edu/" class="nav-logo">CEC English Camp</a>
-  <ul class="nav-links">
-    <li><a href="/cec-edu/about/">About</a></li>
-    <li class="nav-sep">•</li>
-    <li><a href="/cec-edu/elementary/">Camp A</a></li>
-    <li class="nav-sep">•</li>
-    <li><a href="/cec-edu/middle-high/">Camp B</a></li>
-    <li class="nav-sep">•</li>
-    <li><a href="/cec-edu/adult/" class="active">Camp C</a></li>
-    <li class="nav-sep">•</li>
-    <li><a href="/cec-edu/grammar/">Grammar</a></li>
-    <li class="nav-sep">•</li>
-    <li><a href="/cec-edu/speaking/">Speaking</a></li>
-    <li class="nav-sep">•</li>
-    <li><a href="/cec-edu/mom-teacher/">Mom Teacher</a></li>
-  </ul>
-  <a href="/cec-edu/register/" class="nav-register">Register</a>
-</nav>
-<iframe id="epFrame" src="/camp-c/ep01.html" title="Camp C Episode 01"></iframe>
 
-<!-- TTS CONTROLLER (nearly invisible — hover to reveal) -->
+<div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+<div class="counter" id="counter">0 / 0</div>
+
+<div class="stage" id="stage">
+  <!-- Slides injected by JS -->
+</div>
+
 <div class="tts-ctrl" id="ttsCtrl">
-  <button id="ttsPlayBtn" onclick="toggleTTS()" title="Play/Pause">&#9654;</button>
   <button onclick="ttsPrev()" title="Prev">&#9664;</button>
+  <button id="ttsPlayBtn" onclick="toggleTTS()" title="Play/Pause">&#9654;</button>
   <button onclick="ttsNext()" title="Next">&#9654;</button>
   <select id="ttsSpeed" onchange="onSpeedChange()" title="Speed">
     <option value="0.8">0.8x</option>
@@ -82,14 +113,10 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   TTS AUTO-NARRATION + IFRAME SCROLL CONTROLLER
-   ══════════════════════════════════════════════ */
-
 const TTS_URL   = 'https://journey-bronzy-fruitily.ngrok-free.dev/api/tts';
 const TTS_TOKEN = 'cec-speaking-2026';
 
-/* ── SCRIPT DATA ── */
+/* ── SCRIPT ── */
 const RAW_SCRIPT = `[KO] 안녕하세요 여러분~ CEC 영어캠프에 오신 걸 환영합니다!
 오늘은 Camp C 에피소드 1, 공항에 도착하는 이야기예요.
 우리의 주인공, 박영자 씨! 딸을 만나러 혼자 LA 공항에 왔어요.
@@ -417,31 +444,25 @@ function parseScript(raw) {
 
 const sections = parseScript(RAW_SCRIPT);
 
-/*
- * ── SCROLL MAP ──
- * Maps section index ranges to CSS selectors in the iframe.
- * { maxIdx, selector, tab? [prefix, level] }
- * "maxIdx" = last section index (inclusive) this rule covers.
- */
-const scrollMap = [
-  { maxIdx:  1, sel: null },                   /* opening — stay on image, no scroll */
-  { maxIdx:  8, sel: '.key-card' },            /* key expression + practice */
-  { maxIdx: 14, sel: '.story-kr' },            /* story dialogue */
-  { maxIdx: 22, sel: '.story-kr' },            /* grammar patterns */
-  { maxIdx: 39, sel: '.story-kr' },            /* vocab words */
-  { maxIdx: 41, sel: '#story-a1', tab: ['story','a1'] },
-  { maxIdx: 43, sel: '#story-a2', tab: ['story','a2'] },
-  { maxIdx: 46, sel: '#story-b1', tab: ['story','b1'] },
-  { maxIdx: 62, sel: '#quiz-a1',  tab: ['quiz','a1'] },
-  { maxIdx: 83, sel: '#quiz-a2',  tab: ['quiz','a2'] },
-  { maxIdx: 89, sel: '#g1bl' },               /* game 1 */
-  { maxIdx: 92, sel: '#g2zone' },             /* game 2 */
-  { maxIdx:103, sel: '#g3fb' },               /* game 3 */
-  { maxIdx:108, sel: '#g4bl' },               /* game 4 */
-  { maxIdx:111, sel: '#g5fb' },               /* game 5 */
-  { maxIdx:116, sel: '#g6fb' },               /* game 6 */
-  { maxIdx:999, sel: '#ai-tutor-widget' },    /* closing — AI tutor area */
-];
+/* ── BUILD SLIDES ── */
+const stage = document.getElementById('stage');
+sections.forEach((sec, i) => {
+  const div = document.createElement('div');
+  div.className = 'slide' + (i === 0 ? ' active' : '');
+  div.id = 'slide-' + i;
+
+  const tag = document.createElement('div');
+  tag.className = 'lang-tag ' + sec.lang;
+  tag.textContent = sec.lang === 'ko' ? 'KO' : 'EN';
+
+  const txt = document.createElement('div');
+  txt.className = sec.lang === 'ko' ? 'text-ko' : 'text-en';
+  txt.textContent = sec.body;
+
+  div.appendChild(tag);
+  div.appendChild(txt);
+  stage.appendChild(div);
+});
 
 /* ── STATE ── */
 let curIdx       = 0;
@@ -451,44 +472,35 @@ let audio        = null;
 let blobUrl      = null;
 let endTimer     = null;
 
-/* ── DOM ── */
-const playBtn = document.getElementById('ttsPlayBtn');
-const infoEl  = document.getElementById('ttsInfo');
-const frame   = document.getElementById('epFrame');
+const playBtn    = document.getElementById('ttsPlayBtn');
+const infoEl     = document.getElementById('ttsInfo');
+const counterEl  = document.getElementById('counter');
+const progFill   = document.getElementById('progFill');
 
-/* ── SCROLL VIA postMessage (no direct iframe DOM access) ── */
-function iframeScroll(idx) {
-  const rule = scrollMap.find(r => idx <= r.maxIdx);
-  if (!rule || !rule.sel) return;  /* null sel = stay put (e.g. opening image) */
-  try {
-    const win = frame.contentWindow;
-    if (!win) return;
-    if (rule.tab) {
-      win.postMessage({ type: 'showTab', prefix: rule.tab[0], level: rule.tab[1] }, '*');
-    }
-    win.postMessage({ type: 'scrollTo', selector: rule.sel }, '*');
-  } catch(e) {}
+function updateUI() {
+  counterEl.textContent = (curIdx + 1) + ' / ' + sections.length;
+  progFill.style.width = ((curIdx + 1) / sections.length * 100).toFixed(1) + '%';
 }
 
-/* ── AUDIO CLEANUP ── */
+function showSlide(idx) {
+  document.querySelectorAll('.slide').forEach((s, i) => {
+    s.classList.toggle('active', i === idx);
+  });
+  updateUI();
+}
+
+/* ── AUDIO ── */
 function stopAudio() {
   if (endTimer) { clearTimeout(endTimer); endTimer = null; }
-  if (audio) {
-    audio.pause();
-    audio.removeAttribute('src');
-    audio.load();
-    audio = null;
-  }
+  if (audio) { audio.pause(); audio.removeAttribute('src'); audio.load(); audio = null; }
   if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
 }
 
-/* ── TTS FETCH & PLAY ── */
 async function playSection(idx) {
   if (idx >= sections.length) { finish(); return; }
-
   stopAudio();
   curIdx = idx;
-  iframeScroll(idx);
+  showSlide(idx);
   infoEl.textContent = (idx + 1) + '/' + sections.length;
 
   const sec  = sections[idx];
@@ -498,27 +510,16 @@ async function playSection(idx) {
   try {
     const res = await fetch(TTS_URL, {
       method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + TTS_TOKEN,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        text:  sec.body,
-        voice: isKo ? 'alloy' : 'fable',
-        speed: isKo ? 1.0 : 0.75
-      })
+      headers: { 'Authorization': 'Bearer ' + TTS_TOKEN, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: sec.body, voice: isKo ? 'alloy' : 'fable', speed: isKo ? 1.0 : 0.75 })
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     blob = await res.blob();
   } catch(e) {
     infoEl.textContent = 'ERR';
-    console.error('TTS error:', e);
-    playing = false;
-    playBtn.textContent = '\u25B6';
-    playBtn.classList.remove('active');
+    playing = false; playBtn.textContent = '\u25B6'; playBtn.classList.remove('active');
     return;
   }
-
   if (!playing) return;
 
   blobUrl = URL.createObjectURL(blob);
@@ -527,31 +528,24 @@ async function playSection(idx) {
 
   let ended = false;
   function onEnd() {
-    if (ended) return;
-    ended = true;
+    if (ended) return; ended = true;
     if (endTimer) { clearTimeout(endTimer); endTimer = null; }
     if (playing) playSection(idx + 1);
   }
-
   audio.addEventListener('ended', onEnd);
   audio.addEventListener('error', () => { infoEl.textContent = 'ERR'; });
 
   try {
     await audio.play();
-    // Fallback timeout in case ended event doesn't fire
     if (audio.duration && isFinite(audio.duration)) {
       endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
     } else {
       audio.addEventListener('loadedmetadata', () => {
-        if (!ended && audio.duration && isFinite(audio.duration)) {
+        if (!ended && audio.duration && isFinite(audio.duration))
           endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
-        }
       });
     }
-  } catch(e) {
-    infoEl.textContent = 'ERR';
-    console.error('Play error:', e);
-  }
+  } catch(e) { infoEl.textContent = 'ERR'; }
 }
 
 /* ── CONTROLS ── */
@@ -559,14 +553,11 @@ function toggleTTS() {
   if (playing) {
     playing = false;
     if (audio) audio.pause();
-    playBtn.textContent = '\u25B6';
-    playBtn.classList.remove('active');
+    playBtn.textContent = '\u25B6'; playBtn.classList.remove('active');
     infoEl.textContent = 'Paused';
   } else {
     playing = true;
-    playBtn.textContent = '\u23F8';
-    playBtn.classList.add('active');
-
+    playBtn.textContent = '\u23F8'; playBtn.classList.add('active');
     if (audio && audio.paused && audio.currentTime > 0 && !audio.ended) {
       audio.play();
     } else {
@@ -578,15 +569,15 @@ function toggleTTS() {
 function ttsNext() {
   stopAudio();
   curIdx = Math.min(curIdx + 1, sections.length - 1);
+  showSlide(curIdx);
   if (playing) playSection(curIdx);
-  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
 }
 
 function ttsPrev() {
   stopAudio();
   curIdx = Math.max(curIdx - 1, 0);
+  showSlide(curIdx);
   if (playing) playSection(curIdx);
-  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
 }
 
 function onSpeedChange() {
@@ -596,19 +587,23 @@ function onSpeedChange() {
 
 function finish() {
   playing = false;
-  playBtn.textContent = '\u25B6';
-  playBtn.classList.remove('active');
+  playBtn.textContent = '\u25B6'; playBtn.classList.remove('active');
   infoEl.textContent = 'Done';
 }
 
 /* ── KEYBOARD ── */
 document.addEventListener('keydown', (e) => {
-  // Only handle if not typing in an input
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  if (e.code === 'F2')         { e.preventDefault(); toggleTTS(); }
-  else if (e.code === 'F3')    { e.preventDefault(); ttsNext(); }
-  else if (e.code === 'F1')    { e.preventDefault(); ttsPrev(); }
+  if (e.code === 'Space')  { e.preventDefault(); toggleTTS(); }
+  else if (e.code === 'ArrowRight') { e.preventDefault(); ttsNext(); }
+  else if (e.code === 'ArrowLeft')  { e.preventDefault(); ttsPrev(); }
+  else if (e.code === 'F2')         { e.preventDefault(); toggleTTS(); }
+  else if (e.code === 'F3')         { e.preventDefault(); ttsNext(); }
+  else if (e.code === 'F1')         { e.preventDefault(); ttsPrev(); }
 });
+
+/* ── INIT ── */
+showSlide(0);
 </script>
 </body>
 </html>
