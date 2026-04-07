@@ -15,6 +15,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#000;border-bott
 .nav-sep{color:rgba(255,255,255,.2);font-size:.65rem}
 .nav-register{background:#00f2ff;color:#000;font-size:.78rem;font-weight:800;padding:7px 16px;border-radius:50px;text-decoration:none;white-space:nowrap}
 iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100vh - 52px);border:none}
+
+/* ── TTS CONTROLLER (nearly invisible for OBS) ── */
+.tts-ctrl{
+  position:fixed;bottom:4px;right:4px;z-index:10000;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(0,0,0,.15);backdrop-filter:blur(4px);
+  border-radius:8px;padding:3px 6px;
+  opacity:0.08;transition:opacity .3s;
+  font-family:'Segoe UI',sans-serif;
+}
+.tts-ctrl:hover{opacity:0.85}
+.tts-ctrl button{
+  background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);
+  width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.tts-ctrl button:hover{background:rgba(255,255,255,.15)}
+.tts-ctrl button.active{background:rgba(233,69,96,.6);border-color:rgba(233,69,96,.8)}
+.tts-ctrl .tts-info{
+  font-size:10px;color:rgba(255,255,255,.7);max-width:120px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.tts-ctrl select{
+  background:rgba(0,0,0,.3);color:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.2);border-radius:4px;
+  font-size:10px;padding:2px 4px;cursor:pointer;
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
 </head>
@@ -38,6 +65,451 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
   </ul>
   <a href="/cec-edu/register/" class="nav-register">Register</a>
 </nav>
-<iframe src="/camp-c/ep07.html" title="Camp C Episode 07"></iframe>
+<iframe id="epFrame" src="/camp-c/ep07.html" title="Camp C Episode 07"></iframe>
+
+<!-- TTS CONTROLLER (nearly invisible — hover to reveal) -->
+<div class="tts-ctrl" id="ttsCtrl">
+  <button id="ttsPlayBtn" onclick="toggleTTS()" title="Play/Pause">&#9654;</button>
+  <button onclick="ttsPrev()" title="Prev">&#9664;</button>
+  <button onclick="ttsNext()" title="Next">&#9654;</button>
+  <select id="ttsSpeed" onchange="onSpeedChange()" title="Speed">
+    <option value="0.8">0.8x</option>
+    <option value="1.0" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+    <option value="1.5">1.5x</option>
+  </select>
+  <span class="tts-info" id="ttsInfo">Ready</span>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   TTS AUTO-NARRATION + IFRAME SCROLL CONTROLLER
+   ══════════════════════════════════════════════ */
+
+const TTS_URL   = 'https://journey-bronzy-fruitily.ngrok-free.dev/api/tts';
+const TTS_TOKEN = 'cec-speaking-2026';
+
+/* ── SCRIPT DATA ── */
+const RAW_SCRIPT = `[KO] 안녕하세요 여러분~ CEC 영어캠프에 오신 걸 환영합니다!
+오늘은 Camp C 에피소드 7, 동네 사람들과의 첫 인사 이야기예요.
+영자는 오늘도 아침 산책을 나섰습니다.
+
+[KO] 자, 오늘의 이야기를 들어볼까요?
+
+[KO] 영자는 오늘도 아침 산책을 나섰습니다.
+[KO] 며칠째 다니던 길이라 이제는 익숙했죠.
+[KO] 하지만 오늘은 뭔가 달랐습니다.
+[KO] “오늘은 반드시, 미국식 인사를 해보겠어!”
+[KO] 그녀는 평소에 딸이 말하던 말을 떠올렸습니다.
+[KO] “엄마, 그냥 ‘Hi!’ 아니면 ‘How are you?’라고 하면 돼요.”
+[KO] “하우아유… 하위… 하와이…”
+[KO] 영자는 입으로 연습하며 걷기 시작했습니다.
+[KO] 그때! 정면에서 개를 산책시키는 미국 아저씨가 다가왔습니다.
+[KO] 영자는 숨을 고르고 외쳤습니다.
+[KO] “하우아…!”
+[KO] 그런데 입이 꼬여
+[KO] “하워유… 와하하… 오하이오…”
+[KO] 아저씨는 미소를 지으며 “Good morning!” 하고 지나갔습니다.
+[KO] 영자는 민망함을 애써 감추고 옆에 있던 고양이에게 속삭였습니다.
+[KO] “야옹아, 나 발음 괜찮았지?”
+[KO] 그 다음엔 꽃밭을 가꾸던 아주머니가 있었습니다.
+[KO] 이번엔 자신 있게!
+[KO] “헬로우! 아이엠 영자!”
+[KO] 그랬더니 아주머니가 활짝 웃으며 말했습니다.
+[KO] “Oh, Young-ja! What a beautiful name!”
+[KO] 영자는 그제야 편안히 웃을 수 있었습니다.
+[KO] "어쨌든 이름 하나로 미국 정복 시작이다!"
+
+[KO] 오늘의 핵심 표현이에요. 잘 들어보세요~
+
+[EN] Nice to meet you!
+
+[KO] 만나서 반가워요!
+[KO] 어때요? 생각보다 쉽죠?
+자, 한번 같이 따라해봐요. 천천히 갈게요~
+
+[EN] Nice to meet you!
+
+[KO] 잘하셨어요! 한번 더 해볼까요?
+
+[EN] Nice to meet you!
+
+[KO] 완벽해요~!
+
+[KO] 먼저 오늘의 핵심 문장 패턴이에요.
+이 표현을 활용하면 다양한 상황에서 쓸 수 있어요!
+
+[EN] Nice to meet you!
+
+[KO] 오늘의 핵심 표현이에요!
+
+[KO] 이 패턴 하나면 정말 만능이에요!
+
+[KO] 이제 오늘의 주요 단어들을 같이 읽어볼게요.
+
+[EN] Neighbor.
+
+[KO] 이웃.
+
+[EN] Greeting.
+
+[KO] 인사.
+
+[EN] Practice.
+
+[KO] 연습하다.
+
+[EN] Nervous.
+
+[KO] 긴장된.
+
+[EN] Compliment.
+
+[KO] 칭찬.
+
+[KO] 좋아요! 이제 같은 이야기를 영어로 한번 읽어볼게요.
+가장 쉬운 버전부터 갈게요. 긴장하지 마세요~
+
+[EN] Young-ja walks in the morning.
+She wants to say hello.
+She sees a man with a dog.
+She says, “How… wa… why… hello!”
+The man says, “Good morning!”
+She talks to a cat.
+“Did I say it okay?”
+Then she sees a lady.
+She says, “Hello! I am Young-ja.”
+The lady smiles.
+“Your name is beautiful!”
+Young-ja is happy.
+
+[KO] 어때요? 다 아는 단어들이죠?
+이번엔 조금 더 자연스러운 버전으로 들어볼게요.
+
+[EN] It’s a sunny morning.
+Young-ja decides to practice saying hello.
+Her daughter told her,
+“Just say ‘Hi’ or ‘How are you?’”
+She walks and sees a man with a dog.
+She tries to say “How are you,”
+but it comes out as
+“Howa-you-ha-ha-hi-oh…”
+The man just smiles and says, “Good morning!”
+Young-ja laughs to herself and whispers to a cat nearby,
+“I tried.”
+Next, she meets a woman in her garden.
+This time she says clearly,
+“Hello! I’m Young-ja.”
+The woman replies,
+“Oh! What a lovely name!”
+Young-ja smiles with pride.
+One successful hello is enough for today!
+
+[KO] 점점 영어가 귀에 들어오죠?
+마지막으로 원어민 느낌 버전이에요. 한번 도전!
+
+[EN] Determined to make her first “real” American-style greeting,
+Young-ja stepped outside with a plan:
+Say hello. In English. Without fear.
+She had been practicing.
+“Hi… Hello… How are you… Hoo…Ha…Hawaii?”
+Okay, maybe still practicing.
+Soon, a man with a big dog came walking toward her.
+This was it!
+She took a deep breath and said,
+“How-a-you-wa-ha… oh…hi-yo?”
+The man blinked, smiled, and said,
+“Good morning!” like nothing happened.
+She turned and muttered to a nearby cat,
+“You saw that, right? Nailed it.”
+Moments later, she approached a woman tending flowers.
+“Hello! I’m Young-ja!” she said clearly.
+The woman beamed.
+“Oh, what a beautiful name!”
+Young-ja grinned.
+Day one of Operation Hello: complete.
+
+[KO] 와~ 같은 이야기인데 레벨별로 들으니까 다르죠?
+이렇게 반복하면 자연스럽게 영어 실력이 올라가요!
+
+[KO] 자, 이제 퀴즈 타임이에요! 간단하니까 겁먹지 마세요~
+
+[KO] 자, 이제 재미있는 게임도 해볼까요?
+사이트에 가면 6개 게임이 있어요!
+
+[KO] 게임 1. 단어 순서 맞추기!
+뒤죽박죽 된 단어들을 올바른 순서로 배열하는 거예요.
+정답은 물론~
+
+[EN] Nice to meet you!
+
+[KO] 이거 한 문장이면 어디서든 통해요!
+
+[KO] 게임 2. 매칭 게임!
+영어 단어와 한국어 뜻을 연결하는 거예요.
+
+[EN] Neighbor.
+[KO] 이웃.
+[EN] Greeting.
+[KO] 인사.
+[EN] Practice.
+[KO] 연습하다.
+[EN] Nervous.
+[KO] 긴장된.
+[EN] Compliment.
+[KO] 칭찬.
+
+[KO] 게임 3. 빈칸 채우기!
+
+[EN] "만나서 반가워요!"
+
+[KO] TRANSLATION 중에서 정답은?
+
+[EN] Translation!
+
+[KO] 맞아요!
+
+[KO] 게임 4. 번역 게임!
+"만나서 반가워요!"를 영어로 하면?
+
+[EN] Nice to meet you!
+
+[KO] 완벽해요~!
+
+[KO] 오늘의 핵심 표현 마지막으로 한번 더!
+
+[EN] Nice to meet you!
+
+[KO] 이 한 문장으로 영자 씨는 오늘도 잘 해냈어요.
+여러분도 충분히 할 수 있어요!
+
+[KO] 이 안에는 아주 다양하고 재미난 이야기들이 가득합니다.
+여러분을 기다리고 있어요~
+
+[KO] 오늘 공부 정말 잘 하셨어요!
+이제 오늘 배운 표현을 AI 선생님과 직접 연습해보세요.
+AI 선생님과 1대1 연습은 유튜브에서는 연결되지 않아요.
+CEC 영어캠프 웹사이트로 오시면 바로 연결됩니다!
+cecenglishcamp.github.io 에서 만나요~
+
+[EN] Great job today!
+Practice with your AI teacher at our website.
+See you at CEC English Camp!
+
+[KO] 다음 에피소드에서 또 만나요~ 감사합니다!`;
+
+/* ── PARSE ── */
+function parseScript(raw) {
+  const parts = [];
+  const regex = /\[(KO|EN)\]\s*/g;
+  let match;
+  const tags = [];
+  while ((match = regex.exec(raw)) !== null) {
+    tags.push({ lang: match[1].toLowerCase(), idx: match.index, end: regex.lastIndex });
+  }
+  for (let i = 0; i < tags.length; i++) {
+    const textStart = tags[i].end;
+    const textEnd = (i + 1 < tags.length) ? tags[i + 1].idx : raw.length;
+    const body = raw.substring(textStart, textEnd).trim();
+    if (body) parts.push({ lang: tags[i].lang, body });
+  }
+  return parts;
+}
+
+const sections = parseScript(RAW_SCRIPT);
+
+/*
+ * ── SCROLL MAP ──
+ * Maps section index ranges to CSS selectors in the iframe.
+ * { maxIdx, selector, tab? [prefix, level] }
+ * "maxIdx" = last section index (inclusive) this rule covers.
+ */
+const scrollMap = [
+  { maxIdx:  1, sel: null },                   /* opening — stay on image, no scroll */
+  { maxIdx:  8, sel: '.key-card' },            /* key expression + practice */
+  { maxIdx: 14, sel: '.story-kr' },            /* story dialogue */
+  { maxIdx: 22, sel: '.story-kr' },            /* grammar patterns */
+  { maxIdx: 39, sel: '.story-kr' },            /* vocab words */
+  { maxIdx: 41, sel: '#story-a1', tab: ['story','a1'] },
+  { maxIdx: 43, sel: '#story-a2', tab: ['story','a2'] },
+  { maxIdx: 46, sel: '#story-b1', tab: ['story','b1'] },
+  { maxIdx: 62, sel: '#quiz-a1',  tab: ['quiz','a1'] },
+  { maxIdx: 83, sel: '#quiz-a2',  tab: ['quiz','a2'] },
+  { maxIdx: 89, sel: '#g1bl' },               /* game 1 */
+  { maxIdx: 92, sel: '#g2zone' },             /* game 2 */
+  { maxIdx:103, sel: '#g3fb' },               /* game 3 */
+  { maxIdx:108, sel: '#g4bl' },               /* game 4 */
+  { maxIdx:111, sel: '#g5fb' },               /* game 5 */
+  { maxIdx:116, sel: '#g6fb' },               /* game 6 */
+  { maxIdx:999, sel: '#ai-tutor-widget' },    /* closing — AI tutor area */
+];
+
+/* ── STATE ── */
+let curIdx       = 0;
+let playing      = false;
+let playbackRate = 1.0;
+let audio        = null;
+let blobUrl      = null;
+let endTimer     = null;
+
+/* ── DOM ── */
+const playBtn = document.getElementById('ttsPlayBtn');
+const infoEl  = document.getElementById('ttsInfo');
+const frame   = document.getElementById('epFrame');
+
+/* ── SCROLL VIA postMessage (no direct iframe DOM access) ── */
+function iframeScroll(idx) {
+  const rule = scrollMap.find(r => idx <= r.maxIdx);
+  if (!rule || !rule.sel) return;  /* null sel = stay put (e.g. opening image) */
+  try {
+    const win = frame.contentWindow;
+    if (!win) return;
+    if (rule.tab) {
+      win.postMessage({ type: 'showTab', prefix: rule.tab[0], level: rule.tab[1] }, '*');
+    }
+    win.postMessage({ type: 'scrollTo', selector: rule.sel }, '*');
+  } catch(e) {}
+}
+
+/* ── AUDIO CLEANUP ── */
+function stopAudio() {
+  if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+  if (audio) {
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    audio = null;
+  }
+  if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+}
+
+/* ── TTS FETCH & PLAY ── */
+async function playSection(idx) {
+  if (idx >= sections.length) { finish(); return; }
+
+  stopAudio();
+  curIdx = idx;
+  iframeScroll(idx);
+  infoEl.textContent = (idx + 1) + '/' + sections.length;
+
+  const sec  = sections[idx];
+  const isKo = sec.lang === 'ko';
+
+  let blob;
+  try {
+    const res = await fetch(TTS_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + TTS_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text:  sec.body,
+        voice: isKo ? 'alloy' : 'fable',
+        speed: isKo ? 1.0 : 0.75
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    blob = await res.blob();
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('TTS error:', e);
+    playing = false;
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    return;
+  }
+
+  if (!playing) return;
+
+  blobUrl = URL.createObjectURL(blob);
+  audio = new Audio(blobUrl);
+  audio.playbackRate = playbackRate;
+
+  let ended = false;
+  function onEnd() {
+    if (ended) return;
+    ended = true;
+    if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+    if (playing) playSection(idx + 1);
+  }
+
+  audio.addEventListener('ended', onEnd);
+  audio.addEventListener('error', () => { infoEl.textContent = 'ERR'; });
+
+  try {
+    await audio.play();
+    // Fallback timeout in case ended event doesn't fire
+    if (audio.duration && isFinite(audio.duration)) {
+      endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+    } else {
+      audio.addEventListener('loadedmetadata', () => {
+        if (!ended && audio.duration && isFinite(audio.duration)) {
+          endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+        }
+      });
+    }
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('Play error:', e);
+  }
+}
+
+/* ── CONTROLS ── */
+function toggleTTS() {
+  if (playing) {
+    playing = false;
+    if (audio) audio.pause();
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    infoEl.textContent = 'Paused';
+  } else {
+    playing = true;
+    playBtn.textContent = '\u23F8';
+    playBtn.classList.add('active');
+
+    if (audio && audio.paused && audio.currentTime > 0 && !audio.ended) {
+      audio.play();
+    } else {
+      playSection(curIdx);
+    }
+  }
+}
+
+function ttsNext() {
+  stopAudio();
+  curIdx = Math.min(curIdx + 1, sections.length - 1);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function ttsPrev() {
+  stopAudio();
+  curIdx = Math.max(curIdx - 1, 0);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function onSpeedChange() {
+  playbackRate = parseFloat(document.getElementById('ttsSpeed').value);
+  if (audio) audio.playbackRate = playbackRate;
+}
+
+function finish() {
+  playing = false;
+  playBtn.textContent = '\u25B6';
+  playBtn.classList.remove('active');
+  infoEl.textContent = 'Done';
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', (e) => {
+  // Only handle if not typing in an input
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.code === 'F2')         { e.preventDefault(); toggleTTS(); }
+  else if (e.code === 'F3')    { e.preventDefault(); ttsNext(); }
+  else if (e.code === 'F1')    { e.preventDefault(); ttsPrev(); }
+});
+</script>
 </body>
 </html>

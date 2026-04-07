@@ -15,6 +15,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#000;border-bott
 .nav-sep{color:rgba(255,255,255,.2);font-size:.65rem}
 .nav-register{background:#00f2ff;color:#000;font-size:.78rem;font-weight:800;padding:7px 16px;border-radius:50px;text-decoration:none;white-space:nowrap}
 iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100vh - 52px);border:none}
+
+/* ── TTS CONTROLLER (nearly invisible for OBS) ── */
+.tts-ctrl{
+  position:fixed;bottom:4px;right:4px;z-index:10000;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(0,0,0,.15);backdrop-filter:blur(4px);
+  border-radius:8px;padding:3px 6px;
+  opacity:0.08;transition:opacity .3s;
+  font-family:'Segoe UI',sans-serif;
+}
+.tts-ctrl:hover{opacity:0.85}
+.tts-ctrl button{
+  background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);
+  width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.tts-ctrl button:hover{background:rgba(255,255,255,.15)}
+.tts-ctrl button.active{background:rgba(233,69,96,.6);border-color:rgba(233,69,96,.8)}
+.tts-ctrl .tts-info{
+  font-size:10px;color:rgba(255,255,255,.7);max-width:120px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.tts-ctrl select{
+  background:rgba(0,0,0,.3);color:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.2);border-radius:4px;
+  font-size:10px;padding:2px 4px;cursor:pointer;
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
 </head>
@@ -38,6 +65,429 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
   </ul>
   <a href="/cec-edu/register/" class="nav-register">Register</a>
 </nav>
-<iframe src="/camp-c/ep18.html" title="Camp C Episode 18"></iframe>
+<iframe id="epFrame" src="/camp-c/ep18.html" title="Camp C Episode 18"></iframe>
+
+<!-- TTS CONTROLLER (nearly invisible — hover to reveal) -->
+<div class="tts-ctrl" id="ttsCtrl">
+  <button id="ttsPlayBtn" onclick="toggleTTS()" title="Play/Pause">&#9654;</button>
+  <button onclick="ttsPrev()" title="Prev">&#9664;</button>
+  <button onclick="ttsNext()" title="Next">&#9654;</button>
+  <select id="ttsSpeed" onchange="onSpeedChange()" title="Speed">
+    <option value="0.8">0.8x</option>
+    <option value="1.0" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+    <option value="1.5">1.5x</option>
+  </select>
+  <span class="tts-info" id="ttsInfo">Ready</span>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   TTS AUTO-NARRATION + IFRAME SCROLL CONTROLLER
+   ══════════════════════════════════════════════ */
+
+const TTS_URL   = 'https://journey-bronzy-fruitily.ngrok-free.dev/api/tts';
+const TTS_TOKEN = 'cec-speaking-2026';
+
+/* ── SCRIPT DATA ── */
+const RAW_SCRIPT = `[KO] 안녕하세요 여러분~ CEC 영어캠프에 오신 걸 환영합니다!
+오늘은 Camp C 에피소드 18, 아울렛 쇼핑 실수담 이야기예요.
+“엄마, 오늘 아울렛 가요. 세일 많대요!”
+
+[KO] 자, 오늘의 이야기를 들어볼까요?
+
+[KO] “엄마, 오늘 아울렛 가요. 세일 많대요!”
+[KO] 딸과 함께 미국 아울렛에 처음 간 영자.
+[KO] 간판부터 낯설고, 사이즈도 이상하게 느껴졌습니다.
+[KO] L인데 너무 크고, M인데 너무 작고…
+[KO] 결국 XL 사이즈를 들고 피팅룸으로!
+[KO] 그런데 문을 열고 들어간 피팅룸 안엔…
+[KO] 다른 사람이 있었습니다!
+[KO] “Oops! I’m sorry!”
+[KO] 황급히 문을 닫은 영자, 얼굴은 벌겋게 달아올랐고
+[KO] 딸은 배꼽 잡고 웃었습니다.
+[KO] 결국 다른 피팅룸에서 옷을 입어보고 마음에 들어
+[KO] 계산대에 갔더니 점원이 말했습니다:
+[KO] “Do you want to open a store credit card and save 15%?”
+[KO] 영자는 당당히 말했습니다:
+[KO] “No, I already have many credit problems!”
+[KO] 딸이 속삭였습니다:
+[KO] “엄마… 그건 말 안 해도 돼…”
+
+[KO] 오늘의 핵심 표현이에요. 잘 들어보세요~
+
+[EN] Can I try this on?
+
+[KO] 이거 입어봐도 될까요?
+[KO] 어때요? 생각보다 쉽죠?
+자, 한번 같이 따라해봐요. 천천히 갈게요~
+
+[EN] Can I try this on?
+
+[KO] 잘하셨어요! 한번 더 해볼까요?
+
+[EN] Can I try this on?
+
+[KO] 완벽해요~!
+
+[KO] 먼저 오늘의 핵심 문장 패턴이에요.
+Can I 다음에 동사를 넣으면 허락을 구할 수 있어요!
+
+[EN] Can I try this on?
+
+[KO] 이거 입어봐도 되나요?
+
+[EN] Can I sit here?
+
+[KO] 여기 앉아도 되나요?
+
+[EN] Can I have water?
+
+[KO] 물 좀 주시겠어요?
+
+[KO] 이 패턴 하나면 정말 만능이에요!
+
+[KO] 이제 오늘의 주요 단어들을 같이 읽어볼게요.
+
+[EN] Fitting room.
+
+[KO] 탈의실.
+
+[EN] Size.
+
+[KO] 사이즈.
+
+[EN] Sale.
+
+[KO] 세일.
+
+[EN] Receipt.
+
+[KO] 영수증.
+
+[EN] Jacket.
+
+[KO] 재킷.
+
+[KO] 좋아요! 이제 같은 이야기를 영어로 한번 읽어볼게요.
+가장 쉬운 버전부터 갈게요. 긴장하지 마세요~
+
+[EN] Young-ja goes shopping.
+She tries on clothes.
+She opens a door — oops! Someone is inside!
+Later, she buys a shirt.
+The worker says, “Do you want a store card?”
+Young-ja says, “I have credit problems!”
+Her daughter laughs.
+
+[KO] 어때요? 다 아는 단어들이죠?
+이번엔 조금 더 자연스러운 버전으로 들어볼게요.
+
+[EN] Young-ja visits an American outlet mall.
+She picks an XL shirt and goes to the fitting room.
+But she opens the wrong door — someone is changing!
+She says, “Sorry!” and turns red.
+At checkout, the clerk offers a store card.
+Young-ja says loudly, “I already have credit problems!”
+Her daughter covers her face in embarrassment.
+
+[KO] 점점 영어가 귀에 들어오죠?
+마지막으로 원어민 느낌 버전이에요. 한번 도전!
+
+[EN] Young-ja was excited for her first outlet shopping trip.
+The sizes confused her — L felt like XL, M felt like S.
+She finally grabbed an XL and walked into a fitting room.
+Only... it wasn’t empty.
+“Oh no! Sorry!” she gasped, closing the door fast.
+Later, at the register, the clerk asked:
+“Would you like to open a store credit card and save 15%?”
+Young-ja answered proudly,
+“No thanks. I already have enough credit problems!”
+Silence.
+Her daughter whispered,
+“Mom... maybe say just ‘No thank you’ next time.”
+
+[KO] 와~ 같은 이야기인데 레벨별로 들으니까 다르죠?
+이렇게 반복하면 자연스럽게 영어 실력이 올라가요!
+
+[KO] 자, 이제 퀴즈 타임이에요! 간단하니까 겁먹지 마세요~
+
+[KO] 자, 이제 재미있는 게임도 해볼까요?
+사이트에 가면 6개 게임이 있어요!
+
+[KO] 게임 1. 단어 순서 맞추기!
+뒤죽박죽 된 단어들을 올바른 순서로 배열하는 거예요.
+정답은 물론~
+
+[EN] Can I try this on?
+
+[KO] 이거 한 문장이면 어디서든 통해요!
+
+[KO] 게임 2. 매칭 게임!
+영어 단어와 한국어 뜻을 연결하는 거예요.
+
+[EN] Fitting room.
+[KO] 탈의실.
+[EN] Size.
+[KO] 사이즈.
+[EN] Sale.
+[KO] 세일.
+[EN] Receipt.
+[KO] 영수증.
+[EN] Jacket.
+[KO] 재킷.
+
+[KO] 게임 3. 빈칸 채우기!
+
+[EN] "이거 입어봐도 될까요?"
+
+[KO] TRANSLATION 중에서 정답은?
+
+[EN] Translation!
+
+[KO] 맞아요!
+
+[KO] 게임 4. 번역 게임!
+"이거 입어봐도 될까요?"를 영어로 하면?
+
+[EN] Can I try this on?
+
+[KO] 완벽해요~!
+
+[KO] 오늘의 핵심 표현 마지막으로 한번 더!
+
+[EN] Can I try this on?
+
+[KO] 이 한 문장으로 영자 씨는 오늘도 잘 해냈어요.
+여러분도 충분히 할 수 있어요!
+
+[KO] 이 안에는 아주 다양하고 재미난 이야기들이 가득합니다.
+여러분을 기다리고 있어요~
+
+[KO] 오늘 공부 정말 잘 하셨어요!
+이제 오늘 배운 표현을 AI 선생님과 직접 연습해보세요.
+AI 선생님과 1대1 연습은 유튜브에서는 연결되지 않아요.
+CEC 영어캠프 웹사이트로 오시면 바로 연결됩니다!
+cecenglishcamp.github.io 에서 만나요~
+
+[EN] Great job today!
+Practice with your AI teacher at our website.
+See you at CEC English Camp!
+
+[KO] 다음 에피소드에서 또 만나요~ 감사합니다!`;
+
+/* ── PARSE ── */
+function parseScript(raw) {
+  const parts = [];
+  const regex = /\[(KO|EN)\]\s*/g;
+  let match;
+  const tags = [];
+  while ((match = regex.exec(raw)) !== null) {
+    tags.push({ lang: match[1].toLowerCase(), idx: match.index, end: regex.lastIndex });
+  }
+  for (let i = 0; i < tags.length; i++) {
+    const textStart = tags[i].end;
+    const textEnd = (i + 1 < tags.length) ? tags[i + 1].idx : raw.length;
+    const body = raw.substring(textStart, textEnd).trim();
+    if (body) parts.push({ lang: tags[i].lang, body });
+  }
+  return parts;
+}
+
+const sections = parseScript(RAW_SCRIPT);
+
+/*
+ * ── SCROLL MAP ──
+ * Maps section index ranges to CSS selectors in the iframe.
+ * { maxIdx, selector, tab? [prefix, level] }
+ * "maxIdx" = last section index (inclusive) this rule covers.
+ */
+const scrollMap = [
+  { maxIdx:  1, sel: null },                   /* opening — stay on image, no scroll */
+  { maxIdx:  8, sel: '.key-card' },            /* key expression + practice */
+  { maxIdx: 14, sel: '.story-kr' },            /* story dialogue */
+  { maxIdx: 22, sel: '.story-kr' },            /* grammar patterns */
+  { maxIdx: 39, sel: '.story-kr' },            /* vocab words */
+  { maxIdx: 41, sel: '#story-a1', tab: ['story','a1'] },
+  { maxIdx: 43, sel: '#story-a2', tab: ['story','a2'] },
+  { maxIdx: 46, sel: '#story-b1', tab: ['story','b1'] },
+  { maxIdx: 62, sel: '#quiz-a1',  tab: ['quiz','a1'] },
+  { maxIdx: 83, sel: '#quiz-a2',  tab: ['quiz','a2'] },
+  { maxIdx: 89, sel: '#g1bl' },               /* game 1 */
+  { maxIdx: 92, sel: '#g2zone' },             /* game 2 */
+  { maxIdx:103, sel: '#g3fb' },               /* game 3 */
+  { maxIdx:108, sel: '#g4bl' },               /* game 4 */
+  { maxIdx:111, sel: '#g5fb' },               /* game 5 */
+  { maxIdx:116, sel: '#g6fb' },               /* game 6 */
+  { maxIdx:999, sel: '#ai-tutor-widget' },    /* closing — AI tutor area */
+];
+
+/* ── STATE ── */
+let curIdx       = 0;
+let playing      = false;
+let playbackRate = 1.0;
+let audio        = null;
+let blobUrl      = null;
+let endTimer     = null;
+
+/* ── DOM ── */
+const playBtn = document.getElementById('ttsPlayBtn');
+const infoEl  = document.getElementById('ttsInfo');
+const frame   = document.getElementById('epFrame');
+
+/* ── SCROLL VIA postMessage (no direct iframe DOM access) ── */
+function iframeScroll(idx) {
+  const rule = scrollMap.find(r => idx <= r.maxIdx);
+  if (!rule || !rule.sel) return;  /* null sel = stay put (e.g. opening image) */
+  try {
+    const win = frame.contentWindow;
+    if (!win) return;
+    if (rule.tab) {
+      win.postMessage({ type: 'showTab', prefix: rule.tab[0], level: rule.tab[1] }, '*');
+    }
+    win.postMessage({ type: 'scrollTo', selector: rule.sel }, '*');
+  } catch(e) {}
+}
+
+/* ── AUDIO CLEANUP ── */
+function stopAudio() {
+  if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+  if (audio) {
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    audio = null;
+  }
+  if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+}
+
+/* ── TTS FETCH & PLAY ── */
+async function playSection(idx) {
+  if (idx >= sections.length) { finish(); return; }
+
+  stopAudio();
+  curIdx = idx;
+  iframeScroll(idx);
+  infoEl.textContent = (idx + 1) + '/' + sections.length;
+
+  const sec  = sections[idx];
+  const isKo = sec.lang === 'ko';
+
+  let blob;
+  try {
+    const res = await fetch(TTS_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + TTS_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text:  sec.body,
+        voice: isKo ? 'alloy' : 'fable',
+        speed: isKo ? 1.0 : 0.75
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    blob = await res.blob();
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('TTS error:', e);
+    playing = false;
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    return;
+  }
+
+  if (!playing) return;
+
+  blobUrl = URL.createObjectURL(blob);
+  audio = new Audio(blobUrl);
+  audio.playbackRate = playbackRate;
+
+  let ended = false;
+  function onEnd() {
+    if (ended) return;
+    ended = true;
+    if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+    if (playing) playSection(idx + 1);
+  }
+
+  audio.addEventListener('ended', onEnd);
+  audio.addEventListener('error', () => { infoEl.textContent = 'ERR'; });
+
+  try {
+    await audio.play();
+    // Fallback timeout in case ended event doesn't fire
+    if (audio.duration && isFinite(audio.duration)) {
+      endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+    } else {
+      audio.addEventListener('loadedmetadata', () => {
+        if (!ended && audio.duration && isFinite(audio.duration)) {
+          endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+        }
+      });
+    }
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('Play error:', e);
+  }
+}
+
+/* ── CONTROLS ── */
+function toggleTTS() {
+  if (playing) {
+    playing = false;
+    if (audio) audio.pause();
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    infoEl.textContent = 'Paused';
+  } else {
+    playing = true;
+    playBtn.textContent = '\u23F8';
+    playBtn.classList.add('active');
+
+    if (audio && audio.paused && audio.currentTime > 0 && !audio.ended) {
+      audio.play();
+    } else {
+      playSection(curIdx);
+    }
+  }
+}
+
+function ttsNext() {
+  stopAudio();
+  curIdx = Math.min(curIdx + 1, sections.length - 1);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function ttsPrev() {
+  stopAudio();
+  curIdx = Math.max(curIdx - 1, 0);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function onSpeedChange() {
+  playbackRate = parseFloat(document.getElementById('ttsSpeed').value);
+  if (audio) audio.playbackRate = playbackRate;
+}
+
+function finish() {
+  playing = false;
+  playBtn.textContent = '\u25B6';
+  playBtn.classList.remove('active');
+  infoEl.textContent = 'Done';
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', (e) => {
+  // Only handle if not typing in an input
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.code === 'F2')         { e.preventDefault(); toggleTTS(); }
+  else if (e.code === 'F3')    { e.preventDefault(); ttsNext(); }
+  else if (e.code === 'F1')    { e.preventDefault(); ttsPrev(); }
+});
+</script>
 </body>
 </html>

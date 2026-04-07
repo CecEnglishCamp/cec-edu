@@ -15,6 +15,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:#000;border-bott
 .nav-sep{color:rgba(255,255,255,.2);font-size:.65rem}
 .nav-register{background:#00f2ff;color:#000;font-size:.78rem;font-weight:800;padding:7px 16px;border-radius:50px;text-decoration:none;white-space:nowrap}
 iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100vh - 52px);border:none}
+
+/* ── TTS CONTROLLER (nearly invisible for OBS) ── */
+.tts-ctrl{
+  position:fixed;bottom:4px;right:4px;z-index:10000;
+  display:flex;align-items:center;gap:4px;
+  background:rgba(0,0,0,.15);backdrop-filter:blur(4px);
+  border-radius:8px;padding:3px 6px;
+  opacity:0.08;transition:opacity .3s;
+  font-family:'Segoe UI',sans-serif;
+}
+.tts-ctrl:hover{opacity:0.85}
+.tts-ctrl button{
+  background:none;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);
+  width:28px;height:28px;border-radius:6px;font-size:13px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.tts-ctrl button:hover{background:rgba(255,255,255,.15)}
+.tts-ctrl button.active{background:rgba(233,69,96,.6);border-color:rgba(233,69,96,.8)}
+.tts-ctrl .tts-info{
+  font-size:10px;color:rgba(255,255,255,.7);max-width:120px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.tts-ctrl select{
+  background:rgba(0,0,0,.3);color:rgba(255,255,255,.8);
+  border:1px solid rgba(255,255,255,.2);border-radius:4px;
+  font-size:10px;padding:2px 4px;cursor:pointer;
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
 </head>
@@ -38,6 +65,445 @@ iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(10
   </ul>
   <a href="/cec-edu/register/" class="nav-register">Register</a>
 </nav>
-<iframe src="/camp-c/ep34.html" title="Camp C Episode 34"></iframe>
+<iframe id="epFrame" src="/camp-c/ep34.html" title="Camp C Episode 34"></iframe>
+
+<!-- TTS CONTROLLER (nearly invisible — hover to reveal) -->
+<div class="tts-ctrl" id="ttsCtrl">
+  <button id="ttsPlayBtn" onclick="toggleTTS()" title="Play/Pause">&#9654;</button>
+  <button onclick="ttsPrev()" title="Prev">&#9664;</button>
+  <button onclick="ttsNext()" title="Next">&#9654;</button>
+  <select id="ttsSpeed" onchange="onSpeedChange()" title="Speed">
+    <option value="0.8">0.8x</option>
+    <option value="1.0" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+    <option value="1.5">1.5x</option>
+  </select>
+  <span class="tts-info" id="ttsInfo">Ready</span>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   TTS AUTO-NARRATION + IFRAME SCROLL CONTROLLER
+   ══════════════════════════════════════════════ */
+
+const TTS_URL   = 'https://journey-bronzy-fruitily.ngrok-free.dev/api/tts';
+const TTS_TOKEN = 'cec-speaking-2026';
+
+/* ── SCRIPT DATA ── */
+const RAW_SCRIPT = `[KO] 안녕하세요 여러분~ CEC 영어캠프에 오신 걸 환영합니다!
+오늘은 Camp C 에피소드 34, 미국 학교 학부모 회의 참석 이야기예요.
+우리의 주인공, 박영자 씨! 오늘도 새로운 모험이 시작됩니다!
+
+[KO] 자, 오늘의 이야기를 들어볼까요?
+
+[KO] 영자는 손녀의 학교 학부모 회의에 갔습니다.
+[KO] 선생님이 말했습니다. "Soyeon is such a bright and kind student!"
+[KO] 영자는 'bright'가 '밝다'인 줄 알고 말했습니다. "Yes, her face very bright!"
+[KO] 선생님이 웃으며 말했습니다. "I mean she is very smart."
+[KO] 영자는 얼굴이 빨개졌습니다.
+[KO] 딸이 설명했습니다. "학교에서 bright는 '총명하다'는 뜻이야."
+
+[KO] 오늘의 핵심 표현이에요. 잘 들어보세요~
+
+[EN] Soyeon is such a bright and kind student!
+
+[KO] 어때요? 생각보다 쉽죠?
+자, 한번 같이 따라해봐요. 천천히 갈게요~
+
+[EN] Soyeon is such a bright and kind student!
+
+[KO] 잘하셨어요! 한번 더 해볼까요?
+
+[EN] Soyeon is such a bright and kind student!
+
+[KO] 완벽해요~!
+
+[KO] 먼저 오늘의 핵심 문장 패턴이에요.
+이 패턴을 활용하면 다양한 상황에서 쓸 수 있어요!
+
+[KO] "She is such a bright student!" — such a + 형용사 + 명사
+
+[EN] He is such a kind person!
+
+[KO] "I mean she is smart." — I mean... (설명)
+
+[EN] I mean, it is not easy.
+
+[KO] "Does bright mean smart?" — Does... mean...?
+
+[EN] Does "kind" mean nice?
+
+[KO] 이 패턴 하나면 정말 만능이에요!
+
+[KO] 이제 오늘의 주요 단어들을 같이 읽어볼게요.
+
+[EN] Bright.
+
+[KO] 똑똑한 / 밝은.
+
+[EN] Parent-teacher meeting.
+
+[KO] 학부모 회의.
+
+[EN] Smart.
+
+[KO] 똑똑한.
+
+[EN] Kind.
+
+[KO] 친절한.
+
+[EN] Embarrassed.
+
+[KO] 창피한.
+
+[KO] 좋아요! 이제 같은 이야기를 영어로 한번 읽어볼게요.
+가장 쉬운 버전부터 갈게요. 긴장하지 마세요~
+
+[EN] Young-ja goes to her granddaughter's school.
+The teacher says, "Soyeon is very bright!"
+Young-ja thinks "bright" means her face looks bright.
+"Yes, her face is very bright!" she says.
+The teacher laughs.
+Young-ja learns "bright" also means smart.
+She is embarrassed.
+Young-ja accompanied her daughter to the parent-teacher meeting.
+The teacher greeted them warmly.
+"Soyeon is such a bright and kind student!"
+Young-ja beamed. She thought "bright" described Soyeon's face.
+"Yes! Her face is very bright!" she agreed.
+The teacher paused, then smiled gently.
+"I mean she's very smart and kind-hearted."
+Young-ja's cheeks turned red.
+Later she asked, "Does bright mean smart?"
+Her daughter laughed. "In school, yes."
+
+[KO] 어때요? 다 아는 단어들이죠?
+이번엔 조금 더 자연스러운 버전으로 들어볼게요.
+
+[KO] 자, 이제 퀴즈 타임이에요! 간단하니까 겁먹지 마세요~
+
+[KO] 첫번째 문제.
+
+[EN] Who is Soyeon?
+
+[KO] 정답은~
+
+[EN] Young-ja's granddaughter.
+
+[KO] 맞아요!
+
+[KO] 두번째 문제.
+
+[EN] What does Young-ja think "bright" means?
+
+[KO] 정답은~
+
+[EN] That her face looks bright.
+
+[KO] 맞아요!
+
+[KO] 이번엔 B1 레벨 퀴즈! 조금 더 생각해봐요~
+
+[EN] What does "bright" really mean here?
+
+[KO] 정답은~
+
+[EN] Smart and intelligent.
+
+[KO] 맞아요!
+
+[EN] How does Young-ja feel?
+
+[KO] 정답은~
+
+[EN] Embarrassed.
+
+[KO] 맞아요!
+
+[KO] 자, 이제 재미있는 게임도 해볼까요?
+사이트에 가면 다양한 연습이 있어요!
+
+[KO] 게임 1. 따라 말하기!
+영자 씨가 쓸 수 있는 표현들을 따라 해봐요.
+
+[EN] I am her grandmother.
+
+[EN] She is a very smart student.
+
+[EN] Thank you for meeting with us.
+
+[KO] 잘하셨어요!
+
+[KO] 게임 2. 듣기 연습!
+오늘 나온 문장들을 귀로 한번 더 확인해봐요~
+
+[EN] Are you Soyeon's grandmother?
+
+[EN] She is such a bright student!
+
+[EN] I mean she is very smart.
+
+[EN] It's a pleasure to meet you.
+
+[KO] 잘 들리시죠?
+
+[KO] 게임 3. 매칭 게임!
+영어 단어와 한국어 뜻을 연결하는 거예요.
+
+[EN] Bright.
+[KO] 똑똑한 / 밝은.
+[EN] Parent-teacher meeting.
+[KO] 학부모 회의.
+[EN] Smart.
+[KO] 똑똑한.
+[EN] Kind.
+[KO] 친절한.
+[EN] Embarrassed.
+[KO] 창피한.
+
+[KO] 게임 4. 단어 순서 맞추기!
+뒤죽박죽 된 단어들을 올바른 순서로 배열하는 거예요.
+정답은 물론~
+
+[EN] Soyeon is such a bright and kind student!
+
+[KO] 이거 한 문장이면 어디서든 통해요!
+
+[KO] 오늘의 핵심 표현 마지막으로 한번 더!
+
+[EN] Soyeon is such a bright and kind student!
+
+[KO] 이 한 문장으로 영자 씨는 오늘도 잘 해냈어요.
+여러분도 충분히 할 수 있어요!
+
+[KO] 이 안에는 아주 다양하고 재미난 이야기들이 가득합니다.
+여러분을 기다리고 있어요~
+
+[KO] 오늘 공부 정말 잘 하셨어요!
+이제 오늘 배운 표현을 AI 선생님과 직접 연습해보세요.
+AI 선생님과 1대1 연습은 유튜브에서는 연결되지 않아요.
+CEC 영어캠프 웹사이트로 오시면 바로 연결됩니다!
+cecenglishcamp.github.io 에서 만나요~
+
+[EN] Great job today!
+Practice with your AI teacher at our website.
+See you at CEC English Camp!
+
+[KO] 다음 에피소드에서 또 만나요~ 감사합니다!`;
+
+/* ── PARSE ── */
+function parseScript(raw) {
+  const parts = [];
+  const regex = /\[(KO|EN)\]\s*/g;
+  let match;
+  const tags = [];
+  while ((match = regex.exec(raw)) !== null) {
+    tags.push({ lang: match[1].toLowerCase(), idx: match.index, end: regex.lastIndex });
+  }
+  for (let i = 0; i < tags.length; i++) {
+    const textStart = tags[i].end;
+    const textEnd = (i + 1 < tags.length) ? tags[i + 1].idx : raw.length;
+    const body = raw.substring(textStart, textEnd).trim();
+    if (body) parts.push({ lang: tags[i].lang, body });
+  }
+  return parts;
+}
+
+const sections = parseScript(RAW_SCRIPT);
+
+/*
+ * ── SCROLL MAP ──
+ * Maps section index ranges to CSS selectors in the iframe.
+ * { maxIdx, selector, tab? [prefix, level] }
+ * "maxIdx" = last section index (inclusive) this rule covers.
+ */
+const scrollMap = [
+  { maxIdx:  1, sel: null },                   /* opening — stay on image, no scroll */
+  { maxIdx:  8, sel: '.key-card' },            /* key expression + practice */
+  { maxIdx: 14, sel: '.story-kr' },            /* story dialogue */
+  { maxIdx: 22, sel: '.story-kr' },            /* grammar patterns */
+  { maxIdx: 39, sel: '.story-kr' },            /* vocab words */
+  { maxIdx: 41, sel: '#story-a1', tab: ['story','a1'] },
+  { maxIdx: 43, sel: '#story-a2', tab: ['story','a2'] },
+  { maxIdx: 46, sel: '#story-b1', tab: ['story','b1'] },
+  { maxIdx: 62, sel: '#quiz-a1',  tab: ['quiz','a1'] },
+  { maxIdx: 83, sel: '#quiz-a2',  tab: ['quiz','a2'] },
+  { maxIdx: 89, sel: '#g1bl' },               /* game 1 */
+  { maxIdx: 92, sel: '#g2zone' },             /* game 2 */
+  { maxIdx:103, sel: '#g3fb' },               /* game 3 */
+  { maxIdx:108, sel: '#g4bl' },               /* game 4 */
+  { maxIdx:111, sel: '#g5fb' },               /* game 5 */
+  { maxIdx:116, sel: '#g6fb' },               /* game 6 */
+  { maxIdx:999, sel: '#ai-tutor-widget' },    /* closing — AI tutor area */
+];
+
+/* ── STATE ── */
+let curIdx       = 0;
+let playing      = false;
+let playbackRate = 1.0;
+let audio        = null;
+let blobUrl      = null;
+let endTimer     = null;
+
+/* ── DOM ── */
+const playBtn = document.getElementById('ttsPlayBtn');
+const infoEl  = document.getElementById('ttsInfo');
+const frame   = document.getElementById('epFrame');
+
+/* ── SCROLL VIA postMessage (no direct iframe DOM access) ── */
+function iframeScroll(idx) {
+  const rule = scrollMap.find(r => idx <= r.maxIdx);
+  if (!rule || !rule.sel) return;  /* null sel = stay put (e.g. opening image) */
+  try {
+    const win = frame.contentWindow;
+    if (!win) return;
+    if (rule.tab) {
+      win.postMessage({ type: 'showTab', prefix: rule.tab[0], level: rule.tab[1] }, '*');
+    }
+    win.postMessage({ type: 'scrollTo', selector: rule.sel }, '*');
+  } catch(e) {}
+}
+
+/* ── AUDIO CLEANUP ── */
+function stopAudio() {
+  if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+  if (audio) {
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    audio = null;
+  }
+  if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
+}
+
+/* ── TTS FETCH & PLAY ── */
+async function playSection(idx) {
+  if (idx >= sections.length) { finish(); return; }
+
+  stopAudio();
+  curIdx = idx;
+  iframeScroll(idx);
+  infoEl.textContent = (idx + 1) + '/' + sections.length;
+
+  const sec  = sections[idx];
+  const isKo = sec.lang === 'ko';
+
+  let blob;
+  try {
+    const res = await fetch(TTS_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + TTS_TOKEN,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text:  sec.body,
+        voice: isKo ? 'alloy' : 'fable',
+        speed: isKo ? 1.0 : 0.75
+      })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    blob = await res.blob();
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('TTS error:', e);
+    playing = false;
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    return;
+  }
+
+  if (!playing) return;
+
+  blobUrl = URL.createObjectURL(blob);
+  audio = new Audio(blobUrl);
+  audio.playbackRate = playbackRate;
+
+  let ended = false;
+  function onEnd() {
+    if (ended) return;
+    ended = true;
+    if (endTimer) { clearTimeout(endTimer); endTimer = null; }
+    if (playing) playSection(idx + 1);
+  }
+
+  audio.addEventListener('ended', onEnd);
+  audio.addEventListener('error', () => { infoEl.textContent = 'ERR'; });
+
+  try {
+    await audio.play();
+    // Fallback timeout in case ended event doesn't fire
+    if (audio.duration && isFinite(audio.duration)) {
+      endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+    } else {
+      audio.addEventListener('loadedmetadata', () => {
+        if (!ended && audio.duration && isFinite(audio.duration)) {
+          endTimer = setTimeout(onEnd, (audio.duration / playbackRate) * 1000 + 600);
+        }
+      });
+    }
+  } catch(e) {
+    infoEl.textContent = 'ERR';
+    console.error('Play error:', e);
+  }
+}
+
+/* ── CONTROLS ── */
+function toggleTTS() {
+  if (playing) {
+    playing = false;
+    if (audio) audio.pause();
+    playBtn.textContent = '\u25B6';
+    playBtn.classList.remove('active');
+    infoEl.textContent = 'Paused';
+  } else {
+    playing = true;
+    playBtn.textContent = '\u23F8';
+    playBtn.classList.add('active');
+
+    if (audio && audio.paused && audio.currentTime > 0 && !audio.ended) {
+      audio.play();
+    } else {
+      playSection(curIdx);
+    }
+  }
+}
+
+function ttsNext() {
+  stopAudio();
+  curIdx = Math.min(curIdx + 1, sections.length - 1);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function ttsPrev() {
+  stopAudio();
+  curIdx = Math.max(curIdx - 1, 0);
+  if (playing) playSection(curIdx);
+  else { iframeScroll(curIdx); infoEl.textContent = (curIdx + 1) + '/' + sections.length; }
+}
+
+function onSpeedChange() {
+  playbackRate = parseFloat(document.getElementById('ttsSpeed').value);
+  if (audio) audio.playbackRate = playbackRate;
+}
+
+function finish() {
+  playing = false;
+  playBtn.textContent = '\u25B6';
+  playBtn.classList.remove('active');
+  infoEl.textContent = 'Done';
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', (e) => {
+  // Only handle if not typing in an input
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.code === 'F2')         { e.preventDefault(); toggleTTS(); }
+  else if (e.code === 'F3')    { e.preventDefault(); ttsNext(); }
+  else if (e.code === 'F1')    { e.preventDefault(); ttsPrev(); }
+});
+</script>
 </body>
 </html>
